@@ -29,8 +29,12 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return initView();
+        View view =  inflater.inflate(getLayoutResource(),container,false);
+        initView(view);
+        return view;
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -41,8 +45,9 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 加载视图（强制重写）
      * @return 此Fragment的视图
+     * @param view
      */
-    public abstract View initView();
+    public abstract void initView(View view);
 
     /**
      * 加载数据，网络请求（可选）
@@ -50,4 +55,10 @@ public abstract class BaseFragment extends Fragment {
     public void initData() {
 
     }
+
+    /**
+     * 初始化布局文件
+     * @return 布局文件 id
+     */
+    public abstract int getLayoutResource();
 }
