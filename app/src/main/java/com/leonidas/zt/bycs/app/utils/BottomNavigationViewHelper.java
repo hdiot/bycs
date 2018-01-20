@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.app.utils;
 
+import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,7 @@ import java.lang.reflect.Field;
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
 public class BottomNavigationViewHelper {
+    @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
         //获取子View BottomNavigationMenuView的对象
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);

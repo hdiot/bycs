@@ -29,4 +29,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.jcodecraeer:xrecyclerview:1.5.8'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'com.squareup.okio:okio:1.13.0'
+    compile 'com.alibaba:fastjson:1.2.44'
+    compile 'me.zhanghai.android.materialratingbar:library:1.2.0'
 }

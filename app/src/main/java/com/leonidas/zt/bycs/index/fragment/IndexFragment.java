@@ -1,38 +1,44 @@
 package com.leonidas.zt.bycs.index.fragment;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
+import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.index.activity.SearchActivity;
 import com.leonidas.zt.bycs.index.adapter.RcvIndexAdapter;
+import com.leonidas.zt.bycs.index.adapter.RcvShopAdapter;
+import com.leonidas.zt.bycs.index.bean.Data;
+import com.leonidas.zt.bycs.index.bean.ResMessage;
+import com.leonidas.zt.bycs.index.bean.Shops;
+import com.leonidas.zt.bycs.index.utils.BaseCallback;
+import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
+
+import java.io.IOException;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 
-@SuppressLint("ValidFragment")
 public class IndexFragment extends BaseFragment {
 
     private static final String TAG = "IndexFragment";
-    private final String mString;
     private Toolbar mToolBar;
-    private RecyclerView mRcvIndex;
-
-    @SuppressLint("ValidFragment")
-    public IndexFragment(String s) {
-        super();
-        this.mString = s;
-    }
+    private XRecyclerView mRcvIndex;
 
 
     @Override
     public void initView(View view) {
         mToolBar = (Toolbar) view.findViewById(R.id.index_toolbar);
-        mRcvIndex = (RecyclerView) view.findViewById(R.id.rcv_index);
+        mRcvIndex = (XRecyclerView) view.findViewById(R.id.rcv_index);
 
         initToolbar();
         initRcvRcmShop();
@@ -42,22 +48,48 @@ public class IndexFragment extends BaseFragment {
      * 初始化 商家列表
      */
     private void initRcvRcmShop() {
-        Log.d(TAG, "initRcvRcmShop: ");
+
         mRcvIndex.setAdapter(new RcvIndexAdapter());
         mRcvIndex.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRcvIndex.setLoadingMoreEnabled(false);
+        mRcvIndex.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "onRefresh: ");
+                // 网络请求
+
+                // 更新数据
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRcvIndex.refreshComplete();
+                        Log.d(TAG, "run: ");
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                // 网络请求
+
+                // 更新数据
+
+            }
+        });
     }
+
 
     /**
      * 初始化 顶部 ToolBar
      */
     private void initToolbar() {
-        mToolBar.inflateMenu(R.menu.index_toolbar);
+        //mToolBar.inflateMenu(R.menu.index_toolbar);
         EditText mSearchEditText = (EditText) mToolBar.findViewById(R.id.edit_search);
         // mSearchEditText.clearFocus();
         mSearchEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Search was clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), SearchActivity.class));
             }
         });
     }

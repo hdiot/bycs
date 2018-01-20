@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_marginBottom="15dp"
+    android:background="@color/white">
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrcv_index_shops"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+</LinearLayout>

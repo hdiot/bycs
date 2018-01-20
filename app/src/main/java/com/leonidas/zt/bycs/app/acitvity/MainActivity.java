@@ -1,5 +1,8 @@
 package com.leonidas.zt.bycs.app.acitvity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.adapter.MyPagerAdapter;
@@ -25,19 +31,27 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setStatusBar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
 
     }
 
+    private void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
+    }
+
     /**
      * 初始化视图
      */
+    @SuppressLint("ResourceAsColor")
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mNavigation = (BottomNavigationView) findViewById(R.id.navigation);
-
         initNavigation();
         initViewPager();
     }
@@ -48,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void initViewPager() {
 
         List<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(new IndexFragment("haha"));
-        fragments.add(new IndexFragment("hehe"));
-        fragments.add(new IndexFragment("hihi"));
-        fragments.add(new IndexFragment("xixi"));
+        fragments.add(new IndexFragment());
+        fragments.add(new IndexFragment());
+        fragments.add(new IndexFragment());
+        fragments.add(new IndexFragment());
 
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),fragments);
         mViewPager.setAdapter(myPagerAdapter);

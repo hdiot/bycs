@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.index.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.index.bean.Category;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by mebee on 2018/1/7.
@@ -17,6 +23,14 @@ import com.leonidas.zt.bycs.R;
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
 public class RcvSortAdapter extends RecyclerView.Adapter<RcvSortAdapter.ViewHolder> {
+
+    private List<Category> mCategories = new ArrayList<>();
+
+    public RcvSortAdapter(@Nullable List<Category> categories) {
+        if (categories != null) {
+            this.mCategories = categories;
+        }
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,8 +42,9 @@ public class RcvSortAdapter extends RecyclerView.Adapter<RcvSortAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.txt.setText("分类：" + position);
+        holder.txt.setText(mCategories.get(position).getCategoryName());
     }
+
 
     @Override
     public int getItemCount() {
@@ -43,6 +58,30 @@ public class RcvSortAdapter extends RecyclerView.Adapter<RcvSortAdapter.ViewHold
             super(itemView);
             txt = itemView.findViewById(R.id.txt_sort);
             image = itemView.findViewById(R.id.img_sort);
+        }
+    }
+
+
+    public void refresh(List<Category> categories){
+        if (categories != null){
+            forbidNull();
+            mCategories.clear();
+            loadMore(categories);
+        }
+    }
+
+    public void loadMore(List<Category> categories){
+        if (categories != null){
+            forbidNull();
+            int position = mCategories.size();
+            mCategories.addAll(position,categories);
+            notifyDataSetChanged();
+        }
+    }
+
+    private void forbidNull(){
+        if (mCategories == null) {
+            mCategories = new ArrayList<>();
         }
     }
 }

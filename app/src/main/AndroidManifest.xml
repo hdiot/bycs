@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.leonidas.zt.bycs">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,11 @@
         <activity
             android:name=".app.acitvity.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".index.Activity.SearchActivity"></activity>
+        <activity android:name=".index.activity.SearchActivity" />
+        <activity android:name=".index.activity.SortActivity" />
+        <activity android:name=".index.activity.ProductDetialActivity" />
+        <activity android:name=".index.activity.ShopsActivity" />
+        <activity android:name=".index.activity.ShopActivity"></activity>
     </application>
 
 </manifest>
