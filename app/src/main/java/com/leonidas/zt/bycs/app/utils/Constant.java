@@ -9,10 +9,11 @@ package com.leonidas.zt.bycs.app.utils;
  */
 public class Constant {
     public static class API{
-        public static String baseUrl = "http://119.23.33.62:8080/";
+        public static String baseUrl = "http://120.78.87.169:8080/";
         public static String getShops = baseUrl + "market/front/shops";
         public static String getComment = baseUrl + "market/front/shop/comments";
         public static String getProducts = baseUrl + "market/front/products";
         public static String getProduct  = baseUrl + "market/front/product";
+        public static String images = baseUrl + "market/images/";
     }
 }

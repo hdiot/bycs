@@ -99,5 +99,4 @@ public class IndexFragment extends BaseFragment {
         return R.layout.mebee_fragment_index;
     }
 
-
 }

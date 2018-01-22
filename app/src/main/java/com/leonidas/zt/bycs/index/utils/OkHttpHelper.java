@@ -78,6 +78,7 @@ public class OkHttpHelper {
         } else if (methodType == HttpMethodType.POST) {
             MediaType JSON = MediaType.parse("application/json;charset=utf-8");
             RequestBody body = RequestBody.create(JSON, json);
+
             builder.post(body);
         }
         return builder.build();

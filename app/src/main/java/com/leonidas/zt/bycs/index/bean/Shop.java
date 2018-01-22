@@ -145,7 +145,7 @@ public class Shop {
          */
 
         private long pictureId;
-        private int picturePath;
+        private String picturePath;
 
         public long getPictureId() {
             return pictureId;
@@ -155,11 +155,11 @@ public class Shop {
             this.pictureId = pictureId;
         }
 
-        public int getPicturePath() {
+        public String getPicturePath() {
             return picturePath;
         }
 
-        public void setPicturePath(int picturePath) {
+        public void setPicturePath(String picturePath) {
             this.picturePath = picturePath;
         }
     }

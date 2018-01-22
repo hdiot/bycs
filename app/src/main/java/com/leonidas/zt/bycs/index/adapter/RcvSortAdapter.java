@@ -12,7 +12,6 @@ import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.index.bean.Category;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

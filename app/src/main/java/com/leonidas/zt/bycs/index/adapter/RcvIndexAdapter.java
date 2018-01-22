@@ -1,7 +1,7 @@
 package com.leonidas.zt.bycs.index.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -17,7 +17,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
 import com.leonidas.zt.bycs.index.bean.Category;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
@@ -51,7 +50,6 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private Context mContext;
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -103,12 +101,14 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                     });
 
-            getShopsData("", "");
+            getShopsData("1", "15");
+
         }
     }
 
     private void getShopsData(String pageNum, String size) {
         String params = formParams(pageNum, size);
+        Log.d(TAG, "getShopsData: " + params);
         OkHttpHelper.getInstance().
                 doGet(Constant.API.getShops + params,
                         new BaseCallback<ResMessage<Data<Shops>>>() {
@@ -144,6 +144,7 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                             @Override
                             public void onFailure(Request request, IOException e) {
+                                Dialog dialog = new Dialog(mContext);
 
                             }
 

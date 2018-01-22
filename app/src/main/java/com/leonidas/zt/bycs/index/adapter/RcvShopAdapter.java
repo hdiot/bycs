@@ -3,7 +3,6 @@ package com.leonidas.zt.bycs.index.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
-import com.leonidas.zt.bycs.app.acitvity.MainActivity;
-import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
+import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.activity.ShopActivity;
 import com.leonidas.zt.bycs.index.activity.ShopsActivity;
 import com.leonidas.zt.bycs.index.bean.Shop;
@@ -121,6 +120,9 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
             ((ViewHolder) holder).ratingScore.setProgress(mShops.get(position).getShopGrade() * 100);
             ((ViewHolder) holder).txtPostFee.setText("配送费￥" + mShops.get(position).getSendPrice());
             ((ViewHolder) holder).txtShopName.setText(mShops.get(position).getShopName());
+            Glide.with(mContext)
+                    .load(Constant.API.images + mShops.get(position).getShopPictures().get(0).getPicturePath())
+                    .into(((ViewHolder) holder).imgShopImg);
             //((ViewHolder) holder).imgShopImg.setText(mShops.get(position).getShopSale());
 
             final int finalPosition = position;

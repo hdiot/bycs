@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 
+import com.bumptech.glide.Glide;
 import com.leonidas.zt.bycs.app.acitvity.MainActivity;
 
 public class StartupActivity extends FragmentActivity {
@@ -23,5 +24,6 @@ public class StartupActivity extends FragmentActivity {
                 finish();
             }
         },2000);
+
     }
 }
