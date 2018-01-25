@@ -19,6 +19,7 @@ import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.bean.Category;
 import com.leonidas.zt.bycs.index.bean.Data;
+import com.leonidas.zt.bycs.index.bean.ProductCategories;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
 import com.leonidas.zt.bycs.index.bean.Shops;
 import com.leonidas.zt.bycs.index.utils.BaseCallback;
@@ -159,10 +160,38 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void getSortData() {
-        Type type = new TypeReference<Category>() {}.getType();
+
+        OkHttpHelper.getInstance()
+                .doGet(Constant.API.getSorts, new BaseCallback<ResMessage<Data<ProductCategories>>>() {
+                    @Override
+                    public void OnSuccess(Response response, ResMessage<Data<ProductCategories>> dataResMessage) {
+                        mCategoryAdapter.refresh(dataResMessage.getData().getProductCategories().getList());
+                    }
+
+                    @Override
+                    public void onError(Response response, int errCode, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onRequestBefore(Request request) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onBzError(Response response, int code, String hint, String data) {
+
+                    }
+                });
+        /*Type type = new TypeReference<Category>() {}.getType();
         List<Category> categories = JSON.parseArray(mContext.getResources().getString(R.string.category_list), Category.class);
         Log.d(TAG, "getSortData: " + categories.get(0).getCategoryName());
-        mCategoryAdapter.refresh(categories);
+        mCategoryAdapter.refresh(categories);*/
     }
 
     @Override

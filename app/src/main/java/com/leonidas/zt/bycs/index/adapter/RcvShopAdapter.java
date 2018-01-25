@@ -130,15 +130,14 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
             ((ViewHolder) holder).item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("shopId",
+                    Intent intent = new Intent(mContext,ShopActivity.class);
+                    intent.putExtra("shopId",
                             String.valueOf(mShops
                                     .get(finalPosition)
                                     .getShopId()));
                     /* 启动 商家详情 Activity */
                     startActivity(mContext,
-                            new Intent(mContext, ShopActivity.class),
-                            bundle);
+                            intent,null);
                     if (mMnItemClickListener != null) {
                         mMnItemClickListener.onItemClickListener(view, finalPosition);
                     }

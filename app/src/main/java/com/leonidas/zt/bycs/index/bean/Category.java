@@ -8,13 +8,16 @@ package com.leonidas.zt.bycs.index.bean;
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
 public class Category {
+
     /**
-     * categoryId : 1515557309728
-     * categoryName : 其他
+     * categoryId : 1515557064589
+     * categoryName : 蔬菜
+     * categoryIcon : pc1.png
      */
 
     private long categoryId;
     private String categoryName;
+    private String categoryIcon;
 
     public long getCategoryId() {
         return categoryId;
@@ -30,5 +33,13 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getCategoryIcon() {
+        return categoryIcon;
+    }
+
+    public void setCategoryIcon(String categoryIcon) {
+        this.categoryIcon = categoryIcon;
     }
 }

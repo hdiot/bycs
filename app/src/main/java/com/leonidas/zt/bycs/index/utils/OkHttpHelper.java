@@ -4,6 +4,7 @@ package com.leonidas.zt.bycs.index.utils;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -61,12 +62,17 @@ public class OkHttpHelper {
     }
 
     public void doPost(String url, Map<String, String> param, BaseCallback callback) {
-        Request request = buildRequest(url, param);
+        Request request = buildRequest(url, param,HttpMethodType.POST);
         doRequest(request, callback);
     }
 
     public void doGet(String url, BaseCallback callback) {
-        Request request = buildRequest(url, null, HttpMethodType.GET);
+        Request request = buildRequest(url, "", HttpMethodType.GET);
+        doRequest(request, callback);
+    }
+
+    public void doGet(String url, Map<String,String> params, BaseCallback callback){
+        Request request = buildRequest(url, params,HttpMethodType.GET);
         doRequest(request, callback);
     }
 
@@ -84,16 +90,22 @@ public class OkHttpHelper {
         return builder.build();
     }
 
-    private Request buildRequest(String url, Map<String, String> map) {
+    private Request buildRequest(String url, Map<String, String> map,HttpMethodType methodType) {
         Request.Builder rbuilder = new Request.Builder();
-        FormBody.Builder fbuilder = new FormBody.Builder();
         rbuilder.url(url);
-
+        FormBody.Builder fbuilder = new FormBody.Builder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             fbuilder.add(entry.getKey(), entry.getValue());
         }
-        rbuilder.post(fbuilder.build());
-        return rbuilder.build();
+        if (methodType == HttpMethodType.GET) {
+            rbuilder.put(fbuilder.build())
+                    .get();
+            return rbuilder.build();
+
+        } else {
+            rbuilder.post(fbuilder.build());
+            return rbuilder.build();
+        }
     }
 
     private void doRequest(final Request request, final BaseCallback callback) {

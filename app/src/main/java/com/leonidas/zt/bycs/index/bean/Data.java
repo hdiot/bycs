@@ -9,6 +9,33 @@ package com.leonidas.zt.bycs.index.bean;
  */
 public class Data<T> {
     T shops;
+    T products;
+    T shop;
+    T productCategories;
+
+    public T getProductCategories() {
+        return productCategories;
+    }
+
+    public void setProductCategories(T productCategories) {
+        this.productCategories = productCategories;
+    }
+
+    public T getShop() {
+        return shop;
+    }
+
+    public void setShop(T shop) {
+        this.shop = shop;
+    }
+
+    public T getProducts() {
+        return products;
+    }
+
+    public void setProducts(T products) {
+        this.products = products;
+    }
 
     public T getShops() {
         return shops;

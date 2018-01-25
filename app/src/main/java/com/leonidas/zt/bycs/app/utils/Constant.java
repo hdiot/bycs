@@ -15,5 +15,7 @@ public class Constant {
         public static String getProducts = baseUrl + "market/front/products";
         public static String getProduct  = baseUrl + "market/front/product";
         public static String images = baseUrl + "market/images/";
+        public static String getShop = baseUrl + "market/front/shop";
+        public static String getSorts = baseUrl + "market/front/product/categories";
     }
 }
