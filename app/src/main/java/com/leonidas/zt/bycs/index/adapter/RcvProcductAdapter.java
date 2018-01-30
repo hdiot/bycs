@@ -18,6 +18,7 @@ import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
 import com.leonidas.zt.bycs.index.bean.Product;
 import com.mcxtzhang.lib.AnimShopButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +41,12 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.mebee_rcv_shop_view,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.mebee_rcv_product_view,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.productStockTxt.setText("剩余" + mProducts.get(position).getProductStock() + "份");
         holder.productPriceTxt.setText("￥" + mProducts.get(position).getProductPrice());
         holder.productNameTxt.setText( mProducts.get(position).getProductName());
@@ -57,7 +58,9 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, ProductDetialActivity.class));
+                Intent intent = new Intent(mContext, ProductDetialActivity.class);
+                intent.putExtra("productInfo", (Serializable) mProducts.get(position));
+                mContext.startActivity(intent);
             }
         });
     }

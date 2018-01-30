@@ -27,7 +27,7 @@
                 android:focusable="false"
                 android:hint="@string/serach"
                 android:background="@drawable/selector_search"
-                android:drawableLeft="@drawable/ic_search_black_24dp"/>
+                android:drawableLeft="@mipmap/search"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

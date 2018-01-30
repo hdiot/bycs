@@ -3,6 +3,7 @@ package com.leonidas.zt.bycs.index.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ import static android.support.v4.content.ContextCompat.startActivity;
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHolder> {
+public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "RcvShopAdapter";
     private Context mContext;
     private List<Shop> mShops;
@@ -78,7 +79,7 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
     }
 
     @Override
-    public XRecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: ");
         View view;
         mContext = parent.getContext();
@@ -98,7 +99,7 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(XRecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         /* 根据ItemView 类型绑定数据 */
         if (holder instanceof FistViewHolder) {
             ((FistViewHolder) holder).item.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +154,7 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
                 mShops.size() + 1 : mShops.size();
     }
 
-    class ViewHolder extends XRecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgShopImg;
         TextView txtShopName;
         MaterialRatingBar ratingScore;
@@ -179,7 +180,7 @@ public class RcvShopAdapter extends XRecyclerView.Adapter<XRecyclerView.ViewHold
     /**
      * 第一个 Item View ，显示: 商家     加载更多 >
      */
-    class FistViewHolder extends XRecyclerView.ViewHolder {
+    class FistViewHolder extends RecyclerView.ViewHolder {
         View item;
 
         public FistViewHolder(View itemView) {

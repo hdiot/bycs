@@ -14,7 +14,7 @@
         app:title="商店名称"
         app:titleTextColor="@color/white"
         android:background="@drawable/mebee_shop_header_bg"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
+        app:navigationIcon="@mipmap/back">
 
     </android.support.v7.widget.Toolbar>
 
@@ -119,7 +119,7 @@
                 android:textColor="@color/white"
                 android:text="商家评价"
                 android:textSize="10sp"
-                android:drawableRight="@drawable/ic_navigate_next_black_24dp"/>
+                android:drawableRight="@mipmap/next_white"/>
         </LinearLayout>
     </LinearLayout>
 

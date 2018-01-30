@@ -1,5 +1,7 @@
 package com.leonidas.zt.bycs.index.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by mebee on 2018/1/12.
  * Version: V1.0
@@ -7,7 +9,7 @@ package com.leonidas.zt.bycs.index.bean;
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class Product {
+public class Product implements Serializable {
     /**
      * productId : 1515575599578
      * productName : 商品名称9

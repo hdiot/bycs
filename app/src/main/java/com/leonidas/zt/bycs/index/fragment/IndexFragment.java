@@ -3,12 +3,15 @@ package com.leonidas.zt.bycs.index.fragment;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
@@ -49,15 +52,17 @@ public class IndexFragment extends BaseFragment {
      */
     private void initRcvRcmShop() {
 
-        mRcvIndex.setAdapter(new RcvIndexAdapter());
+        final RcvIndexAdapter mRcvIndexAdapter = new RcvIndexAdapter();
+        mRcvIndex.setAdapter(mRcvIndexAdapter);
         mRcvIndex.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRcvIndex.setLoadingMoreEnabled(false);
+        mRcvIndex.setLoadingMoreEnabled(true);
+        mRcvIndex.setLoadingMoreProgressStyle(ProgressStyle.BallScaleRipple);
         mRcvIndex.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 Log.d(TAG, "onRefresh: ");
                 // 网络请求
-
+                
                 // 更新数据
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -70,10 +75,18 @@ public class IndexFragment extends BaseFragment {
 
             @Override
             public void onLoadMore() {
-                // 网络请求
 
-                // 更新数据
+                final Boolean haveMore = mRcvIndexAdapter.loadMore();
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRcvIndex.loadMoreComplete();
+                        if (!haveMore) {
+                            mRcvIndex.setNoMore(true);
+                        }
+                    }
+                },2000);
             }
         });
     }

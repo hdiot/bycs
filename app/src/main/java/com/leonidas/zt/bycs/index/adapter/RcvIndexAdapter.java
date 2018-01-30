@@ -12,12 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.bean.Category;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.ProductCategories;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
@@ -26,8 +23,6 @@ import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -44,6 +39,7 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final String TAG = "RcvIndexAdapter";
     private RcvShopAdapter mShopsAdapter = new RcvShopAdapter(null);
     private RcvSortAdapter mCategoryAdapter = new RcvSortAdapter(null);
+    private Shops mShops;
 
     private enum ITEM_VIEW_TYPE {
         SORT,
@@ -51,6 +47,8 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private Context mContext;
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,7 +59,8 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view = layoutInflater.inflate(R.layout.mebee_rcv_view, parent, false);
             return new SortViewHolder(view);
         } else {
-            view = layoutInflater.inflate(R.layout.mebee_xrcv_view, parent, false);
+            //view = layoutInflater.inflate(R.layout.mebee_xrcv_view, parent, false);
+            view = layoutInflater.inflate(R.layout.mebee_rcv_view, parent, false);
             return new ShopsViewHolder(view);
         }
     }
@@ -86,28 +85,14 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .setAdapter(mShopsAdapter);
             ((ShopsViewHolder) holder).xrcvShops
                     .setLayoutManager(new LinearLayoutManager(mContext));
-            ((ShopsViewHolder) holder).xrcvShops.setPullRefreshEnabled(false);
-            ((ShopsViewHolder) holder).xrcvShops.setLoadingMoreEnabled(false);
-
-            ((ShopsViewHolder) holder).xrcvShops
-                    .setLoadingListener(new XRecyclerView.LoadingListener() {
-                        @Override
-                        public void onRefresh() {
-
-                        }
-
-                        @Override
-                        public void onLoadMore() {
-
-                        }
-                    });
-
-            getShopsData("1", "15");
+            //((ShopsViewHolder) holder).xrcvShops.setPullRefreshEnabled(false);
+            //((ShopsViewHolder) holder).xrcvShops.setLoadingMoreEnabled(false);
+            getShopsData(1, 10);
 
         }
     }
 
-    private void getShopsData(String pageNum, String size) {
+    private void getShopsData(int pageNum, int size) {
         String params = formParams(pageNum, size);
         Log.d(TAG, "getShopsData: " + params);
         OkHttpHelper.getInstance().
@@ -118,16 +103,15 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             public void OnSuccess(Response response,
                                                   ResMessage<Data<Shops>> dataResMessage) {
                                 if (dataResMessage.getCode() == 1) {
-                                    Log.d(TAG, "OnSuccess: " + dataResMessage
-                                                    .getData()
-                                                    .getShops()
+
+                                    mShops = dataResMessage
+                                            .getData()
+                                            .getShops();
+                                    Log.d(TAG, "OnSuccess: " + mShops
                                                     .getList()
                                                     .get(0)
                                                     .toString());
-                                    mShopsAdapter.loadMore(dataResMessage
-                                            .getData()
-                                            .getShops()
-                                            .getList());
+                                    mShopsAdapter.loadMore(mShops.getList());
                                 } else {
 
                                 }
@@ -157,6 +141,16 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 Log.d(TAG, "onBzError: " + code + hint + data);
                             }
                         });
+    }
+
+    public boolean loadMore(){
+        if (!mShops.isIsLastPage()){
+            getShopsData(mShops.getPageNum()+1,10);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     private void getSortData() {
@@ -210,17 +204,18 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    class ShopsViewHolder extends XRecyclerView.ViewHolder {
+    class ShopsViewHolder extends RecyclerView.ViewHolder {
 
-        XRecyclerView xrcvShops;
+        //XRecyclerView xrcvShops;
+        RecyclerView xrcvShops;
 
         public ShopsViewHolder(View itemView) {
             super(itemView);
-            xrcvShops = itemView.findViewById(R.id.xrcv_index_shops);
+            xrcvShops = itemView.findViewById(R.id.rcv_index_sort);
         }
     }
 
-    private String formParams(String pageNum, String size) {
+    private String formParams(int pageNum, int size) {
         return "?isRecom=" + true + "&pageNum=" + pageNum + "&pageSize=" + size;
     }
 
