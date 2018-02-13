@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="90dp"
     android:orientation="horizontal"
-    android:background="@drawable/selector_item_bg_withe_gray">
+    android:background="?android:attr/selectableItemBackground">
     <ImageView
+        android:padding="3dp"
         android:id="@+id/img_shop"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -92,7 +93,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#bababa" />
+            android:background="@color/lighter_gray" />
 
     </LinearLayout>
 

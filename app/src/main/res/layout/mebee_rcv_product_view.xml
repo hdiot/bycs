@@ -6,7 +6,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:gravity="top"
-    android:background="@drawable/selector_item_bg_withe_gray"
+    android:background="@drawable/mebee_withe2gray_selector"
     android:orientation="horizontal">
 
     <ImageView
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@color/lighter_gray"/>
     </LinearLayout>
 
 </LinearLayout>

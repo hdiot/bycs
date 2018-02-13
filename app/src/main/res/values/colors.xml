@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffff</color>
     <color name="brown">#5d4844</color>
+    <color name="lighter_gray">#ddd</color>
+    <color name="foreground">#ffefefef</color>
+    <color name="apha_50_white">#ffffff</color>
 </resources>

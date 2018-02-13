@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mebee_select_item_ripple_bg"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/img_bar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/evaluation"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/txt_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_bar"
+        android:layout_centerInParent="true"
+        android:text="待评价"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/num_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:maxLines="1"
+        android:layout_alignEnd="@+id/img_bar"
+        android:layout_alignTop="@+id/img_bar"
+        android:layout_marginRight="-10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/mebee_badge_bg"
+        android:padding="3dp"
+        android:text="99+" />
+</RelativeLayout>

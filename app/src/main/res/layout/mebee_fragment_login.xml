@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <com.leonidas.zt.bycs.user.ui.LoginBar
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.leonidas.zt.bycs.user.ui.LoginBar>
+
+    <TextView
+        android:id="@+id/txt_introduction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="15dp"
+        android:text="温馨提示：未注册便易商城的手机号码，登录时自动注册，并且代表你已同意《XXXXXXXX协议》"/>
+
+    <Button
+        android:id="@+id/btn_2login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:text="登录"/>
+
+</LinearLayout>

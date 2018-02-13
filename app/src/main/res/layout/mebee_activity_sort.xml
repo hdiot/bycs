@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.leonidas.zt.bycs.index.activity.SortActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_sort"
+            style="@style/Toolbar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:layout_collapseMode="parallax"
+            app:navigationIcon="@mipmap/back"
+            app:contentInsetStartWithNavigation="0dp">
+            <!--<TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="商品"
+                android:gravity="center"/>-->
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView_sort"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionSearch"
+                android:layout_marginRight="20dp"
+                app:goIcon="@mipmap/search"
+                app:searchIcon="@color/white"
+                android:background="@color/white"
+                app:queryHint="商品搜索" />
+
+            <!--<android.support.v7.widget.SearchView
+                android:id="@+id/searchView_sort"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:imeOptions="actionSearch"
+
+                app:defaultQueryHint="搜索"
+                app:queryHint="搜索"
+                app:submitBackground="@mipmap/search" />-->
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_sort"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:tabMode="scrollable"
+            android:background="@color/white"/>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrcv_sort"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+</android.support.design.widget.CoordinatorLayout>

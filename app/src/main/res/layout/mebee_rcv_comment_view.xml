@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="@drawable/selector_item_bg_withe_gray"
+    android:background="@drawable/mebee_withe2gray_selector"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,6 +51,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#bababa" />
+        android:background="@color/lighter_gray" />
 
 </LinearLayout>

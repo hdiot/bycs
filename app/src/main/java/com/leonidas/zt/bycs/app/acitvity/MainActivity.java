@@ -15,6 +15,7 @@ import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.adapter.MyPagerAdapter;
 import com.leonidas.zt.bycs.app.utils.BottomNavigationViewHelper;
 import com.leonidas.zt.bycs.index.fragment.IndexFragment;
+import com.leonidas.zt.bycs.user.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      * 初始化ViewPager
      */
     private void initViewPager() {
-
+getApplication();
         List<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(new IndexFragment());
         fragments.add(new IndexFragment());
         fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
+        fragments.add(new UserFragment());
 
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),fragments);
         mViewPager.setAdapter(myPagerAdapter);
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
      *初始化BottomNavigationView
      */
     private void initNavigation() {
-
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

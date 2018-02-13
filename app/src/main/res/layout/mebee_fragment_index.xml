@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:padding="8dp"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways|snap">
             <!-- 搜索框 EditText -->
             <EditText
                 android:id="@+id/edit_search"
@@ -37,8 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/index_toolbar"
-        android:layout_alignParentBottom="true"
-        android:descendantFocusability="blocksDescendants"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 </android.support.design.widget.CoordinatorLayout>

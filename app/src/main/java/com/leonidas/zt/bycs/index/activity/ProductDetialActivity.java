@@ -2,12 +2,14 @@ package com.leonidas.zt.bycs.index.activity;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +37,7 @@ public class ProductDetialActivity extends AppCompatActivity {
 
     private static final String TAG = "ProductDetialActivity";
     private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollToolbarLay;
     private ImageView mProductImg;
     private TextView mProductNameTxt;
     private TextView mProductPriceTxt;
@@ -51,7 +54,7 @@ public class ProductDetialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mebee_activity_product_detial);
         getInfoFromStart();
-        initView();
+        //initView();
     }
 
     private void getInfoFromStart() {
@@ -91,7 +94,7 @@ public class ProductDetialActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mToolbar = findViewById(R.id.toolbar_product_detail);
+        /*mToolbar = findViewById(R.id.toolbar_product_detail);
         mProductImg = findViewById(R.id.img_product);
         mProductNameTxt = findViewById(R.id.txt_product_name);
         mProductPriceTxt = findViewById(R.id.txt_product_price);
@@ -99,9 +102,10 @@ public class ProductDetialActivity extends AppCompatActivity {
         mProductLimitTxt = findViewById(R.id.txt_product_limit);
         mCommentsRCV = findViewById(R.id.rcv_comments);
         mAnimShopButton = findViewById(R.id.shop_button);
+        mCollToolbarLay = findViewById(R.id.coll_toolbar_layout);
         initToolbar();
         initProductData();
-        initComments();
+        initComments();*/
     }
 
     private void initComments() {
@@ -150,13 +154,21 @@ public class ProductDetialActivity extends AppCompatActivity {
         mProductPriceTxt.setText(String.valueOf(mProduct.getProductPrice()));
         mProductStockTxt.setText(String.valueOf(mProduct.getProductStock()));
         mProductLimitTxt.setText(String.valueOf(mProduct.getLimitNumber()));
+
     }
 
     private void initToolbar() {
         if (mIsNeedPadding) {
             mToolbar.setPadding(0,getStatusBarHeight(),0,0);
         }
-        mToolbar.inflateMenu(R.menu.product_detail_toolbar);
+        setSupportActionBar(mToolbar);//设置toolbar
+        mCollToolbarLay.setTitleEnabled(true);
+        mCollToolbarLay.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
+        mCollToolbarLay.setExpandedTitleGravity(Gravity.CENTER);////设置展开后标题的位置
+        mCollToolbarLay.setTitle("苍井空");//设置标题的名字
+        mCollToolbarLay.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
+        mCollToolbarLay.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
+        mToolbar.inflateMenu(R.menu.toolbar_basket_only);
     }
 
     @Override

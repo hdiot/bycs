@@ -1,9 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_mine"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:title="我的"
+        app:titleTextColor="@color/white">
 
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/layout_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/user"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="用户名" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/phone"
+                android:textColor="@color/white"
+                android:text="184****6450"/>
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/img_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/next_64_white"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_all_order"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/mebee_select_item_ripple_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="15sp"
+            android:text="我的订单"/>
+        <TextView
+            android:focusable="false"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:gravity="right"
+            android:text="全部订单"
+            android:drawableRight="@mipmap/next_black"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/mine_order_item">
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/wait4paying"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:src="@mipmap/wallet"
+            app:describe="待付款"
+            app:num="99+"/>
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/wait4grouping"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:src="@mipmap/team"
+            app:describe="待成团"
+            app:num="99+"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/mine_order_item">
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/wait4posting"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:src="@mipmap/delivery_truck"
+            app:describe="待发货"
+            app:num="99+"/>
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/wait4receiving"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:src="@mipmap/box"
+            app:describe="待收货"
+            app:num="99+"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/mine_order_item"
+        android:layout_marginBottom="0dp">
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/wait4evaluating"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:src="@mipmap/evaluation"
+            app:describe="待评价"
+            app:num="99+"/>
+
+        <com.leonidas.zt.bycs.user.ui.BadgeBar
+            android:id="@+id/post_addr"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:describe="收货地址"
+            app:src="@mipmap/house"
+            app:num=""/>
+    </LinearLayout>
 </LinearLayout>

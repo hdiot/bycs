@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
+    <application android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,7 +25,11 @@
         <activity android:name=".index.activity.SortActivity" />
         <activity android:name=".index.activity.ProductDetialActivity" />
         <activity android:name=".index.activity.ShopsActivity" />
-        <activity android:name=".index.activity.ShopActivity"></activity>
+        <activity android:name=".index.activity.ShopActivity" />
+        <activity android:name=".index.activity.ShopInfoActivity" />
+        <activity android:name=".index.activity.ShopCommentActivity" />
+        <activity android:name=".user.activity.OrdersActivity" />
+        <activity android:name=".user.activity.LoginActivity"></activity>
     </application>
 
 </manifest>

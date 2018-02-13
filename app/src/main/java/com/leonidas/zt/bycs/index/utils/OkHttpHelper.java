@@ -4,10 +4,10 @@ package com.leonidas.zt.bycs.index.utils;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.leonidas.zt.bycs.app.App;
 
 import java.io.IOException;
 import java.util.Map;
@@ -32,9 +32,9 @@ import okhttp3.Response;
  */
 public class OkHttpHelper {
     private static final String TAG = "OkHttpHelper";
+    private static final OkHttpHelper sInstance = null;
     private OkHttpClient mClient;
     private Handler mHandler;
-
     // private Gson mGson;
     public enum HttpMethodType {
         POST,
@@ -44,6 +44,7 @@ public class OkHttpHelper {
 
     private OkHttpHelper() {
         mClient = new OkHttpClient.Builder()
+                .cookieJar(CookieManager.getInstance(App.getContext()))
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -53,7 +54,14 @@ public class OkHttpHelper {
     }
 
     public static OkHttpHelper getInstance() {
-        return new OkHttpHelper();
+        if (sInstance == null){
+            synchronized (OkHttpHelper.class){
+                if (sInstance == null) {
+                    return new OkHttpHelper();
+                }
+            }
+        }
+        return sInstance;
     }
 
     public void doPost(String url, String json, BaseCallback callback) {
@@ -132,6 +140,7 @@ public class OkHttpHelper {
                         String hint = jsonObject.getString("hint");
                         String data = jsonObject.getString("data");
                         callbackBzError(callback, response, code, hint, data);
+                        return;
                     }
 
                     if (callback.mType == String.class) {

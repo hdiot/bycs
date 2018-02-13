@@ -16,6 +16,7 @@ import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.activity.SortActivity;
 import com.leonidas.zt.bycs.index.bean.Category;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class RcvSortAdapter extends RecyclerView.Adapter<RcvSortAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SortActivity.class);
                 intent.putExtra("categoryId",mCategories.get(position).getCategoryId());
+                intent.putExtra("sorts", (Serializable) mCategories);
                 mContext.startActivity(intent);
             }
         });

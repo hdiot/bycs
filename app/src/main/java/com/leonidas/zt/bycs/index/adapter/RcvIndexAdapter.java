@@ -2,6 +2,8 @@ package com.leonidas.zt.bycs.index.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -12,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.index.bean.Category;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.ProductCategories;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
@@ -23,6 +28,8 @@ import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -129,7 +136,6 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                             @Override
                             public void onFailure(Request request, IOException e) {
-                                Dialog dialog = new Dialog(mContext);
 
                             }
 

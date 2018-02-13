@@ -1,17 +1,19 @@
-package com.leonidas.zt.bycs.user;
+package com.leonidas.zt.bycs.user.fragment;
 
 import android.view.View;
 
+import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
 
 /**
- * Created by mebee on 2018/1/18.
+ * Created by mebee on 2018/2/2.
  * Version: V1.0
  * Description:
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class UserFragment extends BaseFragment {
+public class AllOrdersFragment extends BaseFragment {
+
     @Override
     public void initView(View view) {
 
@@ -19,6 +21,6 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public int getLayoutResource() {
-        return 0;
+        return R.layout.mebee_fragment_all_orders;
     }
 }

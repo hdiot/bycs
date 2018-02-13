@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.index.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -7,13 +8,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,10 +46,12 @@ public class ShopActivity extends AppCompatActivity {
     private TextView mDescriptionNoteTxt;
     private TextView mScoreTxt;
     private TabLayout mTab;
+    private LinearLayout mShopInfoLayout;
     private XRecyclerView mProductsXR;
     private String mShopId;
     private OkHttpHelper mHttpHelper;
     private RcvProcductAdapter mRcvProductAdapter = new RcvProcductAdapter(null);
+    private boolean isNeedPading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +70,26 @@ public class ShopActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+            isNeedPading = true;
         }
     }
 
     private void initView() {
         findView();
         initToolbar();
+        initShopLayout();
         initTab();
         initProductsXR();
+    }
+
+    private void initShopLayout() {
+        mShopInfoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShopActivity.this,ShopInfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initProductsXR() {
@@ -114,6 +129,7 @@ public class ShopActivity extends AppCompatActivity {
         mScoreTxt = findViewById(R.id.txt_score);
         mTab = findViewById(R.id.tab_shop);
         mProductsXR = findViewById(R.id.xrv_products);
+        mShopInfoLayout = findViewById(R.id.layout_shop_info);
     }
 
     private void initData(){
@@ -208,8 +224,10 @@ public class ShopActivity extends AppCompatActivity {
 
 
     private void initToolbar() {
-        mToolbar.setPadding(0,getStatusBarHeight(),0,0);
-        mToolbar.inflateMenu(R.menu.product_detail_toolbar);
+        if (isNeedPading) {
+            mToolbar.setPadding(0,getStatusBarHeight(),0,0);
+        }
+        mToolbar.inflateMenu(R.menu.toolbar_basket_only);
     }
 
     public int getStatusBarHeight() {
