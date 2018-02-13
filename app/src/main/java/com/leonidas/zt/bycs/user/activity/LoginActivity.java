@@ -28,7 +28,6 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-
     private Toolbar mToolbar;
     private LoginBar mLoginBar;
     private Button m2LoginBtn;
