@@ -38,6 +38,8 @@ public class OkHttpHelper {
     // private Gson mGson;
     public enum HttpMethodType {
         POST,
+        PUT,
+        DELETE,
         GET
     }
 
@@ -84,17 +86,35 @@ public class OkHttpHelper {
         doRequest(request, callback);
     }
 
+    public void doPut(){
+
+    }
+
+    public void doDelete(){
+
+    }
+
+
     private Request buildRequest(String url, String json, HttpMethodType methodType) {
         Request.Builder builder = new Request.Builder();
         builder.url(url);
-        if (methodType == HttpMethodType.GET) {
-            builder.get();
-        } else if (methodType == HttpMethodType.POST) {
-            MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-            RequestBody body = RequestBody.create(JSON, json);
 
-            builder.post(body);
+        switch (methodType) {
+            case GET:
+                builder.get();
+                break;
+            case POST:
+                MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+                RequestBody body = RequestBody.create(JSON, json);
+
+                builder.post(body);
+                break;
+            case DELETE:
+                break;
+            case PUT:
+                break;
         }
+
         return builder.build();
     }
 
@@ -105,15 +125,25 @@ public class OkHttpHelper {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             fbuilder.add(entry.getKey(), entry.getValue());
         }
-        if (methodType == HttpMethodType.GET) {
-            rbuilder.put(fbuilder.build())
-                    .get();
-            return rbuilder.build();
 
-        } else {
-            rbuilder.post(fbuilder.build());
-            return rbuilder.build();
+        switch (methodType) {
+            case POST:
+                rbuilder.post(fbuilder.build());
+                break;
+            case GET:
+                rbuilder.put(fbuilder.build())
+                        .get();
+                break;
+            case PUT:
+                rbuilder.put(fbuilder.build());
+                break;
+            case DELETE:
+                break;
+            default:
+
         }
+
+        return rbuilder.build();
     }
 
     private void doRequest(final Request request, final BaseCallback callback) {

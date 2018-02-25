@@ -9,13 +9,13 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"/>
 
-    <com.leonidas.zt.bycs.user.ui.LoginBar
+    <com.leonidas.zt.bycs.userInfo.ui.LoginBar
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.leonidas.zt.bycs.user.ui.LoginBar>
+    </com.leonidas.zt.bycs.userInfo.ui.LoginBar>
 
     <TextView
         android:id="@+id/txt_introduction"
