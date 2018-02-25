@@ -14,6 +14,8 @@ import android.view.Window;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.adapter.MyPagerAdapter;
 import com.leonidas.zt.bycs.app.utils.BottomNavigationViewHelper;
+import com.leonidas.zt.bycs.basket.fragment.BasketFragment;
+import com.leonidas.zt.bycs.group.fragment.GroupPurchaseFragment;
 import com.leonidas.zt.bycs.index.fragment.IndexFragment;
 import com.leonidas.zt.bycs.user.fragment.UserFragment;
 
@@ -63,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 getApplication();
         List<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
-        fragments.add(new IndexFragment());
+        fragments.add(new GroupPurchaseFragment());
+        fragments.add(new BasketFragment());
         fragments.add(new UserFragment());
 
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),fragments);

@@ -29,7 +29,8 @@
         <activity android:name=".index.activity.ShopInfoActivity" />
         <activity android:name=".index.activity.ShopCommentActivity" />
         <activity android:name=".user.activity.OrdersActivity" />
-        <activity android:name=".user.activity.LoginActivity"></activity>
+        <activity android:name=".user.activity.LoginActivity"/>
+        <activity android:name=".group.activity.GroupPurchaseGoodsDetailActivity" />
     </application>
 
 </manifest>

@@ -46,7 +46,7 @@
 
                 app:defaultQueryHint="搜索"
                 app:queryHint="搜索"
-                app:submitBackground="@mipmap/search" />-->
+                app:submitBackground="@mipmap/leonidas_search" />-->
         </android.support.v7.widget.Toolbar>
 
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 上 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal">
+            <!-- 后退 -->
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/leonidas_back" />
+
+            <!-- 搜索框 -->
+            <EditText
+                android:id="@+id/et_search_content"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_search"
+                android:drawableLeft="@drawable/leonidas_search"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:hint="输入搜索信息"
+                android:textSize="13sp" />
+
+            <!-- 搜索ImageView -->
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:src="@drawable/leonidas_search_button" />
+        </LinearLayout>
+
+        <!-- 热搜 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:text="  热门搜索"
+            android:drawableLeft="@drawable/leonidas_hot_search" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="0.1dp"
+            android:background="#FFEDEDED"/>
+
+    </LinearLayout>
+
+    <!-- 下 -->
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/tfl_hot_search"
+        zhy:max_select="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp" >
+    </com.zhy.view.flowlayout.TagFlowLayout>
+
+
+</LinearLayout>

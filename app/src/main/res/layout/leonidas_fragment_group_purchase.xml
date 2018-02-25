@@ -5,37 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.leonidas.zt.bycs.index.fragment.IndexFragment">
+    tools:context="com.leonidas.zt.bycs.group.fragment.GroupPurchaseFragment">
 
+    <!-- 顶部toolbar -->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/index_toolbar"
+            android:id="@+id/tb_group_purchase"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:padding="8dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            app:layout_scrollFlags="scroll|enterAlways">
             <!-- 搜索框 EditText -->
-            <EditText
-                android:id="@+id/edit_search"
+           <EditText
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:focusable="false"
                 android:hint="@string/serach"
                 android:background="@drawable/selector_search"
-                android:drawableLeft="@mipmap/search"/>
+                android:drawableLeft="@drawable/ic_search_black_24dp"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <!-- 商家列表 -->
+    <!-- 拼购商品列表 -->
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/rcv_index"
+        android:id="@+id/rv_group_purchase"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/index_toolbar"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_group_purchase"
+        android:layout_alignParentBottom="true"
+        android:descendantFocusability="blocksDescendants"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 </android.support.design.widget.CoordinatorLayout>
