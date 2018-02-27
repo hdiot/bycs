@@ -20,5 +20,7 @@ public class Api {
     //查询拼购商品的详情
     public static final String QueryGroupPurchaseGoodsDetail = Base + "market/front/groupProduct";
     //获取用户购物车数据
-    public static final String QueryUserCart= Base + "market/cartItem";
+    public static final String QueryUserCart = Base + "market/cartItem";
+    //添加（拼购）商品到购物车中
+    public static final String AddPgGoodsToCart = Base + "market/pgCartItem";
 }

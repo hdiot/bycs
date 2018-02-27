@@ -4,25 +4,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.group.activity.GroupPurchaseGoodsDetailActivity;
 import com.leonidas.zt.bycs.group.utils.Api;
+import com.leonidas.zt.bycs.group.utils.ApiParamKey;
 import com.leonidas.zt.bycs.group.vo.GroupPurchaseGoodsListVO;
 import com.mcxtzhang.lib.AnimShopButton;
+import com.mcxtzhang.lib.IOnAddDelListener;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /**
  * Created by 华强 on 2018/1/24.
  * Version: V1.0
- * Description:
+ * Description: 拼购商品列表适配器
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
@@ -59,7 +69,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
         return DataList.size();
     }
 
-    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, IOnAddDelListener{
         private ImageView ivGoods; //商品(默认)图片
         private TextView tvGoodsName; //商品名称
         private TextView tvGoodsStock; //商品数量
@@ -68,6 +78,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
         private TextView tvGoodsOrgPrice; //商品原价
         private AnimShopButton btAddCart; //加入购物车
         private GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data;
+        private boolean isModifyCount; //是否正在进行修改购物车中此商品的数量操作（网络请求）
 
         public Holder(View itemView) {
             super(itemView);
@@ -79,6 +90,8 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
             tvGoodsOrgPrice = itemView.findViewById(R.id.tv_goods_org_price);
             btAddCart = itemView.findViewById(R.id.bt_add_cart);
             tvGoodsOrgPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            btAddCart.setOnAddDelListener(this);
+            btAddCart.setMaxCount(10); //设置最大购买份数 --- 当前为最多购买10份
         }
 
         public void setData(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data) {
@@ -93,14 +106,140 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * 判断当前是否还在进行网络操作（防止用户连续点击）
+         * @return 是否正在进行网络操作
+         */
+        public boolean isModifyCount() {
+            return isModifyCount;
+        }
+
         @Override
         public void onClick(View view) {
+            //进入商品详情页面
             GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data
                     = (GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean) view.getTag();
             Intent intent = new Intent(mContext, GroupPurchaseGoodsDetailActivity.class);
             intent.putExtra(ProductId, data.getProductId());
             mContext.startActivity(intent);
         }
+
+        /**
+         * 添加商品数量成功
+         * @param count 当前商品总数
+         */
+        @Override
+        public void onAddSuccess(int count) {
+            if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
+                btAddCart.setCount((count - 1));
+                Toast.makeText(mContext, "正在添加，请稍后！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
+            Log.e("productedid", data.getProductId() + "");
+            addGoodsToCart(data.getProductId(),count);
+        }
+
+        /**
+         * 添加商品数量失败
+         * @param count 当前商品总数
+         * @param failType 失败类型
+         */
+        @Override
+        public void onAddFailed(int count, FailType failType) {
+            /*Toast.makeText(mContext, "count == " + count
+                    + "/n"
+                    + "FailType == " + failType, Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(mContext, "已达到限制购买数量！", Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * 删除商品数量成功
+         * @param count 当前商品总数
+         */
+        @Override
+        public void onDelSuccess(int count) {
+            if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
+                btAddCart.setCount((count - 1));
+                Toast.makeText(mContext, "正在消减，请稍后！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * 删除商品数量失败
+         * @param count 当前商品总数
+         * @param failType 失败类型
+         */
+        @Override
+        public void onDelFaild(int count, FailType failType) {
+            /*Toast.makeText(mContext, "count == " + count
+                    + "/n"
+                    + "FailType == " + failType, Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(mContext, "低于最低购买数量！", Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * 添加商品到购物车（修改当前购物车中此商品的数量）
+         * @param productId 商品ID
+         * @param count 商品数量
+         */
+        private void addGoodsToCart(long productId, int count) {
+            int UserId = 1;
+            JSONObject mJo = new JSONObject();
+            mJo.put(ApiParamKey.UserId, UserId);
+            mJo.put(ApiParamKey.ProductId, productId);
+            mJo.put(ApiParamKey.ProductQuantity, count);
+
+            OkHttpUtils.postString().url(Api.AddPgGoodsToCart).content(mJo.toJSONString())
+                    .mediaType(MediaType.parse("application/json; charset=utf-8")).build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            Log.e(TAG, e.toString());
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.e(TAG, response);
+                            JSONObject mJo = JSONObject.parseObject(response);
+
+                            if (mJo == null) {//返回数据出错
+                                Toast.makeText(mContext, "服务器错误！", Toast.LENGTH_SHORT).show();
+                                btAddCart.setCount((btAddCart.getCount() - 1)); //添加失败则数量恢复
+                                isModifyCount = false;
+                                return;
+                            }
+
+                            Integer ResultCoud = mJo.getInteger(ApiParamKey.ResultCode);
+
+                            if (ResultCoud == 1) {//添加成功
+                                isModifyCount = false;
+                                return;
+                            }
+
+                            //添加出错
+                            btAddCart.setCount((btAddCart.getCount() - 1));
+                            switch (ResultCoud) {
+                                case 403:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 408:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 444:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(mContext, "未知错误！", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            isModifyCount = false;
+                        }
+                    });
+        }
+
     }
 
 }

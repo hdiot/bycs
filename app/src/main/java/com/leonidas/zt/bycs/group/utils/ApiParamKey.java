@@ -23,4 +23,9 @@ public class ApiParamKey {
     public static final String UserId = "userId";
     //分类
     public static final String Category = "category";
+    //商品数量
+    public static final String ProductQuantity = "productQuantity";
+    //提示
+    public static final String Hint = "hint";
 }
+
