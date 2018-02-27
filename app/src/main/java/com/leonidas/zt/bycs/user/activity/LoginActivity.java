@@ -14,8 +14,9 @@ import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
 import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
-import com.leonidas.zt.bycs.user.bean.User;
+import com.leonidas.zt.bycs.user.bean.UserInfo;
 import com.leonidas.zt.bycs.user.ui.LoginBar;
+import com.leonidas.zt.bycs.user.User;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,18 +74,19 @@ public class LoginActivity extends AppCompatActivity {
         params.put("chose", 0);*/
 
         WeakHashMap<String, Object> params = new WeakHashMap<>();
-        params.put("userName", "zhang");
+        params.put("userName", "lisi");
         params.put("userPassword", "a123456");
         params.put("chose", 1);
 
         mOkHttpHelper.doPost(Constant.API.login,
                 JSON.toJSON(params).toString(),
-                new BaseCallback<ResMessage<User>>() {
+                new BaseCallback<ResMessage<UserInfo>>() {
 
 
                     @Override
-                    public void OnSuccess(Response response, ResMessage<User> userResMessage) {
+                    public void OnSuccess(Response response, ResMessage<UserInfo> userResMessage) {
                         Log.d(TAG, "OnSuccess: " + userResMessage.getData().getUserName());
+                        User.getInstance().setmUserInfo(userResMessage.getData());
                         test();
                     }
 
