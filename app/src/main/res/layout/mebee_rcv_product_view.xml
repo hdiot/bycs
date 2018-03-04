@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusableInTouchMode="false"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:gravity="top"
-    android:background="@drawable/mebee_withe2gray_selector"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:gravity="center"
+    android:background="@drawable/mebee_select_item_ripple_bg"
     android:orientation="horizontal">
 
     <ImageView
@@ -15,91 +16,98 @@
         android:layout_height="80dp"
         android:src="@mipmap/ic_launcher"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/txt_product_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="章鱼屋"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/txt_product_stock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="剩余xxx份"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"/>
-            <TextView
-                android:id="@+id/txt_product_limit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="每份xxx克"/>
-        </LinearLayout>
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:minHeight="90dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:text="章鱼屋"/>
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/txt_product_price"
+                    android:id="@+id/txt_product_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
-                    android:text="拼购价￥xxx"/>
+                    android:text="剩余xxx份"/>
                 <TextView
-                    android:id="@+id/txt_product_org_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:visibility="gone"
-                    android:text="￥xxx"/>
+                    android:text="/"/>
+                <TextView
+                    android:id="@+id/txt_product_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="每份xxx克"/>
             </LinearLayout>
 
-            <com.mcxtzhang.lib.AnimShopButton
-                android:id="@+id/shop_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:addEnableBgColor="#3190E8"
-                app:addEnableFgColor="#ffffff"
-                app:hintBgColor="#3190E8"
-                app:hintBgRoundValue="15dp"
-                app:hintFgColor="#ffffff"
-                app:maxCount="99"/>
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txt_product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:text="拼购价￥xxx"/>
+                    <TextView
+                        android:id="@+id/txt_product_org_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:visibility="gone"
+                        android:text="￥xxx"/>
+                </LinearLayout>
 
+                <com.mcxtzhang.lib.AnimShopButton
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/shop_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:addEnableBgColor="#3190E8"
+                    app:addEnableFgColor="#ffffff"
+                    app:hintBgColor="#3190E8"
+                    app:hintBgRoundValue="15dp"
+                    app:hintFgColor="#ffffff"
+                    app:maxCount="99"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_product_node"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:visibility="gone"
+                android:text="备注"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/txt_product_node"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="gone"
-            android:text="备注"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/lighter_gray"/>
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorBg"/>
+    </RelativeLayout>
 
 </LinearLayout>

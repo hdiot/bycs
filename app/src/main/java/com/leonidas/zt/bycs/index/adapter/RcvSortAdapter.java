@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.activity.SortActivity;
 import com.leonidas.zt.bycs.index.bean.Category;
@@ -50,15 +53,18 @@ public class RcvSortAdapter extends RecyclerView.Adapter<RcvSortAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.txt.setText(mCategories.get(position).getCategoryName());
-        Glide.with(mContext)
+        GlideApp.with(mContext)
                 .load(Constant.API.images + mCategories.get(position).getCategoryIcon())
+                .error(R.mipmap.mebee_load_fail)
+                .transform(new RoundedCorners(20))
+                .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SortActivity.class);
-                intent.putExtra("categoryId",mCategories.get(position).getCategoryId());
                 intent.putExtra("sorts", (Serializable) mCategories);
+                intent.putExtra("position",position);
                 mContext.startActivity(intent);
             }
         });

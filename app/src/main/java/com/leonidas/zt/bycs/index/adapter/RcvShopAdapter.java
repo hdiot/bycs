@@ -12,13 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.TransitionOptions;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.activity.ShopActivity;
+import com.leonidas.zt.bycs.index.activity.ShopActivityNew;
 import com.leonidas.zt.bycs.index.activity.ShopsActivity;
 import com.leonidas.zt.bycs.index.bean.Shop;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +103,6 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .from(parent.getContext())
                 .inflate(R.layout.mebee_rcv_rcm_shops_view, parent, false);
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -118,25 +125,31 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ViewHolder) holder).txtPostMinCons.setText("￥" + mShops.get(position).getLimitPrice() + "起送");
             ((ViewHolder) holder).txtSoleNum.setText("销量" + mShops.get(position).getShopSale() + "单");
             ((ViewHolder) holder).txtScore.setText("" + mShops.get(position).getShopGrade());
-            ((ViewHolder) holder).ratingScore.setProgress(mShops.get(position).getShopGrade() * 100);
+            ((ViewHolder) holder).ratingScore.setRating(mShops.get(position).getShopGrade());
             ((ViewHolder) holder).txtPostFee.setText("配送费￥" + mShops.get(position).getSendPrice());
             ((ViewHolder) holder).txtShopName.setText(mShops.get(position).getShopName());
-            Glide.with(mContext)
+
+            GlideApp.with(mContext)
                     .load(Constant.API.images + mShops.get(position).getShopPictures().get(0).getPicturePath())
+                    .error(R.mipmap.mebee_iamge_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
                     .into(((ViewHolder) holder).imgShopImg);
             //((ViewHolder) holder).imgShopImg.setText(mShops.get(position).getShopSale());
 
             final int finalPosition = position;
+
             /* 设置 ItemVIew 点击监听 */
-            ((ViewHolder) holder).item.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext,ShopActivity.class);
+                    Intent intent = new Intent(mContext,ShopActivityNew.class);
                     intent.putExtra("shopId",
                             String.valueOf(mShops
                                     .get(finalPosition)
                                     .getShopId()));
-                    /* 启动 商家详情 Activity */
+                    intent.putExtra("shop", (Serializable) mShops.get(finalPosition));
+                     /*启动 商家详情 Activity */
                     startActivity(mContext,
                             intent,null);
                     if (mMnItemClickListener != null) {
@@ -162,7 +175,6 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView txtSoleNum;
         TextView txtPostMinCons;
         TextView txtPostFee;
-        View item;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -173,7 +185,6 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             txtScore = itemView.findViewById(R.id.txt_score);
             txtSoleNum = itemView.findViewById(R.id.txt_sole_num);
             txtPostMinCons = itemView.findViewById(R.id.txt_post_min_consume);
-            item = itemView;
         }
     }
 
@@ -193,12 +204,15 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * 下拉刷新时调用，清空原有数据，重新加载
      * @param shops
      */
-    public void refresh(List<Shop> shops) {
+    public boolean refresh(List<Shop> shops) {
         if (shops != null) {
             forbidNull();
             mShops.clear();
             loadMore(shops);
+            return true;
         }
+
+        return false;
     }
 
     /**

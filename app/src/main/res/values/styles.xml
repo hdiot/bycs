@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MebeeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorBg</item>
+        <item name="colorPrimaryDark">#3190E8</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="mine_order_item">
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_width">match_parent</item>

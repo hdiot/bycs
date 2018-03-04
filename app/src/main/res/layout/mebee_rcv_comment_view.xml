@@ -3,16 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:background="@drawable/mebee_withe2gray_selector"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/mebee_select_item_ripple_bg"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/comment_user_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -27,10 +32,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/comment_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="匿名用户"/>
                 <TextView
+                    android:id="@+id/comment_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -39,18 +46,15 @@
             </LinearLayout>
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/comment_star_grade"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp" />
+                android:layout_height="15dp"
+                android:isIndicator="true" />
             <TextView
+                android:id="@+id/comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="菜很新鲜，卖家送货速度非常快"/>
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lighter_gray" />
-
 </LinearLayout>

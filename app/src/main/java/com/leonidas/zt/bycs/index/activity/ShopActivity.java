@@ -50,7 +50,7 @@ public class ShopActivity extends AppCompatActivity {
     private XRecyclerView mProductsXR;
     private String mShopId;
     private OkHttpHelper mHttpHelper;
-    private RcvProcductAdapter mRcvProductAdapter = new RcvProcductAdapter(null);
+    private RcvProcductAdapter mRcvProductAdapter = new RcvProcductAdapter(null, "");
     private boolean isNeedPading = false;
 
     @Override

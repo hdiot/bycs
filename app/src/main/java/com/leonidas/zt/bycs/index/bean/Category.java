@@ -17,15 +17,15 @@ public class Category implements Serializable{
      * categoryIcon : pc1.png
      */
 
-    private long categoryId;
+    private String categoryId;
     private String categoryName;
     private String categoryIcon;
 
-    public long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(long categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

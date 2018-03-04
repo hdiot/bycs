@@ -29,6 +29,8 @@ import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 import com.mcxtzhang.lib.AnimShopButton;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -47,18 +49,21 @@ public class ProductDetialActivity extends AppCompatActivity {
     private RecyclerView mCommentsRCV;
     private Product mProduct;
     private boolean mIsNeedPadding = false;
+    private RcvCommentAdapter mCommentAdapter;
+    private String mShopId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setStatusBar();
+        //setStatusBar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mebee_activity_product_detial);
         getInfoFromStart();
-        //initView();
+        initView();
     }
 
     private void getInfoFromStart() {
         mProduct = (Product) getIntent().getSerializableExtra("productInfo");
+        mShopId = getIntent().getStringExtra("shopId");
         if (mProduct == null) {
             throw new RuntimeException("Product can not be null");
         }
@@ -94,7 +99,7 @@ public class ProductDetialActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        /*mToolbar = findViewById(R.id.toolbar_product_detail);
+        mToolbar = findViewById(R.id.toolbar_product_detail);
         mProductImg = findViewById(R.id.img_product);
         mProductNameTxt = findViewById(R.id.txt_product_name);
         mProductPriceTxt = findViewById(R.id.txt_product_price);
@@ -105,22 +110,26 @@ public class ProductDetialActivity extends AppCompatActivity {
         mCollToolbarLay = findViewById(R.id.coll_toolbar_layout);
         initToolbar();
         initProductData();
-        initComments();*/
+        initComments();
     }
 
     private void initComments() {
+        mCommentAdapter = new RcvCommentAdapter(null);
         mCommentsRCV.setNestedScrollingEnabled(false);
-        mCommentsRCV.setAdapter(new RcvCommentAdapter());
+        mCommentsRCV.setAdapter(mCommentAdapter);
         mCommentsRCV.setLayoutManager(new LinearLayoutManager(this));
+        getCommentsData();
     }
 
     private void getCommentsData(){
+        Map<String, String> params = new WeakHashMap<>(1);
+        params.put("shopId",mShopId);
         OkHttpHelper.getInstance()
-                .doGet(Constant.API.getComment, null, new BaseCallback<ResMessage<Data<ShopComments>>>() {
+                .doGet(Constant.API.getComment, params, new BaseCallback<ResMessage<Data<ShopComments>>>() {
 
                     @Override
                     public void OnSuccess(Response response, ResMessage<Data<ShopComments>> dataResMessage) {
-
+                        mCommentAdapter.loadMore(dataResMessage.getData().getShopComments().getList());
                     }
 
                     @Override
@@ -149,7 +158,8 @@ public class ProductDetialActivity extends AppCompatActivity {
         if (mProduct == null)
             return;
         Glide.with(this)
-                .load(Constant.API.images + mProduct.getProductIcon());
+                .load(Constant.API.images + mProduct.getProductIcon())
+                .into(mProductImg);
         mProductNameTxt.setText(mProduct.getProductName());
         mProductPriceTxt.setText(String.valueOf(mProduct.getProductPrice()));
         mProductStockTxt.setText(String.valueOf(mProduct.getProductStock()));
@@ -159,13 +169,13 @@ public class ProductDetialActivity extends AppCompatActivity {
 
     private void initToolbar() {
         if (mIsNeedPadding) {
-            mToolbar.setPadding(0,getStatusBarHeight(),0,0);
+            //mToolbar.setPadding(0,getStatusBarHeight(),0,0);
         }
         setSupportActionBar(mToolbar);//设置toolbar
         mCollToolbarLay.setTitleEnabled(true);
         mCollToolbarLay.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
         mCollToolbarLay.setExpandedTitleGravity(Gravity.CENTER);////设置展开后标题的位置
-        mCollToolbarLay.setTitle("苍井空");//设置标题的名字
+        mCollToolbarLay.setTitle("标题");//设置标题的名字
         mCollToolbarLay.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
         mCollToolbarLay.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
         mToolbar.inflateMenu(R.menu.toolbar_basket_only);
@@ -176,4 +186,5 @@ public class ProductDetialActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
 }

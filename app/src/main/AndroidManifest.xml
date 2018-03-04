@@ -3,14 +3,17 @@
     package="com.leonidas.zt.bycs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application android:name=".app.App"
+    <application
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/NoTitleTheme">
         <activity android:name=".StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,14 +26,15 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".index.activity.SearchActivity" />
         <activity android:name=".index.activity.SortActivity" />
-        <activity android:name=".index.activity.ProductDetialActivity" />
+        <activity android:name=".index.activity.ProductDetialActivity" android:theme="@style/MebeeTheme" />
         <activity android:name=".index.activity.ShopsActivity" />
         <activity android:name=".index.activity.ShopActivity" />
         <activity android:name=".index.activity.ShopInfoActivity" />
         <activity android:name=".index.activity.ShopCommentActivity" />
         <activity android:name=".user.activity.OrdersActivity" />
-        <activity android:name=".user.activity.LoginActivity"/>
+        <activity android:name=".user.activity.LoginActivity" />
         <activity android:name=".group.activity.GroupPurchaseGoodsDetailActivity" />
+        <activity android:name=".index.activity.ShopActivityNew"></activity>
     </application>
 
 </manifest>

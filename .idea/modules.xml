@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bycs.iml" filepath="$PROJECT_DIR$/bycs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bycs.iml" filepath="$PROJECT_DIR$/.idea/bycs.iml" />
+      <module fileurl="file://G:\Android\Backup\bycs\bycs.iml" filepath="G:\Android\Backup\bycs\bycs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coordinatorbehavior/coordinatorbehavior.iml" filepath="$PROJECT_DIR$/coordinatorbehavior/coordinatorbehavior.iml" />
     </modules>
   </component>
 </project>

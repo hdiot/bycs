@@ -8,6 +8,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.leonidas.zt.bycs.app.App;
+import com.leonidas.zt.bycs.app.ui.loader.MebeeLoader;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class OkHttpHelper {
     private static final OkHttpHelper sInstance = null;
     private OkHttpClient mClient;
     private Handler mHandler;
+
     // private Gson mGson;
     public enum HttpMethodType {
         POST,
@@ -56,8 +58,8 @@ public class OkHttpHelper {
     }
 
     public static OkHttpHelper getInstance() {
-        if (sInstance == null){
-            synchronized (OkHttpHelper.class){
+        if (sInstance == null) {
+            synchronized (OkHttpHelper.class) {
                 if (sInstance == null) {
                     return new OkHttpHelper();
                 }
@@ -72,7 +74,7 @@ public class OkHttpHelper {
     }
 
     public void doPost(String url, Map<String, String> param, BaseCallback callback) {
-        Request request = buildRequest(url, param,HttpMethodType.POST);
+        Request request = buildRequest(url, param, HttpMethodType.POST);
         doRequest(request, callback);
     }
 
@@ -81,16 +83,16 @@ public class OkHttpHelper {
         doRequest(request, callback);
     }
 
-    public void doGet(String url, Map<String,String> params, BaseCallback callback){
-        Request request = buildRequest(url, params,HttpMethodType.GET);
+    public void doGet(String url, Map<String, String> params, BaseCallback callback) {
+        Request request = buildRequest(url, params, HttpMethodType.GET);
         doRequest(request, callback);
     }
 
-    public void doPut(){
+    public void doPut() {
 
     }
 
-    public void doDelete(){
+    public void doDelete() {
 
     }
 
@@ -118,11 +120,12 @@ public class OkHttpHelper {
         return builder.build();
     }
 
-    private Request buildRequest(String url, Map<String, String> map,HttpMethodType methodType) {
+    private Request buildRequest(String url, Map<String, String> map, HttpMethodType methodType) {
         Request.Builder rbuilder = new Request.Builder();
         rbuilder.url(url);
         FormBody.Builder fbuilder = new FormBody.Builder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
+            Log.e(TAG, "buildRequest: " + entry.getKey() + entry.getValue());
             fbuilder.add(entry.getKey(), entry.getValue());
         }
 
@@ -176,7 +179,6 @@ public class OkHttpHelper {
                     if (callback.mType == String.class) {
                         callbackSuccess(callback, response, resultStr);
                     } else {
-                        // Object object = mGson.fromJson(resultStr, callback.mType);
                         Object object = JSON.parseObject(resultStr, callback.mType);
                         callbackSuccess(callback, response, object);
                     }

@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.index.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class Shop {
+public class Shop implements Serializable {
     /**
      * shopId : 1515567851722
      * shopName : 商店名称22
@@ -138,7 +139,7 @@ public class Shop {
     }
 
 
-    public static class ShopPicturesBean {
+    public static class ShopPicturesBean implements Serializable {
         /**
          * pictureId : 1515567175160
          * picturePath : 2

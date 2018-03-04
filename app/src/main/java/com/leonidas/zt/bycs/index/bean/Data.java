@@ -1,5 +1,7 @@
 package com.leonidas.zt.bycs.index.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * Created by mebee on 2018/1/13.
  * Version: V1.0
@@ -12,6 +14,7 @@ public class Data<T> {
     T products;
     T shop;
     T productCategories;
+    T shopComments;
 
     public T getProductCategories() {
         return productCategories;
@@ -44,4 +47,12 @@ public class Data<T> {
     public void setShops(T shops) {
         this.shops = shops;
     }
+    public T getShopComments() {
+        return shopComments;
+    }
+
+    public void setShopComments(T shopComments) {
+        this.shopComments = shopComments;
+    }
+
 }

@@ -96,7 +96,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
 
         public void setData(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data) {
             this.data = data;
-            Glide.with(mContext).load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath()).into(ivGoods);
+            //Glide.with(mContext).load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath()).into(ivGoods);
             tvGoodsName.setText(data.getProductName());
             tvGoodsStock.setText(data.getProductStock() + "");
             tvGoodsLimit.setText(data.getProductUnit() + "");

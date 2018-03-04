@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/start_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colorBg" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="17dp"
+        android:paddingHorizontal="15dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/flag_uc_star"
+                android:layout_width="80dp"
+                android:layout_height="15dp"
+                android:isIndicator="true"
+                app:mrb_progressBackgroundTint="@color/colorBg" />
+            <TextView
+                android:id="@+id/flag_uc_score_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/pink_fc4f74"
+                android:text="4.8"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@android:color/tertiary_text_light"
+                android:text="月售"/>
+
+            <TextView
+                android:id="@+id/flag_uc_sole_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="2323"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="@color/pink_fc4f74"
+            android:text="—— 公告 ——"/>
+
+        <TextView
+            android:id="@+id/flag_uc_announce_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/tertiary_text_light"
+            android:gravity="center"
+            android:text="字串與數列唯一的差異在於：字串的字元是有限多種；數列的數字是無限多種。屏除這項差異之後，字串與數列完全相同，字串可以視作數列、數列可以視作字串"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colorBg" />
+</LinearLayout>

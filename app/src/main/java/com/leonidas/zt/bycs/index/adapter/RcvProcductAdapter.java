@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
 import com.leonidas.zt.bycs.index.bean.Product;
@@ -20,6 +23,7 @@ import com.mcxtzhang.lib.AnimShopButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -33,9 +37,22 @@ import java.util.List;
 public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter.ViewHolder> {
     private Context mContext;
     private List<Product> mProducts;
+    private String mShopId;
 
-    public RcvProcductAdapter(@NonNull List<Product> products){
+    public RcvProcductAdapter(List<Product> products,@NonNull String shopId){
+        if (products == null) {
+            mProducts = new LinkedList<>();
+        }
         mProducts = products;
+        mShopId = shopId;
+    }
+
+    public RcvProcductAdapter(List<Product> products){
+        if (products == null) {
+            mProducts = new LinkedList<>();
+        }
+        mProducts = products;
+        mShopId = "0";
     }
 
     @Override
@@ -46,19 +63,28 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.productStockTxt.setText("剩余" + mProducts.get(position).getProductStock() + "份");
         holder.productPriceTxt.setText("￥" + mProducts.get(position).getProductPrice());
         holder.productNameTxt.setText( mProducts.get(position).getProductName());
         holder.productLimitTxt.setText("每份" + mProducts.get(position).getLimitNumber() + "克");
         holder.productPriceTxt.setText("￥" + mProducts.get(position).getProductPrice());
-        Glide.with(mContext)
+        GlideApp.with(mContext)
                 .load(Constant.API.images + mProducts.get(position).getProductIcon())
+                .error(R.mipmap.mebee_iamge_bg)
+                .transform(new RoundedCorners(20))
+                .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.productImg);
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ProductDetialActivity.class);
+                intent.putExtra("shopId",mShopId);
                 intent.putExtra("productInfo", (Serializable) mProducts.get(position));
                 mContext.startActivity(intent);
             }
@@ -91,6 +117,13 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
             productStockTxt = itemView.findViewById(R.id.txt_product_stock);
             animShopButton = itemView.findViewById(R.id.shop_button);
             item = itemView;
+        }
+    }
+
+    class NoneViewHolder extends XRecyclerView.ViewHolder{
+
+        public NoneViewHolder(View itemView) {
+            super(itemView);
         }
     }
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.allen.library.SuperTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            app:sLeftTopTextString="商家信息"
+            app:sLeftTopTextColor="@android:color/black"
+            app:sLeftBottomTextString="暂无信息">
+
+        </com.allen.library.SuperTextView>
+        <com.allen.library.SuperTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:sLeftTextString="店主："
+            app:sRightTextString="隔壁老王" />
+
+        <com.allen.library.SuperTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:sLeftTextString="商家电话："
+            app:sRightTextString="1234567890" />
+
+        <com.allen.library.SuperTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:sLeftTextString="商家地址："
+            app:sRightTextString="五道口四里坡三里屯" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="商家实景图"/>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/mebee_circular_bead_img_bg"
+                    android:src="@mipmap/photo"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/mebee_circular_bead_img_bg"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/photo" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

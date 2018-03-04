@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.leonidas.zt.bycs.index.activity.SearchActivity">
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_sort"
-            app:navigationIcon="@mipmap/back"
-            style="@style/Toolbar">
-        </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_sort"
+        app:navigationIcon="@mipmap/back"
+        app:contentInsetStartWithNavigation="0dp"
+        style="@style/Toolbar">
 
         <android.support.v7.widget.SearchView
             android:id="@+id/searchView_sort"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/selector_search">
-        </android.support.v7.widget.SearchView>
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:imeOptions="actionSearch"
+            android:layout_marginRight="20dp"
+            android:focusable="false"
+            app:goIcon="@mipmap/search"
+            app:searchIcon="@color/white"
+            app:showDividers="end"
+            app:iconifiedByDefault="false"
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_sort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-        </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
+            android:background="@color/white"
+            app:queryHint="商品搜索" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+    </android.support.design.widget.TabLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrcv_sort"
@@ -39,4 +46,4 @@
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

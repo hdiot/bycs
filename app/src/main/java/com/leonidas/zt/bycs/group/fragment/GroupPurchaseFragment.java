@@ -80,13 +80,13 @@ public class GroupPurchaseFragment extends BaseFragment {
      * 初始化顶部的ToolBar
      */
     private void initToolbar() {
-        EditText etSearch = mToolBar.findViewById(R.id.et_search);
+        /*EditText etSearch = mToolBar.findViewById(R.id.et_search);
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), SearchActivity.class));
             }
-        });
+        });*/
     }
 
 }

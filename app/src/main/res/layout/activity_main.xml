@@ -13,17 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_above="@+id/navigation">
+        android:layout_above="@+id/common_tab">
 
     </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/common_tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
+        android:layout_height="50dp"
+        android:background="#ffffff"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/navigation" />
+        app:tl_iconGravity="TOP"
+        app:tl_iconHeight="18dp"
+        app:tl_iconWidth="18dp"
+        app:tl_indicator_margin_bottom="4dp"
+        app:tl_indicator_width="4dp"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_bounce_enable="true"
+        app:tl_indicator_color="@color/pink_fc4f74"
+        app:tl_indicator_gravity="TOP"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_anim_enable="true"
+        app:tl_textSelectColor="@color/pink_fc4f74"
+        app:tl_textUnselectColor="#66000000"
+        app:tl_textsize="15sp"
+        app:tl_underline_color="#DDDDDD"
+        />
 
 </RelativeLayout>

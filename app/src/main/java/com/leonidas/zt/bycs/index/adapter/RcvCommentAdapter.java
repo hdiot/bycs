@@ -2,12 +2,27 @@ package com.leonidas.zt.bycs.index.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
+import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.index.bean.Comment;
+import com.leonidas.zt.bycs.index.bean.Shop;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 
 /**
@@ -20,6 +35,13 @@ import com.leonidas.zt.bycs.R;
 public class RcvCommentAdapter extends XRecyclerView.Adapter<RcvCommentAdapter.ViewHolder> {
 
     private Context mContext;
+    private ArrayList<Comment> mComments;
+
+    public RcvCommentAdapter(ArrayList<Comment> comments) {
+        if (comments == null)
+            this.mComments = new ArrayList<>();
+        this.mComments = comments;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,19 +51,74 @@ public class RcvCommentAdapter extends XRecyclerView.Adapter<RcvCommentAdapter.V
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.star.setProgress(mComments.get(position).getCommentGrade());
+        holder.content.setText(mComments.get(position).getCommentContent());
+        holder.userName.setText(mComments.get(position).getUserName());
+        GlideApp.with(mContext)
+                .load(Constant.API.images + mComments.get(position).getUserHead())
+                .error(R.mipmap.mebee_iamge_bg)
+                .transform(new RoundedCorners(20))
+                .transition(new DrawableTransitionOptions().crossFade(200))
+                .into(holder.head);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("mComments", "onClick: " + position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 18;
+        return mComments == null ? 0 : mComments.size();
     }
 
     class ViewHolder extends XRecyclerView.ViewHolder{
+        private ImageView head;
+        private TextView userName;
+        private TextView content;
+        private MaterialRatingBar star;
+        private TextView time;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            head = itemView.findViewById(R.id.comment_user_head);
+            userName = itemView.findViewById(R.id.comment_user_name);
+            content = itemView.findViewById(R.id.comment_content);
+            star = itemView.findViewById(R.id.comment_star_grade);
+            time = itemView.findViewById(R.id.comment_time);
+        }
+    }
+
+    /**
+     * 下拉刷新时调用，清空原有数据，重新加载
+     * @param comments
+     */
+    public void refresh(List<Comment> comments) {
+        if (comments != null) {
+            forbidNull();
+            mComments.clear();
+            loadMore(comments);
+        }
+    }
+
+    /**
+     * 上拉加载时调用，add 加载数据
+     * @param comments
+     */
+    public void loadMore(List<Comment> comments) {
+        if (comments != null) {
+            forbidNull();
+            int position = mComments.size();
+            mComments.addAll(position, comments);
+            notifyDataSetChanged();
+        }
+    }
+
+    private void forbidNull() {
+        if (mComments == null) {
+            mComments = new ArrayList<>();
         }
     }
 }
