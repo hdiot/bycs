@@ -8,9 +8,10 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
+import com.leonidas.zt.bycs.app.ui.error.ErrorLayout;
 import com.leonidas.zt.bycs.app.ui.loader.MebeeLoader;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.adapter.RcvProcductAdapter;
+import com.leonidas.zt.bycs.index.adapter.RcvProductAdapter;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.Products;
 import com.leonidas.zt.bycs.index.bean.RequestDataCase;
@@ -35,10 +36,13 @@ import okhttp3.Response;
  */
 public class SortProductsFragment extends BaseFragment {
 
+    private static final String TAG = "SortProductsFragment";
+
     private final int DEFAULT_PAGE = 1;
     private XRecyclerView recyclerView;
+    private ErrorLayout errorLayout;
     private OkHttpHelper okHttpHelper = OkHttpHelper.getInstance();
-    private RcvProcductAdapter procductAdapter = new RcvProcductAdapter(null);
+    private RcvProductAdapter procductAdapter = new RcvProductAdapter(null);
     private Products products = new Products();
     private String categoryId;
 
@@ -57,7 +61,15 @@ public class SortProductsFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         MebeeLoader.showLoading(mContext);
-        recyclerView = (XRecyclerView) view;
+        recyclerView = (XRecyclerView) view.findViewById(R.id.xr_product_fragment);
+        errorLayout = (ErrorLayout) view.findViewById(R.id.error_layout_product_fragment);
+        errorLayout.setVisibility(View.VISIBLE);
+        errorLayout.setToDoBtnOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onClick: reload" );
+            }
+        });
         initRcv();
     }
 
@@ -130,29 +142,36 @@ public class SortProductsFragment extends BaseFragment {
             public void OnSuccess(Response response, ResMessage<Data<Products>> dataResMessage) {
                 try {
                     products = dataResMessage.getData().getProducts();
-                } catch (NullPointerException e) {
-                    Log.d("data", "OnSuccess: " + categoryId);
+                    currentPage = products.getPageNum();
+                    pageSize = products.getPageSize();
+                    isLastPage = products.isIsLastPage();
+                    getUpdateState(RequestDataResult.SUCCESS);
+                    Log.d("data", "OnSuccess: " + "CurrentPage--" + currentPage + ",TotalPage--" + totalPage + ",isLastpage--" + isLastPage);
+                    switch (requestDataCase) {
+                        case FIRST:
+                            requestDataCase = RequestDataCase.LOAD_MORE;
+                            procductAdapter.loadMore(products.getList());
+                            MebeeLoader.stopLoading();
+                            break;
+                        case REFRESH:
+                            requestDataCase = RequestDataCase.LOAD_MORE;
+                            procductAdapter.loadMore(products.getList());
+                            break;
+                        case LOAD_MORE:
+                            procductAdapter.loadMore(products.getList());
+                            break;
+                    }
+                    errorLayout.setVisibility(View.GONE);
+                } catch (RuntimeException e) {
+                    recyclerView.refreshComplete();
+                    recyclerView.loadMoreComplete();
+                    Log.e("data", "exception: " + categoryId);
+                    errorLayout.setLoadingIndicatorVisibility(View.GONE);
+                    errorLayout.setErrorMessage("无对应的产品");
+                    errorLayout.setToDoBtnVisibility(View.VISIBLE);
                 }
 
-                currentPage = products.getPageNum();
-                pageSize = products.getPageSize();
-                isLastPage = products.isIsLastPage();
-                getUpdateState(RequestDataResult.SUCCESS);
-                Log.d("data", "OnSuccess: " + "CurrentPage--" + currentPage + ",TotalPage--" + totalPage + ",isLastpage--" + isLastPage);
-                switch (requestDataCase) {
-                    case FIRST:
-                        requestDataCase = RequestDataCase.LOAD_MORE;
-                        procductAdapter.loadMore(products.getList());
-                        MebeeLoader.stopLoading();
-                        break;
-                    case REFRESH:
-                        requestDataCase = RequestDataCase.LOAD_MORE;
-                        procductAdapter.loadMore(products.getList());
-                        break;
-                    case LOAD_MORE:
-                        procductAdapter.loadMore(products.getList());
-                        break;
-                }
+
 
             }
 

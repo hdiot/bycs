@@ -110,10 +110,12 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .setAdapter(mShopsAdapter);
             ((ShopsViewHolder) holder).rcvShops
                     .setLayoutManager(new LinearLayoutManager(mContext));
+
             getShopsData(1);
 
         }
     }
+
 
 
     @Override

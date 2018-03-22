@@ -2,7 +2,6 @@ package com.leonidas.zt.bycs.index.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,17 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.TransitionOptions;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.activity.ShopActivity;
 import com.leonidas.zt.bycs.index.activity.ShopActivityNew;
 import com.leonidas.zt.bycs.index.activity.ShopsActivity;
 import com.leonidas.zt.bycs.index.bean.Shop;
@@ -122,6 +115,7 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (mIsDisplayMoreTip) {
                 position -= 1;
             }
+
             ((ViewHolder) holder).txtPostMinCons.setText("￥" + mShops.get(position).getLimitPrice() + "起送");
             ((ViewHolder) holder).txtSoleNum.setText("销量" + mShops.get(position).getShopSale() + "单");
             ((ViewHolder) holder).txtScore.setText("" + mShops.get(position).getShopGrade());
@@ -131,7 +125,7 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             GlideApp.with(mContext)
                     .load(Constant.API.images + mShops.get(position).getShopPictures().get(0).getPicturePath())
-                    .error(R.mipmap.mebee_iamge_bg)
+                    .error(R.mipmap.mebee_image_bg)
                     .transform(new RoundedCorners(20))
                     .transition(new DrawableTransitionOptions().crossFade(200))
                     .into(((ViewHolder) holder).imgShopImg);
@@ -178,13 +172,13 @@ public class RcvShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imgShopImg = itemView.findViewById(R.id.img_shop);
-            txtShopName = itemView.findViewById(R.id.txt_shop_name);
-            txtPostFee = itemView.findViewById(R.id.txt_postfee);
-            ratingScore = itemView.findViewById(R.id.ratingbar_score);
-            txtScore = itemView.findViewById(R.id.txt_score);
-            txtSoleNum = itemView.findViewById(R.id.txt_sole_num);
-            txtPostMinCons = itemView.findViewById(R.id.txt_post_min_consume);
+            imgShopImg = (ImageView) itemView.findViewById(R.id.img_shop);
+            txtShopName = (TextView) itemView.findViewById(R.id.txt_shop_name);
+            txtPostFee = (TextView) itemView.findViewById(R.id.txt_postfee);
+            ratingScore = (MaterialRatingBar) itemView.findViewById(R.id.ratingbar_score);
+            txtScore = (TextView) itemView.findViewById(R.id.txt_score);
+            txtSoleNum = (TextView) itemView.findViewById(R.id.txt_sole_num);
+            txtPostMinCons = (TextView) itemView.findViewById(R.id.txt_post_min_consume);
         }
     }
 

@@ -4,5 +4,62 @@
         <attr name="describe" format="string"/>
         <attr name="num" format="string"/>
         <attr name="src" format="reference"/>
+        <attr name="num_visibility" format="integer">
+            <enum name="gone" value="0x00000008"/>
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable  name="Error_Layout">
+        <attr name="load_indicator_visibility" format="integer">
+            <enum name="gone" value="0x00000008"/>
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+        </attr>
+        <attr name="error_message_visibility" format="integer">
+            <enum name="gone" value="0x00000008"/>
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+        </attr>
+        <attr name="to_btn_visibility" format="integer">
+            <enum name="gone" value="0x00000008"/>
+            <enum name="visible" value="0x00000000"/>
+            <enum name="invisible" value="0x00000004"/>
+        </attr>
+        <attr name="error_message_text" format="string"/>
+        <attr name="error_message_text_color" format="color"/>
+        <attr name="error_message_text_size" format="integer"/>
+        <attr name="load_indicator_width" format="float"/>
+        <attr name="load_indicator_height" format="float"/>
+        <attr name="to_btn_background" format="reference"/>
+        <attr name="load_indicator_style" format="enum">
+            <enum name="BallPulse" value="0"/>
+            <enum name="BallGridPulse" value="2"/>
+            <enum name="BallClipRotate" value="3"/>
+            <enum name="BallClipRotatePulse" value="4"/>
+            <enum name="SquareSpin" value="5"/>
+            <enum name="BallClipRotateMultiple" value="6"/>
+            <enum name="BallPulseRise" value="7"/>
+            <enum name="BallRotate" value="8"/>
+            <enum name="CubeTransition" value="9"/>
+            <enum name="BallZigZag" value="10"/>
+            <enum name="BallZigZagDeflect" value="11"/>
+            <enum name="BallTrianglePath" value="12"/>
+            <enum name="BallScale" value="13"/>
+            <enum name="LineScale" value="14"/>
+            <enum name="LineScaleParty" value="15"/>
+            <enum name="BallScaleMultiple" value="16"/>
+            <enum name="BallPulseSync" value="17"/>
+            <enum name="BallBeat" value="18"/>
+            <enum name="LineScalePulseOut" value="19"/>
+            <enum name="LineScalePulseOutRapid" value="20"/>
+            <enum name="BallScaleRipple" value="21"/>
+            <enum name="BallScaleRippleMultiple" value="22"/>
+            <enum name="BallSpinFadeLoader" value="23"/>
+            <enum name="LineSpinFadeLoader" value="24"/>
+            <enum name="TriangleSkewSpin" value="25"/>
+            <enum name="Pacman" value="26"/>
+            <enum name="BallGridBeat" value="27"/>
+        </attr>
     </declare-styleable>
 </resources>

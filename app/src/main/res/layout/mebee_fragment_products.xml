@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jcodecraeer.xrecyclerview.XRecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/xr_product_fragment"/>
 
-</com.jcodecraeer.xrecyclerview.XRecyclerView>
+    <com.leonidas.zt.bycs.app.ui.error.ErrorLayout
+        android:id="@+id/error_layout_product_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:error_message_text="正在加载"
+        app:error_message_visibility="visible"
+        app:load_indicator_style="BallScaleRippleMultiple"/>
+</RelativeLayout>

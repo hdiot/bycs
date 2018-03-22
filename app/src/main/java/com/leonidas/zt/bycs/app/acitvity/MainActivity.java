@@ -11,26 +11,42 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.App;
 import com.leonidas.zt.bycs.app.adapter.MyPagerAdapter;
 import com.leonidas.zt.bycs.basket.fragment.BasketFragment;
 import com.leonidas.zt.bycs.group.fragment.GroupPurchaseFragment;
 import com.leonidas.zt.bycs.index.fragment.IndexFragment;
+import com.leonidas.zt.bycs.index.utils.CookieManager;
+import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 import com.leonidas.zt.bycs.user.fragment.UserFragment;
 import com.mebee.coordinatorbehavior.fragment.dummy.TabEntity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okio.BufferedSink;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
@@ -142,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(myPagerAdapter);
         mViewPager.setOnPageChangeListener(this);
+
+        test();
     }
 
     @Override
@@ -157,5 +175,31 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    private void test(){
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(CookieManager.getInstance(App.getContext()))
+                .build();
+
+
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "{\"userId\":1516332510603,\"cartItemId\":\"1519658923438145696\",\"quantity\":110}");
+        Request request = new Request.Builder()
+                .url("http://120.78.87.169:8080/market/cartItem")
+                .put(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e(TAG, "onResponse: " + response.body().string() );
+            }
+        });
     }
 }

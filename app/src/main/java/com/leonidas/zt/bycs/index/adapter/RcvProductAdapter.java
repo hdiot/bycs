@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -34,12 +33,12 @@ import java.util.List;
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter.ViewHolder> {
+public class RcvProductAdapter extends XRecyclerView.Adapter<RcvProductAdapter.ViewHolder> {
     private Context mContext;
     private List<Product> mProducts;
     private String mShopId;
 
-    public RcvProcductAdapter(List<Product> products,@NonNull String shopId){
+    public RcvProductAdapter(List<Product> products, @NonNull String shopId){
         if (products == null) {
             mProducts = new LinkedList<>();
         }
@@ -47,7 +46,7 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
         mShopId = shopId;
     }
 
-    public RcvProcductAdapter(List<Product> products){
+    public RcvProductAdapter(List<Product> products){
         if (products == null) {
             mProducts = new LinkedList<>();
         }
@@ -76,7 +75,7 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
         holder.productPriceTxt.setText("￥" + mProducts.get(position).getProductPrice());
         GlideApp.with(mContext)
                 .load(Constant.API.images + mProducts.get(position).getProductIcon())
-                .error(R.mipmap.mebee_iamge_bg)
+                .error(R.mipmap.mebee_image_bg)
                 .transform(new RoundedCorners(20))
                 .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.productImg);
@@ -109,24 +108,16 @@ public class RcvProcductAdapter extends XRecyclerView.Adapter<RcvProcductAdapter
 
         public ViewHolder(View itemView) {
             super(itemView);
-            productImg = itemView.findViewById(R.id.img_product);
-            productLimitTxt = itemView.findViewById(R.id.txt_product_limit);
-            productNameTxt = itemView.findViewById(R.id.txt_product_name);
-            productPriceTxt = itemView.findViewById(R.id.txt_product_price);
-            productOrgPriceTxt = itemView.findViewById(R.id.txt_product_org_price);
-            productStockTxt = itemView.findViewById(R.id.txt_product_stock);
-            animShopButton = itemView.findViewById(R.id.shop_button);
+            productImg = (ImageView) itemView.findViewById(R.id.img_product);
+            productLimitTxt = (TextView) itemView.findViewById(R.id.txt_product_limit);
+            productNameTxt = (TextView) itemView.findViewById(R.id.txt_product_name);
+            productPriceTxt = (TextView) itemView.findViewById(R.id.txt_product_price);
+            productOrgPriceTxt = (TextView) itemView.findViewById(R.id.txt_product_org_price);
+            productStockTxt = (TextView) itemView.findViewById(R.id.txt_product_stock);
+            animShopButton = (AnimShopButton) itemView.findViewById(R.id.shop_button);
             item = itemView;
         }
     }
-
-    class NoneViewHolder extends XRecyclerView.ViewHolder{
-
-        public NoneViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
 
     public void refresh(List<Product> products) {
         if (products != null) {

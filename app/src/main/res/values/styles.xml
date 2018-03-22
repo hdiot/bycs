@@ -10,8 +10,9 @@
 
     <style name="MebeeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorBg</item>
-        <item name="colorPrimaryDark">#3190E8</item>
+        <!--<item name="colorPrimary">@color/colorBg</item>-->
+        <item name="colorPrimary">#3190E8</item>
+        <item name="colorPrimaryDark">#248bea</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -23,7 +24,7 @@
     </style>
 
     <style name="Toolbar" parent="Base.V7.Widget.AppCompat.Toolbar">
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>

@@ -2,6 +2,10 @@ package com.leonidas.zt.bycs.index.utils;
 
 
 
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,7 +34,7 @@ public abstract class BaseCallback<T> {
         }
         // 取当前类的泛型
         ParameterizedType parameterizedType = (ParameterizedType) superclass;
-
+        Log.e("T", "getSuperClassTypeParameter: " +parameterizedType.getActualTypeArguments()[0].toString() );
         // return $Gson$Types.canonicalize(parameterizedType.getActualTypeArguments()[0]);
         return parameterizedType.getActualTypeArguments()[0];
     }

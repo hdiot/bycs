@@ -1,7 +1,5 @@
 package com.leonidas.zt.bycs.index.bean;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 /**
  * Created by mebee on 2018/1/13.
  * Version: V1.0

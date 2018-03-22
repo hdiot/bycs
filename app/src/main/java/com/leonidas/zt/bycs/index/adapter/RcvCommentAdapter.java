@@ -1,7 +1,6 @@
 package com.leonidas.zt.bycs.index.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.app.utils.DateUtils;
 import com.leonidas.zt.bycs.index.bean.Comment;
-import com.leonidas.zt.bycs.index.bean.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class RcvCommentAdapter extends XRecyclerView.Adapter<RcvCommentAdapter.V
         holder.userName.setText(mComments.get(position).getUserName());
         GlideApp.with(mContext)
                 .load(Constant.API.images + mComments.get(position).getUserHead())
-                .error(R.mipmap.mebee_iamge_bg)
+                .error(R.mipmap.mebee_image_bg)
                 .transform(new RoundedCorners(20))
                 .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.head);
@@ -83,11 +81,11 @@ public class RcvCommentAdapter extends XRecyclerView.Adapter<RcvCommentAdapter.V
 
         public ViewHolder(View itemView) {
             super(itemView);
-            head = itemView.findViewById(R.id.comment_user_head);
-            userName = itemView.findViewById(R.id.comment_user_name);
-            content = itemView.findViewById(R.id.comment_content);
-            star = itemView.findViewById(R.id.comment_star_grade);
-            time = itemView.findViewById(R.id.comment_time);
+            head = (ImageView) itemView.findViewById(R.id.comment_user_head);
+            userName = (TextView) itemView.findViewById(R.id.comment_user_name);
+            content = (TextView) itemView.findViewById(R.id.comment_content);
+            star = (MaterialRatingBar) itemView.findViewById(R.id.comment_star_grade);
+            time = (TextView) itemView.findViewById(R.id.comment_time);
         }
     }
 

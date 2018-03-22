@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.leonidas.zt.bycs.user.activity.SettingActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/setting_toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/blue"
+        app:navigationIcon="@mipmap/back"
+        app:title="设置"
+        app:titleTextColor="@color/white"
+        android:layout_height="48dp"/>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/setting_head_super_text"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:sLeftTextString="头像"
+        app:sRightIconShowCircle="true"
+        app:sRightIconHeight="60dp"
+        app:sRightIconWidth="60dp"
+        app:sRightIconRes="@mipmap/user"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="1dp" />
+
+
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/setting_name_super_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        app:sRightTextString="海智团队"
+        app:sLeftTextString="用户名"
+        app:sLeftTextColor="@color/black"/>
+
+    <com.allen.library.SuperTextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="1dp"
+        app:sLeftTextColor="#8a8a8a"
+        app:sLeftTextString="账户绑定"/>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/setting_phone_super_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sLeftTextString="手机"
+        app:sLeftTextColor="@color/black"
+        app:sLeftTvDrawableLeft="@mipmap/phone_blue"
+        app:sRightTextString="134****0000"
+        android:layout_marginBottom="8dp"/>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/setting_about_super_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sLeftTextString="关于便宜超市" />
+
+    <Button
+        android:id="@+id/setting_logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:background="@drawable/mebee_btn_bg_selector"/>
+</LinearLayout>

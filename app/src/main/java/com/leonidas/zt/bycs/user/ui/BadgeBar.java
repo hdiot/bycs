@@ -65,9 +65,14 @@ public class BadgeBar extends RelativeLayout {
             }
             @SuppressLint("RestrictedApi")
             final String num = tintTypedArray.getString(R.styleable.BadgeBar_num);
-            if (describe != null){
+            if (num != null){
                 mNumTxt.setText(num);
             }
+
+            @SuppressLint("RestrictedApi")
+            final int num_visibility = tintTypedArray.getInteger(R.styleable.BadgeBar_num_visibility,0x08);
+            mNumTxt.setVisibility(num_visibility);
+
 
         }
     }

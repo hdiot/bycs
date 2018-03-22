@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.adapter.MyPagerAdapter;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
+import com.leonidas.zt.bycs.basket.normal.fragment.NormalBasketFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class BasketFragment extends BaseFragment implements View.OnClickListener
     public void initView(View view) {
         findViews(view);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new VegetableMarketBasketFragment());
+        fragments.add(new NormalBasketFragment());
         fragments.add(new GroupPurchaseBasketFragment());
         vpCart.setAdapter(new MyPagerAdapter(getFragmentManager(),fragments));
         initListener();

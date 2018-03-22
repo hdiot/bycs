@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.leonidas.zt.bycs.index.activity.SearchActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_sort"
+        android:id="@+id/toolbar_search_activity"
         app:navigationIcon="@mipmap/back"
         app:contentInsetStartWithNavigation="0dp"
         style="@style/Toolbar">
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/searchView_sort"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:imeOptions="actionSearch"
-            android:layout_marginRight="20dp"
-            android:focusable="false"
-            app:goIcon="@mipmap/search"
-            app:searchIcon="@color/white"
-            app:showDividers="end"
-            app:iconifiedByDefault="false"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView_search_activity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionSearch"
+                android:background="@color/white"
+                app:queryHint="搜索商家、商品名称" />
 
-            android:background="@color/white"
-            app:queryHint="商品搜索" />
-
+            <TextView
+                android:id="@+id/txt_search_search_activity"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="搜索" />
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_sort"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-    </android.support.design.widget.TabLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_search_activity">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrcv_sort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xr_search_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+        <com.leonidas.zt.bycs.app.ui.error.ErrorLayout
+            android:id="@+id/error_layout_search_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:load_indicator_visibility="gone"
+            app:error_message_text_color="#000000"
+            app:error_message_text_size="15"
+            app:error_message_text="请在输入框输入搜索内容"/>
 
-</LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

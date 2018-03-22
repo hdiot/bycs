@@ -35,6 +35,9 @@ public class ResMessage<T> {
     }
 
     public T getData() {
+        if (data == null) {
+            throw new RuntimeException("data is null");
+        }
         return data;
     }
 

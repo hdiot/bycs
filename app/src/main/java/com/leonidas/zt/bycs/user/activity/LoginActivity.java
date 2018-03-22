@@ -19,8 +19,6 @@ import com.leonidas.zt.bycs.user.ui.LoginBar;
 import com.leonidas.zt.bycs.user.User;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.WeakHashMap;
 
 import okhttp3.Request;
@@ -86,8 +84,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void OnSuccess(Response response, ResMessage<UserInfo> userResMessage) {
                         Log.d(TAG, "OnSuccess: " + userResMessage.getData().getUserName());
-                        User.getInstance().setmUserInfo(userResMessage.getData());
-                        test();
+                        User user = User.getInstance();
+                        user.setUserInfo(userResMessage.getData());
+                        user.setLogin(true);
+                        finish();
                     }
 
                     @Override
@@ -112,40 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void test() {
-
-        Map<String, String> params = new HashMap<>();
-        params.put("user", "1516332510603");
-
-        mOkHttpHelper.doGet(Constant.API.baseUrl + "market/cartItem?userId=1516332510603",
-                new BaseCallback<String>() {
-
-                    @Override
-                    public void OnSuccess(Response response, String s) {
-                        Log.d(TAG, "OnSuccess: " + s);
-                    }
-
-                    @Override
-                    public void onError(Response response, int errCode, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onRequestBefore(Request request) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Request request, IOException e) {
-
-                    }
-
-                    @Override
-                    public void onBzError(Response response, int code, String hint, String data) {
-
-                    }
-                });
-    }
 
     private void initToolbar() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

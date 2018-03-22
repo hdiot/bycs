@@ -3,8 +3,8 @@
     package="com.leonidas.zt.bycs">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.App"
@@ -26,15 +26,24 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".index.activity.SearchActivity" />
         <activity android:name=".index.activity.SortActivity" />
-        <activity android:name=".index.activity.ProductDetialActivity" android:theme="@style/MebeeTheme" />
+        <activity
+            android:name=".index.activity.ProductDetialActivity"
+            android:theme="@style/MebeeTheme" />
         <activity android:name=".index.activity.ShopsActivity" />
         <activity android:name=".index.activity.ShopActivity" />
         <activity android:name=".index.activity.ShopInfoActivity" />
         <activity android:name=".index.activity.ShopCommentActivity" />
         <activity android:name=".user.activity.OrdersActivity" />
-        <activity android:name=".user.activity.LoginActivity" />
+        <activity
+            android:name=".user.activity.LoginActivity"
+            android:theme="@style/MebeeTheme" />
         <activity android:name=".group.activity.GroupPurchaseGoodsDetailActivity" />
-        <activity android:name=".index.activity.ShopActivityNew"></activity>
+        <activity android:name=".index.activity.ShopActivityNew" />
+        <activity android:name=".user.activity.OrderDetailActivity" />
+        <activity
+            android:name=".user.activity.SettingActivity"
+            android:theme="@style/MebeeTheme" />
+        <activity android:name=".user.activity.AddressActivity"></activity>
     </application>
 
 </manifest>

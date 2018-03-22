@@ -3,14 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="#80dddddd"
     android:gravity="center"
     android:orientation="vertical">
 
     <com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView
+        android:id="@+id/loading_indicator_error_layout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="5dp"
+        android:minHeight="80dp"
+        android:minWidth="80dp" />
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/txt_error_message_error_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_height="wrap_content"
+        android:text="错误信息"/>
+    <Button
+        android:id="@+id/btn_error_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:text="重新加载"
+        android:background="@drawable/selector_stroke_roundcir"/>
 </LinearLayout>

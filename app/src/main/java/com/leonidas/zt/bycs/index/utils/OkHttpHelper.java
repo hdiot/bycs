@@ -73,6 +73,11 @@ public class OkHttpHelper {
         doRequest(request, callback);
     }
 
+    public void doPut(String url, String json, BaseCallback callback){
+        Request request = buildRequest(url, json, HttpMethodType.PUT);
+        doRequest(request, callback);
+    }
+
     public void doPost(String url, Map<String, String> param, BaseCallback callback) {
         Request request = buildRequest(url, param, HttpMethodType.POST);
         doRequest(request, callback);
@@ -88,16 +93,16 @@ public class OkHttpHelper {
         doRequest(request, callback);
     }
 
-    public void doPut() {
 
-    }
-
-    public void doDelete() {
-
+    public void doDelete(String url, String json, BaseCallback callback) {
+        Request request = buildRequest(url, json, HttpMethodType.DELETE);
+        doRequest(request, callback);
     }
 
 
     private Request buildRequest(String url, String json, HttpMethodType methodType) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, json);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
 
@@ -106,14 +111,13 @@ public class OkHttpHelper {
                 builder.get();
                 break;
             case POST:
-                MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-                RequestBody body = RequestBody.create(JSON, json);
-
                 builder.post(body);
                 break;
             case DELETE:
+                builder.delete(body);
                 break;
             case PUT:
+                builder.put(body);
                 break;
         }
 

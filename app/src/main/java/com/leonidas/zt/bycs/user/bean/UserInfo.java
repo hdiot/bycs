@@ -17,17 +17,17 @@ public class UserInfo {
      * userHeadPath : head4.jpg
      */
 
-    public long userId;
+    public String userId;
     private String userName;
     private String userPhone;
     private String userPassword;
     private String userHeadPath;
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

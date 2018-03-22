@@ -21,6 +21,7 @@ public class User {
     private static User mInstance;
     private UserInfo mUserInfo;
     private SharedPreferences mSP;
+    private boolean isLogin = false;
 
     private User(){
         mSP = PreferenceManager.getDefaultSharedPreferences(App.getContext());
@@ -39,13 +40,12 @@ public class User {
         return mInstance;
     }
 
-    public UserInfo getmUserInfo() {
-        Log.d(TAG, "getmUserInfo: " + mUserInfo.toString());
+    public UserInfo getUserInfo() {
         return mUserInfo;
     }
 
-    public void setmUserInfo(UserInfo userInfo) {
-        Log.d(TAG, "setmUserInfo: " + userInfo.toString());
+    public void setUserInfo(UserInfo userInfo) {
+        Log.d(TAG, "setUserInfo: " + userInfo.toString());
         this.mUserInfo = userInfo;
         saveData();
     }
@@ -55,15 +55,26 @@ public class User {
         mSP.edit().putString("userinfo", JSON.toJSONString(mUserInfo)).commit();
     }
 
-    private void clearData(){
+    public void clearData(){
         mSP.edit().clear();
+        mUserInfo = null;
+        isLogin = false;
     }
 
     private void getData(){
         String data = mSP.getString("userinfo", "");
         Log.d(TAG, "getData: " + data);
-        if (data == null) {
+        if (data != null) {
             mUserInfo = JSON.parseObject(data, UserInfo.class);
         }
     }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
+
 }

@@ -9,18 +9,15 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.adapter.RcvProcductAdapter;
+import com.leonidas.zt.bycs.index.adapter.RcvProductAdapter;
 import com.leonidas.zt.bycs.index.bean.Data;
-import com.leonidas.zt.bycs.index.bean.Product;
 import com.leonidas.zt.bycs.index.bean.Products;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
 import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import okhttp3.Request;
@@ -38,7 +35,7 @@ public class ProductsFragment extends BaseFragment {
     private static final String TAG = "ProductsFragment";
     private final String mShopId;
     private XRecyclerView mXRCV;
-    private RcvProcductAdapter mAdapter;
+    private RcvProductAdapter mAdapter;
     private OkHttpHelper mHttpHelper;
 
     public ProductsFragment(String shopId) {
@@ -58,7 +55,7 @@ public class ProductsFragment extends BaseFragment {
     @Override
     public void initData() {
         mHttpHelper = OkHttpHelper.getInstance();
-        mAdapter = new RcvProcductAdapter(null, mShopId);
+        mAdapter = new RcvProductAdapter(null, mShopId);
         mXRCV.setLayoutManager(new LinearLayoutManager(mContext));
         mXRCV.setAdapter(mAdapter);
         getProductData();

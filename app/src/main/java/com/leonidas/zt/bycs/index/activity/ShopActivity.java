@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.utils.Constant;
-import com.leonidas.zt.bycs.index.adapter.RcvProcductAdapter;
+import com.leonidas.zt.bycs.index.adapter.RcvProductAdapter;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.Products;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
@@ -50,7 +50,7 @@ public class ShopActivity extends AppCompatActivity {
     private XRecyclerView mProductsXR;
     private String mShopId;
     private OkHttpHelper mHttpHelper;
-    private RcvProcductAdapter mRcvProductAdapter = new RcvProcductAdapter(null, "");
+    private RcvProductAdapter mRcvProductAdapter = new RcvProductAdapter(null, "");
     private boolean isNeedPading = false;
 
     @Override

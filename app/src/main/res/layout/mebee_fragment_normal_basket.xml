@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/normal_basket_xrcv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBg"
+        android:layout_marginBottom="48dp">
+
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/normal_basket_selected_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="全选" />
+
+        <TextView
+            android:id="@+id/normal_basket_edit_txt"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="编辑" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/normal_basket_pay_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:text="合计:" />
+
+                <TextView
+                    android:id="@+id/normal_basket_amount_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:paddingRight="3dp"
+                    android:text="￥ 0.00" />
+
+                <Button
+                    android:id="@+id/normal_basket_paying_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/mebee_selector_btn"
+                    android:gravity="center"
+                    android:minWidth="100dp"
+                    android:text="去结算(10)"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/normal_basket_delete_btn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:background="@drawable/mebee_btn_bg_selector"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.leonidas.zt.bycs.app.ui.error.ErrorLayout
+        android:id="@+id/normal_basket_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+</RelativeLayout>

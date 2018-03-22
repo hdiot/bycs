@@ -9,7 +9,7 @@ tools:context="com.leonidas.zt.bycs.basket.fragment.BasketFragment">
     <android.support.v7.widget.Toolbar
         android:id="@+id/index_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="48dp"
         android:background="@color/colorPrimaryDark"
         android:padding="8dp">
 
