@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.app.acitvity;
 
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -13,10 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -27,7 +25,6 @@ import com.leonidas.zt.bycs.basket.fragment.BasketFragment;
 import com.leonidas.zt.bycs.group.fragment.GroupPurchaseFragment;
 import com.leonidas.zt.bycs.index.fragment.IndexFragment;
 import com.leonidas.zt.bycs.index.utils.CookieManager;
-import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 import com.leonidas.zt.bycs.user.fragment.UserFragment;
 import com.mebee.coordinatorbehavior.fragment.dummy.TabEntity;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -40,13 +37,11 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
@@ -95,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         permissions.requestEach(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Permission>() {
                     @Override
-                    public void accept(Permission permission) throws Exception {
+                    public void accept(Permission permission) {
                         if (!permission.granted){
                             permissionDialog.show();
                         } else if (permission.shouldShowRequestPermissionRationale) {

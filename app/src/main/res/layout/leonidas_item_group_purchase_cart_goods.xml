@@ -10,21 +10,19 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <!--<CheckBox
+        <CheckBox
             android:id="@+id/cb_is_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_gravity="center_vertical"
-            android:button="@drawable/leonidas_selector_checkbox"
-            android:checked="true"
-            android:clickable="false" />-->
+            android:checked="true" />
 
         <ImageView
             android:id="@+id/iv_goods"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/leonidas_new_img_loading"/>
 
         <!--<ImageView
             android:id="@+id/iv_goods"

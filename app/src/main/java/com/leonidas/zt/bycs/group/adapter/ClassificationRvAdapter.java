@@ -1,6 +1,7 @@
 package com.leonidas.zt.bycs.group.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
+import com.leonidas.zt.bycs.group.activity.ClassificationActivity;
 import com.leonidas.zt.bycs.group.utils.Api;
 import com.leonidas.zt.bycs.group.vo.GroupPurchaseGoodsClassificationVO;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -57,7 +62,7 @@ class ClassificationRvAdapter extends RecyclerView.Adapter {
     /**
      * 分类Item的ViewHolder
      */
-    private class Holder extends RecyclerView.ViewHolder {
+    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivClassification; //分类图片
         TextView tvClassification; //分类名称
 
@@ -73,8 +78,22 @@ class ClassificationRvAdapter extends RecyclerView.Adapter {
          */
         public void setData(GroupPurchaseGoodsClassificationVO.DataBean.ProductCategoriesBean.ListBean data) {
             tvClassification.setText(data.getCategoryName());
-            Glide.with(mContext).load(Api.BaseImg + data.getCategoryIcon()).into(ivClassification);
+            GlideApp.with(mContext)
+                    .load(Api.BaseImg + data.getCategoryIcon())
+                    .error(R.mipmap.mebee_load_fail)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(ivClassification);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            //ClassificationDataList.get(getLayoutPosition());
+            Intent intent = new Intent(mContext, ClassificationActivity.class);
+            intent.putExtra("classifications", (Serializable) ClassificationDataList);
+            intent.putExtra("position",getLayoutPosition());
+            mContext.startActivity(intent);
+        }
     }
 }

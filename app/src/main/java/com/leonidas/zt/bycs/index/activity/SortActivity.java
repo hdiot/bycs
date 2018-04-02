@@ -115,7 +115,6 @@ public class SortActivity extends AppCompatActivity {
         mSearchView.setSubmitButtonEnabled(true);
     }
 
-
     private void initToolbar() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

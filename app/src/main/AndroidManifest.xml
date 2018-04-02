@@ -34,16 +34,14 @@
         <activity android:name=".index.activity.ShopInfoActivity" />
         <activity android:name=".index.activity.ShopCommentActivity" />
         <activity android:name=".user.activity.OrdersActivity" />
-        <activity
-            android:name=".user.activity.LoginActivity"
-            android:theme="@style/MebeeTheme" />
+        <activity android:name=".user.activity.LoginActivity" />
         <activity android:name=".group.activity.GroupPurchaseGoodsDetailActivity" />
         <activity android:name=".index.activity.ShopActivityNew" />
-        <activity android:name=".user.activity.OrderDetailActivity" />
-        <activity
-            android:name=".user.activity.SettingActivity"
-            android:theme="@style/MebeeTheme" />
-        <activity android:name=".user.activity.AddressActivity"></activity>
+        <activity android:name=".basket.activity.ConfirmOrderActivity" />
+        <activity android:name=".basket.activity.SelectTakeDeliveryAddressActivity" />
+        <activity android:name=".user.activity.SettingActivity" />
+        <activity android:name=".basket.activity.GroupPurchasePayActivity" />
+        <activity android:name=".group.activity.ClassificationActivity"></activity>
     </application>
 
 </manifest>

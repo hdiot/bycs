@@ -86,7 +86,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 if (User.getInstance().isLogin()) {
-                    startActivity(new Intent(mContext, SettingActivity.class));
+                    //startActivity(new Intent(mContext, SettingActivity.class));
+                    startActivity(new Intent(mContext, LoginActivity.class));
                 } else {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 }
