@@ -71,24 +71,69 @@ public class BasketPresenter extends BasePresenter<BasketView> {
 
             @Override
             public void onError(Response response, int errCode, Exception e) {
-
+                switch (state){
+                    case REFRESH:
+                        getView().refreshFinish();
+                        break;
+                    case FIRST:
+                        getView().loadMoreFinish();
+                        break;
+                    case MORE:
+                        getView().loadMoreFinish();
+                        break;
+                }
             }
 
             @Override
             public void onRequestBefore(Request request) {
-
+                switch (state){
+                    case REFRESH:
+                        getView().refreshFinish();
+                        break;
+                    case FIRST:
+                        getView().loadMoreFinish();
+                        break;
+                    case MORE:
+                        getView().loadMoreFinish();
+                        break;
+                }
             }
 
             @Override
             public void onFailure(Request request, IOException e) {
-
+                switch (state){
+                    case REFRESH:
+                        getView().refreshFinish();
+                        break;
+                    case FIRST:
+                        getView().loadMoreFinish();
+                        break;
+                    case MORE:
+                        getView().loadMoreFinish();
+                        break;
+                }
             }
 
             @Override
             public void onBzError(Response response, int code, String hint, String data) {
-
+                switch (state){
+                    case REFRESH:
+                        getView().refreshFinish();
+                        break;
+                    case FIRST:
+                        getView().loadMoreFinish();
+                        break;
+                    case MORE:
+                        getView().loadMoreFinish();
+                        break;
+                }
             }
         });
+    }
+
+    private void netError(){
+        getView().loadMoreFinish();
+        getView().refreshFinish();
     }
 
     public void loadMore(){

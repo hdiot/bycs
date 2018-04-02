@@ -22,6 +22,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jaeger.library.StatusBarUtil;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.bean.Data;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
@@ -59,6 +60,7 @@ public class ShopActivityNew extends AppCompatActivity {
     private RoundProgressBar progressBar;
     private ImageView mSettingIv, mMsgIv;
     private CircleImageView mAvater;
+    private CircleImageView mTitleAvater;
     private CommonTabLayout mTablayout;
     private NoScrollViewPager mViewPager;
     private TextView mLimit;
@@ -66,6 +68,7 @@ public class ShopActivityNew extends AppCompatActivity {
     private TextView mDescription;
     private TextView mScore;
     private TextView mShopName;
+    private TextView mAnnounce;
     private MaterialRatingBar mStar;
 
 
@@ -75,6 +78,7 @@ public class ShopActivityNew extends AppCompatActivity {
     private List<Fragment> fragments;
     private int lastState = 1;
     private OkHttpHelper mOkHttpHelper = OkHttpHelper.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,7 @@ public class ShopActivityNew extends AppCompatActivity {
         mAvater = (CircleImageView) findViewById(com.mebee.coordinatorbehavior.R.id.uc_avater);
         mTablayout = (CommonTabLayout) findViewById(com.mebee.coordinatorbehavior.R.id.uc_tablayout);
         mViewPager = (NoScrollViewPager) findViewById(com.mebee.coordinatorbehavior.R.id.uc_viewpager);
+        mTitleAvater = (CircleImageView) findViewById(R.id.title_uc_avater);
 
 
         mLimit = findViewById(R.id.frag_uc_limit_tv);
@@ -113,6 +118,7 @@ public class ShopActivityNew extends AppCompatActivity {
         mScore = findViewById(R.id.flag_uc_score_tv);
         mShopName = findViewById(R.id.frag_uc_nickname_tv);
         mStar = findViewById(R.id.flag_uc_star);
+        mAnnounce = findViewById(R.id.flag_uc_announce_tv);
 
     }
 
@@ -129,12 +135,16 @@ public class ShopActivityNew extends AppCompatActivity {
         Glide.with(this)
                 .load(Constant.API.images + shop.getShopPictures().get(0).getPicturePath())
                 .into(mAvater);
+        GlideApp.with(this)
+                .load(Constant.API.images + shop.getShopPictures().get(0).getPicturePath())
+                .into(mTitleAvater);
         mLimit.setText("￥" + shop.getLimitPrice() + "起送");
         mPostFee.setText("配送费" + shop.getSendPrice());
         mDescription.setText(shop.getShopDesc());
         mScore.setText(shop.getShopGrade() + "");
         mShopName.setText(shop.getShopName());
         mStar.setRating(shop.getShopGrade());
+        mAnnounce.setText(shop.getShopNote());
     }
 
     private void requsetData() {

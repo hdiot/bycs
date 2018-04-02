@@ -19,6 +19,8 @@ public class Product implements Serializable {
      * productDesc : 商品描述9
      * productNote : 商品备注9
      * limitNumber : 9单位
+     * shopId : 1515567033782
+     * categoryId : 1515557723921
      */
 
     private long productId;
@@ -29,6 +31,24 @@ public class Product implements Serializable {
     private String productDesc;
     private String productNote;
     private String limitNumber;
+    private String shopId;
+    private String categoryId;
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
 
     public long getProductId() {
         return productId;

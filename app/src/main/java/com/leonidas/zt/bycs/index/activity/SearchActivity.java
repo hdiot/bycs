@@ -1,38 +1,41 @@
 package com.leonidas.zt.bycs.index.activity;
 
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.ui.error.ErrorLayout;
 import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.index.adapter.SearchAdapter;
 import com.leonidas.zt.bycs.index.bean.Data;
-import com.leonidas.zt.bycs.index.bean.Product;
 import com.leonidas.zt.bycs.index.bean.ResMessage;
+import com.leonidas.zt.bycs.index.bean.SearchShop;
 import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
 
 import java.io.IOException;
-
+import java.util.List;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+    private static final String TAG = "SearchActivity";
 
     private Toolbar mToobar;
     private SearchView mSearchView;
-    private XRecyclerView mXrcv;
+    private RecyclerView mRcv;
     private ErrorLayout mErrorLayout;
     private TextView mSearchTV;
+    private SearchAdapter mSearchAdapter = new SearchAdapter();
 
     private OkHttpHelper httpHelper = OkHttpHelper.getInstance();
 
@@ -45,7 +48,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     private void initView() {
         mToobar = findViewById(R.id.toolbar_search_activity);
-        mXrcv = findViewById(R.id.xr_search_activity);
+        mRcv = findViewById(R.id.rv_search_activity);
         mErrorLayout = findViewById(R.id.error_layout_search_activity);
         mSearchView = findViewById(R.id.searchView_search_activity);
         mSearchTV = findViewById(R.id.txt_search_search_activity);
@@ -69,14 +72,26 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void doQuery() {
+        if (!mSearchView.getQuery().toString().equals("") && mSearchView.getQuery() != null) {
+            postQuery(mSearchView.getQuery().toString());
+        } else {
+            Toast.makeText(this, "请输入你想买的商品、商店的名称", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void postQuery(){
-        httpHelper.doGet(Constant.API.getProducts, null, new BaseCallback<ResMessage<Data<Product>>>() {
+    private void postQuery(String query){
+        String params = "?selectName=" + query;
+        httpHelper.doGet(Constant.API.search + params, new BaseCallback<ResMessage<Data<List<SearchShop>>>>() {
+
 
             @Override
-            public void OnSuccess(Response response, ResMessage<Data<Product>> dataResMessage) {
+            public void OnSuccess(Response response, ResMessage<Data<List<SearchShop>>> dataResMessage) {
+                try {
+                    mSearchAdapter.add(dataResMessage.getData().getShops());
+                    mErrorLayout.setVisibility(View.GONE);
+                } catch (NullPointerException e){
 
+                }
             }
 
             @Override
@@ -102,7 +117,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void initXRCV() {
-
+        mRcv.setLayoutManager(new LinearLayoutManager(this));
+        mRcv.setAdapter(mSearchAdapter);
     }
 
     private void initTab() {
@@ -115,7 +131,10 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     public boolean onQueryTextSubmit(String query) {
         Log.d("Query", "onQueryTextSubmit: " +query);
-        return false;
+        if (!query.equals("")) {
+            postQuery(query);
+        }
+        return true;
     }
 
     @Override

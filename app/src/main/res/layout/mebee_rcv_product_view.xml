@@ -4,8 +4,8 @@
     android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:gravity="center"
     android:background="@drawable/mebee_select_item_ripple_bg"
     android:orientation="horizontal">
@@ -14,7 +14,7 @@
         android:id="@+id/img_product"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/mebee_bg_square"/>
 
     <RelativeLayout
         android:layout_width="0dp"

@@ -21,4 +21,5 @@ public interface BasketView {
     void showNoMoreData();
     void refreshFinish();
     void loadMoreFinish();
+    void onError(CharSequence s);
 }
