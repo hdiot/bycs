@@ -157,47 +157,122 @@ public class GroupPurchaseGoodsDetailActivity extends AppCompatActivity implemen
 
     @Override
     public void onAddSuccess(int count) {
-        if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
+        if (isModifyCount()) { //正在进行网络操作
             btAddCart.setCount((count - 1));
             Toast.makeText(mContext, "正在添加，请稍后！", Toast.LENGTH_SHORT).show();
             return;
+        }else if (count <= 0 ) {
+            btAddCart.setCount(0);
+            return;
         }
-        Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
         Log.e("productedid", data.getData().getGroupProduct().getProductId() + "");
-        addGoodsToCart(data.getData().getGroupProduct().getProductId() ,count);
+        AddGoodsToCart(data.getData().getGroupProduct() ,count);
     }
 
     @Override
     public void onAddFailed(int i, FailType failType) {
-        Toast.makeText(mContext, "已达到限制购买数量！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "添加失败！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDelSuccess(int count) {
-        if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
-            btAddCart.setCount((count - 1));
+        if (isModifyCount()) { //正在进行网络操作
+            btAddCart.setCount((count + 1));
             Toast.makeText(mContext, "正在消减，请稍后！", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (count <= 0 ) {
+            btAddCart.setCount(0);
             return;
         }
         Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
         Log.e("productedid", data.getData().getGroupProduct().getProductId() + "");
-        addGoodsToCart(data.getData().getGroupProduct().getProductId() ,count);
+        DelGoodsToCart(data.getData().getGroupProduct() ,count);
     }
 
     @Override
     public void onDelFaild(int i, FailType failType) {
-        Toast.makeText(mContext, "低于最低购买数量！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "减少失败！", Toast.LENGTH_SHORT).show();
     }
 
-    private void addGoodsToCart(long productId, int count) {
+    /**
+     * 添加商品到购物车
+     * @param groupProduct 商品对象
+     * @param count 购买数量
+     */
+    private void AddGoodsToCart(GroupPurchaseGoodsVO.DataBean.GroupProductBean groupProduct, int count) {
         //int UserId = 1;
         long UserId = 1516332510603L;
         JSONObject mJo = new JSONObject();
         mJo.put(ApiParamKey.UserId, UserId);
-        mJo.put(ApiParamKey.ProductId, productId);
+        mJo.put(ApiParamKey.ProductId, groupProduct.getProductId());
         mJo.put(ApiParamKey.ProductQuantity, count);
 
-        OkHttpUtils.postString().url(Api.AddPgGoodsToCart).content(mJo.toJSONString())
+        OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8")).build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e(TAG, e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, response);
+                        JSONObject mJo = JSONObject.parseObject(response);
+
+                        if (mJo == null) {//返回数据出错
+                            Toast.makeText(mContext, "服务器错误！", Toast.LENGTH_SHORT).show();
+                            btAddCart.setCount((btAddCart.getCount() - 1)); //添加失败则数量恢复
+                            isModifyCount = false;
+                            return;
+                        }
+
+                        Integer ResultCoud = mJo.getInteger(ApiParamKey.ResultCode);
+
+                        if (ResultCoud == 1) {//添加成功
+                            isModifyCount = false;
+                            return;
+                        }
+
+                        //添加出错
+                        btAddCart.setCount((btAddCart.getCount() - 1));
+                        btAddCart.onCountAddSuccess();
+                        switch (ResultCoud) {
+                            case 403:
+                                Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                break;
+                            case 408:
+                                Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                break;
+                            case 410:
+                                Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                break;
+                            case 444:
+                                Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(mContext, "未知错误！", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        isModifyCount = false;
+                    }
+                });
+    }
+
+    /**
+     * 减少购物车中商品的数量
+     * @param groupProduct 商品对象
+     * @param count 减少后的商品数量
+     */
+    private void DelGoodsToCart(GroupPurchaseGoodsVO.DataBean.GroupProductBean groupProduct, int count) {
+        //int UserId = 1;
+        long UserId = 1516332510603L;
+        JSONObject mJo = new JSONObject();
+        mJo.put(ApiParamKey.UserId, UserId);
+        mJo.put(ApiParamKey.ProductId, groupProduct);
+        mJo.put(ApiParamKey.ProductQuantity, count);
+
+        OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8")).build()
                 .execute(new StringCallback() {
                     @Override

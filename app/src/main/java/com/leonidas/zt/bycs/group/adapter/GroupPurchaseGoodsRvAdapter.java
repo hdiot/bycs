@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.group.activity.GroupPurchaseGoodsDetailActivity;
 import com.leonidas.zt.bycs.group.utils.Api;
@@ -90,12 +91,12 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
             btAddCart = itemView.findViewById(R.id.bt_add_cart);
             tvGoodsOrgPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             btAddCart.setOnAddDelListener(this);
-            btAddCart.setMaxCount(10); //设置最大购买份数 --- 当前为最多购买10份
+            btAddCart.setMaxCount(99); //设置最大购买份数 --- 当前为最多购买99份
         }
 
         public void setData(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data) {
             this.data = data;
-            //Glide.with(mContext).load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath()).into(ivGoods);
+            Glide.with(mContext).load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath()).into(ivGoods);
             tvGoodsName.setText(data.getProductName());
             tvGoodsStock.setText(data.getProductStock() + "");
             tvGoodsLimit.setText(data.getProductUnit() + "");
@@ -129,14 +130,16 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
          */
         @Override
         public void onAddSuccess(int count) {
-            if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
+            if (isModifyCount()) { //正在进行网络操作
                 btAddCart.setCount((count - 1));
                 Toast.makeText(mContext, "正在添加，请稍后！", Toast.LENGTH_SHORT).show();
                 return;
+            }else if (count <= 0 ) {
+                btAddCart.setCount(0);
+                return;
             }
-            Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
             Log.e("productedid", data.getProductId() + "");
-            addGoodsToCart(data.getProductId(),count);
+            AddGoodsToCart(data ,count);
         }
 
         /**
@@ -146,9 +149,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
          */
         @Override
         public void onAddFailed(int count, FailType failType) {
-            /*Toast.makeText(mContext, "count == " + count
-                    + "/n"
-                    + "FailType == " + failType, Toast.LENGTH_SHORT).show();*/
+            Log.e("ft", failType.name());
             Toast.makeText(mContext, "已达到限制购买数量！", Toast.LENGTH_SHORT).show();
         }
 
@@ -158,43 +159,102 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
          */
         @Override
         public void onDelSuccess(int count) {
-            addGoodsToCart(data.getProductId(),count);
-            if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
-                btAddCart.setCount((count - 1));
+            if (isModifyCount()) { //正在进行网络操作
+                btAddCart.setCount((count + 1));
                 Toast.makeText(mContext, "正在消减，请稍后！", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (count <= 0 ) {
+                btAddCart.setCount(0);
+                return;
             }
-            Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
             Log.e("productedid", data.getProductId() + "");
-            addGoodsToCart(data.getProductId(),count);
+            DelGoodsToCart(data ,count);
         }
 
-        /**
-         * 删除商品数量失败
-         * @param count 当前商品总数
-         * @param failType 失败类型
-         */
         @Override
-        public void onDelFaild(int count, FailType failType) {
-            /*Toast.makeText(mContext, "count == " + count
-                    + "/n"
-                    + "FailType == " + failType, Toast.LENGTH_SHORT).show();*/
+        public void onDelFaild(int i, FailType failType) {
             Toast.makeText(mContext, "低于最低购买数量！", Toast.LENGTH_SHORT).show();
         }
 
         /**
-         * 添加商品到购物车（修改当前购物车中此商品的数量）
-         * @param productId 商品ID
-         * @param count 商品数量
+         * 添加商品到购物车
+         * @param groupProduct 商品对象
+         * @param count 购买数量
          */
-        private void addGoodsToCart(long productId, int count) {
+        private void AddGoodsToCart(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean groupProduct, int count) {
+            //int UserId = 1;
             long UserId = 1516332510603L;
             JSONObject mJo = new JSONObject();
             mJo.put(ApiParamKey.UserId, UserId);
-            mJo.put(ApiParamKey.ProductId, productId);
+            mJo.put(ApiParamKey.ProductId, groupProduct.getProductId());
             mJo.put(ApiParamKey.ProductQuantity, count);
 
-            OkHttpUtils.postString().url(Api.AddPgGoodsToCart).content(mJo.toJSONString())
+            OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())
+                    .mediaType(MediaType.parse("application/json; charset=utf-8")).build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            Log.e(TAG, e.toString());
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.e(TAG, response);
+                            JSONObject mJo = JSONObject.parseObject(response);
+
+                            if (mJo == null) {//返回数据出错
+                                Toast.makeText(mContext, "服务器错误！", Toast.LENGTH_SHORT).show();
+                                btAddCart.setCount((btAddCart.getCount() - 1)); //添加失败则数量恢复
+                                isModifyCount = false;
+                                return;
+                            }
+
+                            Integer ResultCoud = mJo.getInteger(ApiParamKey.ResultCode);
+
+                            if (ResultCoud == 1) {//添加成功
+                                isModifyCount = false;
+                                return;
+                            }
+
+                            //添加出错
+                            btAddCart.setCount((btAddCart.getCount() - 1));
+                            btAddCart.onCountAddSuccess();
+                            switch (ResultCoud) {
+                                case 403:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 408:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 410:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 444:
+                                    Toast.makeText(mContext, mJo.getString(ApiParamKey.Hint), Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(mContext, "未知错误！", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            isModifyCount = false;
+                        }
+                    });
+        }
+
+        /**
+         * 减少购物车中商品的数量
+         * @param groupProduct 商品对象
+         * @param count 减少后的商品数量
+         */
+        private void DelGoodsToCart(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean groupProduct, int count) {
+            //int UserId = 1;
+            long UserId = 1516332510603L;
+            JSONObject mJo = new JSONObject();
+            mJo.put(ApiParamKey.UserId, UserId);
+            mJo.put(ApiParamKey.ProductId, groupProduct);
+            mJo.put(ApiParamKey.ProductQuantity, count);
+
+            OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())
                     .mediaType(MediaType.parse("application/json; charset=utf-8")).build()
                     .execute(new StringCallback() {
                         @Override

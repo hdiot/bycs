@@ -57,8 +57,8 @@
         android:layout_height="1dp"
         android:background="#eeee" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_cart_goods_list"
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_cart_goods_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

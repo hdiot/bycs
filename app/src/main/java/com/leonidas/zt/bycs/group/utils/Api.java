@@ -22,7 +22,7 @@ public class Api {
     //获取用户购物车数据
     public static final String QueryUserPurchaseCart = Base + "market/pgCartItem";
     //添加（拼购）商品到购物车中
-    public static final String AddPgGoodsToCart = Base + "market/pgCartItem";
+    public static final String ModifyPgGoodsToCart = Base + "market/pgCartItem";
     //通过CartItemId删除商品
     public static final String DeleteGoodsByCartItemId = Base + "market/pgCartItem";
     //获取当天拼购组限制人数

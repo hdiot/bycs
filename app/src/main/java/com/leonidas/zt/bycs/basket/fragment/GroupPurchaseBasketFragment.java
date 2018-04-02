@@ -4,7 +4,6 @@ package com.leonidas.zt.bycs.basket.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,9 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
 import com.leonidas.zt.bycs.basket.activity.ConfirmOrderActivity;
@@ -48,7 +50,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
 
     private CheckBox cbAllSelect; //全选
     private TextView tvDelete; //删除按钮
-    private RecyclerView rvCartGoodsList; //购物车内商品的列表
+    private XRecyclerView rvCartGoodsList; //购物车内商品的列表
     private LinearLayout llCheckAll; //全选
     private TextView tvGroupPeopleNum; //拼购人数
     private TextView tvTotalPrice; //总价
@@ -60,15 +62,38 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
     public void initView(View view) {
         findViews(view);
         initListener();
-        rvCartGoodsList.setAdapter(new CartGoodsListRvAdapter(getContext(), GoodsOfGroupPurchaseCartList, cbAllSelect, tvTotalPrice));
+
+        rvCartGoodsList.setLoadingMoreEnabled(true);
+        rvCartGoodsList.setPullRefreshEnabled(true);
+        rvCartGoodsList.setLoadingMoreProgressStyle(ProgressStyle.BallClipRotateMultiple);
+        rvCartGoodsList.setRefreshProgressStyle(AVLoadingIndicatorView.BallScaleMultiple);
+        rvCartGoodsList.setArrowImageView(R.mipmap.arrow_down);
+        rvCartGoodsList.setFootViewText("疯狂加载中...","我是有底线的 -_-|");
         rvCartGoodsList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        rvCartGoodsList.setAdapter(new CartGoodsListRvAdapter(getContext(), GoodsOfGroupPurchaseCartList, cbAllSelect, tvTotalPrice));
+
+
+        rvCartGoodsList.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                initAllGroupPurchaseCartGoods(1516332510603L);
+            }
+
+            @Override
+            public void onLoadMore() {
+                rvCartGoodsList.loadMoreComplete();
+                rvCartGoodsList.setNoMore(true);
+            }
+        });
+
+
         initData(); //加载数据
     }
 
     @Override
     public void initData() {
         super.initData();
-        initGroupPurchaseCartGoods(1516332510603L); //加载购物车商品数据
+        initAllGroupPurchaseCartGoods(1516332510603L); //加载购物车商品数据
         initGroupPurchaseTotalPeople(); //加载拼购组限制人数
     }
 
@@ -111,7 +136,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
     private void findViews(View view) {
         cbAllSelect = view.findViewById(R.id.cb_all_select);
         tvDelete = view.findViewById(R.id.tv_delete);
-        rvCartGoodsList = view.findViewById(R.id.rv_cart_goods_list);
+        rvCartGoodsList = view.findViewById(R.id.xrv_cart_goods_list);
         llCheckAll = view.findViewById(R.id.ll_check_all);
         tvGroupPeopleNum = view.findViewById(R.id.tv_group_people_num);
         tvTotalPrice = view.findViewById(R.id.tv_total_price);
@@ -144,7 +169,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
      * 加载拼购购物车内的商品数据
      * @param UserId 用户ID
      */
-    public void initGroupPurchaseCartGoods(long UserId) {
+    public void initAllGroupPurchaseCartGoods(long UserId) {
         OkHttpUtils.get()
                 .url(Api.QueryUserPurchaseCart)
                 .addParams(ApiParamKey.UserId, UserId + "")
@@ -170,6 +195,8 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
                     Toast.makeText(mContext, "数据获取失败，请联系客服解决！", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //GoodsOfGroupPurchaseCartList = data.getData();
+                GoodsOfGroupPurchaseCartList.clear();
                 GoodsOfGroupPurchaseCartList.addAll(data.getData());
                 CartGoodsListRvAdapter adapter = (CartGoodsListRvAdapter) rvCartGoodsList.getAdapter();
                 adapter.notifyDataSetChanged();
@@ -180,7 +207,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
                 } else {
                     cbAllSelect.setChecked(false);
                 }
-
+                rvCartGoodsList.refreshComplete();
             }
         });
 
@@ -211,7 +238,6 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
         intent.putExtra(Tag_GoodsTotalPrice, tvTotalPrice.getText().toString());
         mContext.startActivity(intent);
     }
-
 
     /**
      * 删除(选中的) 商品
