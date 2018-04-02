@@ -179,7 +179,7 @@ public class GroupPurchaseRvAdapter extends XRecyclerView.Adapter{
             //初始化RecyclerView
             rvClassification = itemView.findViewById(R.id.rv_normal);
             rvClassification.setAdapter(new ClassificationRvAdapter(mContext, ClassificationDataList));
-            rvClassification.setLayoutManager(new GridLayoutManager(mContext, 2, GridLayoutManager.HORIZONTAL, false));
+            rvClassification.setLayoutManager(new GridLayoutManager(mContext, 4));
         }
 
         /**
@@ -197,7 +197,6 @@ public class GroupPurchaseRvAdapter extends XRecyclerView.Adapter{
 
         public GroupPurchaseGoodsViewHolder(View itemView) {
             super(itemView);
-
             //初始化RecyclerView
             rvGroupPurchaseGoods = itemView.findViewById(R.id.rv_normal);
             rvGroupPurchaseGoods.setAdapter(new GroupPurchaseGoodsRvAdapter(mContext, GroupPurchaseGoodsDataList));
@@ -307,7 +306,8 @@ public class GroupPurchaseRvAdapter extends XRecyclerView.Adapter{
                 GroupPurchaseGoodsListVO datas = JSON.parseObject(response, GroupPurchaseGoodsListVO.class);
 
                 if (datas.getData() == null) {//数据出错
-                    Toast.makeText(mContext, "数据错误，请联系客服！", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "数据错误，请联系客服！", Toast.LENGTH_SHORT).show();
+                    mRvGroupPurchase.setNoMore(true);
                     return;
                 }
 

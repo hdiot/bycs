@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+    <!-- 左半部分的收货信息 -->
+    <LinearLayout
+        android:id="@+id/ll_delivery_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <!-- 收货人姓名 -->
+            <TextView
+                android:id="@+id/tv_take_delivery_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收货人:某某某"
+                android:textColor="#DD000000"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tv_take_delivery_phone_num"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text="13112341234"
+                android:textColor="#DD000000" />
+
+            <!--<ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/modify_congtent" />-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_take_delivery_address"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="收货地址:广东海洋大学"
+                android:textColor="#DD000000" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_alignBottom="@id/ll_delivery_address"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeee" />
+
+</RelativeLayout>

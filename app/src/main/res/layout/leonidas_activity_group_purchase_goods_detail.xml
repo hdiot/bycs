@@ -87,13 +87,12 @@
                         </LinearLayout>
 
                         <com.mcxtzhang.lib.AnimShopButton
-                            android:id="@+id/shop_button"
+                            android:id="@+id/bt_add_cart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:addEnableBgColor="#3190E8"
                             app:addEnableFgColor="#ffffff"
                             app:hintBgColor="#3190E8"
-                            app:hintBgRoundValue="15dp"
                             app:hintFgColor="#ffffff"
                             app:maxCount="99"/>
 
@@ -123,16 +122,18 @@
     <!-- 预留部分-用于后期做推荐或者评论的 -->
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:visibility="gone">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_extra_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.NestedScrollView>
 
+
 </android.support.design.widget.CoordinatorLayout>
+

@@ -27,5 +27,15 @@ public class ApiParamKey {
     public static final String ProductQuantity = "productQuantity";
     //提示
     public static final String Hint = "hint";
+    //购物车ItemId
+    public static final String CartItemId = "cartItemId";
+    //数据
+    public static final String Data = "data";
+    //拼购组限制人数
+    public static String GroupPurchaseTotalPeople = "groupNum";
+    //组状态  0 未完成   1已完成
+    public static String GroupStatus;
+    //组活动状态 0 组有效   1 组无效
+    public static String ActiveStatus;
 }
 

@@ -1,7 +1,6 @@
 package com.leonidas.zt.bycs.basket.normal.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,7 +48,7 @@ public class NormalBasketFragment
 
     @Override
     public void loadMore(List<ShopItem> list) {
-        Log.e("list", "loadMore: " + list.size() );
+//        Log.e("list", "loadMore: " + list.size() );
         mBasketAdapter.loadMore(list);
     }
 

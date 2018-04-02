@@ -1,5 +1,6 @@
 package com.leonidas.zt.bycs.group.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -126,7 +127,7 @@ public class GroupPurchaseGoodsClassificationVO {
                 this.list = list;
             }
 
-            public static class ListBean {
+            public static class ListBean implements Serializable{
                 /**
                  * categoryId : 1515557064589
                  * categoryName : 蔬菜

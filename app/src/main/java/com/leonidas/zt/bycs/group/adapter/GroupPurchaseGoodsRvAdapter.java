@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.group.activity.GroupPurchaseGoodsDetailActivity;
 import com.leonidas.zt.bycs.group.utils.Api;
@@ -159,12 +158,15 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
          */
         @Override
         public void onDelSuccess(int count) {
+            addGoodsToCart(data.getProductId(),count);
             if (isModifyCount()) { //正在进行添加此商品进入购物车操作（网络操作）
                 btAddCart.setCount((count - 1));
                 Toast.makeText(mContext, "正在消减，请稍后！", Toast.LENGTH_SHORT).show();
                 return;
             }
             Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
+            Log.e("productedid", data.getProductId() + "");
+            addGoodsToCart(data.getProductId(),count);
         }
 
         /**
@@ -186,7 +188,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
          * @param count 商品数量
          */
         private void addGoodsToCart(long productId, int count) {
-            int UserId = 1;
+            long UserId = 1516332510603L;
             JSONObject mJo = new JSONObject();
             mJo.put(ApiParamKey.UserId, UserId);
             mJo.put(ApiParamKey.ProductId, productId);

@@ -20,7 +20,19 @@ public class Api {
     //查询拼购商品的详情
     public static final String QueryGroupPurchaseGoodsDetail = Base + "market/front/groupProduct";
     //获取用户购物车数据
-    public static final String QueryUserCart = Base + "market/cartItem";
+    public static final String QueryUserPurchaseCart = Base + "market/pgCartItem";
     //添加（拼购）商品到购物车中
     public static final String AddPgGoodsToCart = Base + "market/pgCartItem";
+    //通过CartItemId删除商品
+    public static final String DeleteGoodsByCartItemId = Base + "market/pgCartItem";
+    //获取当天拼购组限制人数
+    public static final String QueryGroupPurchaseTotalPeople = Base + "market/groupinfo/day";
+    //获取用户默认收获地址
+    public static String QueryUserDefaultDeliveryAddress = Base + "market/userAddress/getDefaultAddress";
+    //获取用户所有收货地址
+    public static String QueryUserAllDeliveryAddress = Base + "market/userAddress/user";
+    //添加拼购订单
+    public static String AddGroupPurchaseOder = Base + "market/pgOrder";
+    //查询拼购组
+    public static String QueryGroupPurchaseGroup = Base + "market/0/0/group/list";
 }

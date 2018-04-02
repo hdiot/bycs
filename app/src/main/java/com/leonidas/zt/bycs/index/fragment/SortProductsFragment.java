@@ -171,8 +171,6 @@ public class SortProductsFragment extends BaseFragment {
                     errorLayout.setToDoBtnVisibility(View.VISIBLE);
                 }
 
-
-
             }
 
             @Override
