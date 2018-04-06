@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.group.adapter.GroupPurchaseGoodsRvAdapter;
 import com.leonidas.zt.bycs.group.utils.Api;
 import com.leonidas.zt.bycs.group.utils.ApiParamKey;
@@ -126,7 +128,12 @@ public class GroupPurchaseGoodsDetailActivity extends AppCompatActivity implemen
                             public void displayImage(Context context, Object path, ImageView imageView) {
                                 GroupPurchaseGoodsVO.DataBean.GroupProductBean.ProductPicturesBean PathBean
                                         = (GroupPurchaseGoodsVO.DataBean.GroupProductBean.ProductPicturesBean)path;
-                                Glide.with(getBaseContext()).load(Api.BaseImg + PathBean.getPicturePath()).into(imageView);
+                                GlideApp.with(mContext)
+                                        .load(Api.BaseImg + PathBean.getPicturePath())
+                                        .error(R.mipmap.mebee_image_bg)
+                                        .transform(new RoundedCorners(20))
+                                        .transition(new DrawableTransitionOptions().crossFade(200))
+                                        .into(imageView);
                             }
                         }).start();
                         //商品名称
@@ -165,7 +172,6 @@ public class GroupPurchaseGoodsDetailActivity extends AppCompatActivity implemen
             btAddCart.setCount(0);
             return;
         }
-        Log.e("productedid", data.getData().getGroupProduct().getProductId() + "");
         AddGoodsToCart(data.getData().getGroupProduct() ,count);
     }
 
@@ -184,8 +190,6 @@ public class GroupPurchaseGoodsDetailActivity extends AppCompatActivity implemen
             btAddCart.setCount(0);
             return;
         }
-        Toast.makeText(mContext, "count == " + count, Toast.LENGTH_SHORT).show();
-        Log.e("productedid", data.getData().getGroupProduct().getProductId() + "");
         DelGoodsToCart(data.getData().getGroupProduct() ,count);
     }
 
@@ -269,7 +273,7 @@ public class GroupPurchaseGoodsDetailActivity extends AppCompatActivity implemen
         long UserId = 1516332510603L;
         JSONObject mJo = new JSONObject();
         mJo.put(ApiParamKey.UserId, UserId);
-        mJo.put(ApiParamKey.ProductId, groupProduct);
+        mJo.put(ApiParamKey.ProductId, groupProduct.getProductId());
         mJo.put(ApiParamKey.ProductQuantity, count);
 
         OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())

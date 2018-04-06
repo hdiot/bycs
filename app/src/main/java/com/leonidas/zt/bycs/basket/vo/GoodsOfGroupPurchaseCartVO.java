@@ -13,10 +13,11 @@ import java.util.List;
 
 public class GoodsOfGroupPurchaseCartVO implements Serializable{
 
+
     /**
      * code : 1
      * hint : 成功！
-     * data : [{"itemId":"1517641851681884708","userId":1,"productQuantity":1,"productId":25473687528098376,"productName":"商品名称6","productOprice":6.5,"productNprice":6,"productStock":2,"productUnit":"6商品单位","productDesc":"商品描述6"},{"itemId":"1517794894272564603","userId":1,"productQuantity":2,"productId":25473687528098376,"productName":"商品名称6","productOprice":6.5,"productNprice":6,"productStock":2,"productUnit":"6商品单位","productDesc":"商品描述6"},{"itemId":"1517808825290791988","userId":1,"productQuantity":1,"productId":190544316423948380,"productName":"商品名称16","productOprice":16.5,"productNprice":16,"productStock":16,"productUnit":"16商品单位","productDesc":"商品描述16"},{"itemId":"1517808831958574956","userId":1,"productQuantity":1,"productId":293591630214219900,"productName":"商品名称8","productOprice":8.5,"productNprice":8,"productStock":5,"productUnit":"8商品单位","productDesc":"商品描述8"},{"itemId":"1517808842537675266","userId":1,"productQuantity":1,"productId":296852422888279740,"productName":"商品名称21","productOprice":21.5,"productNprice":21,"productStock":19,"productUnit":"21商品单位","productDesc":"商品描述21"},{"itemId":"1519870190452181397","userId":1,"productQuantity":1,"productId":1764160889292670700,"productName":"商品名称5","productOprice":5.5,"productNprice":5,"productStock":5,"productUnit":"5商品单位","productDesc":"商品描述5"},{"itemId":"1519889656357889825","userId":1,"productQuantity":1,"productId":711628765302901200,"productName":"商品名称26","productOprice":26.5,"productNprice":26,"productStock":26,"productUnit":"26商品单位","productDesc":"商品描述26"}]
+     * data : [{"itemId":"1517638893278342503","userId":1,"productQuantity":3,"productId":25473687528098376,"productName":"商品名称6","productOprice":6.5,"productNprice":6,"productStock":6,"productUnit":"6商品单位","productDesc":"商品描述6","picturePath":"1.jpg"},{"itemId":"1517639760557385656","userId":1,"productQuantity":1,"productId":47279305344041790,"productName":"商品名称10","productOprice":10.5,"productNprice":10,"productStock":10,"productUnit":"10商品单位","productDesc":"商品描述10","picturePath":"1.jpg"}]
      */
 
     private int code;
@@ -49,16 +50,17 @@ public class GoodsOfGroupPurchaseCartVO implements Serializable{
 
     public static class DataBean implements Serializable{
         /**
-         * itemId : 1517641851681884708
+         * itemId : 1517638893278342503
          * userId : 1
-         * productQuantity : 1
+         * productQuantity : 3
          * productId : 25473687528098376
          * productName : 商品名称6
          * productOprice : 6.5
          * productNprice : 6
-         * productStock : 2
+         * productStock : 6
          * productUnit : 6商品单位
          * productDesc : 商品描述6
+         * picturePath : 1.jpg
          */
 
         private String itemId;
@@ -71,14 +73,15 @@ public class GoodsOfGroupPurchaseCartVO implements Serializable{
         private int productStock;
         private String productUnit;
         private String productDesc;
-        private boolean isSelect = true; //是否被选中
+        private String picturePath;
+        private boolean isSelected = true;
 
-        public boolean isSelect() {
-            return isSelect;
+        public boolean isSelected() {
+            return isSelected;
         }
 
-        public void setSelect(boolean select) {
-            isSelect = select;
+        public void setSelected(boolean selected) {
+            isSelected = selected;
         }
 
         public String getItemId() {
@@ -159,6 +162,14 @@ public class GoodsOfGroupPurchaseCartVO implements Serializable{
 
         public void setProductDesc(String productDesc) {
             this.productDesc = productDesc;
+        }
+
+        public String getPicturePath() {
+            return picturePath;
+        }
+
+        public void setPicturePath(String picturePath) {
+            this.picturePath = picturePath;
         }
     }
 }

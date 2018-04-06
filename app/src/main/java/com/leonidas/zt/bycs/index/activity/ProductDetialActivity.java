@@ -2,9 +2,9 @@ package com.leonidas.zt.bycs.index.activity;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +16,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.index.adapter.RcvCommentAdapter;
 import com.leonidas.zt.bycs.index.bean.Data;
@@ -157,8 +159,11 @@ public class ProductDetialActivity extends AppCompatActivity {
     private void initProductData() {
         if (mProduct == null)
             return;
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(Constant.API.images + mProduct.getProductIcon())
+                .error(R.mipmap.mebee_image_bg)
+                .transform(new RoundedCorners(20))
+                .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(mProductImg);
         mProductNameTxt.setText(mProduct.getProductName());
         mProductPriceTxt.setText(String.valueOf(mProduct.getProductPrice()));

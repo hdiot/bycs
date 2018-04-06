@@ -1,7 +1,5 @@
 package com.leonidas.zt.bycs.basket.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -27,17 +25,11 @@ import com.leonidas.zt.bycs.group.utils.Api;
 import com.leonidas.zt.bycs.group.utils.ApiParamKey;
 import com.leonidas.zt.bycs.index.utils.BaseCallback;
 import com.leonidas.zt.bycs.index.utils.OkHttpHelper;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -80,7 +72,6 @@ public class ConfirmOrderActivity extends AppCompatActivity implements View.OnCl
     private String TakeDeliveryAddress; //收货地址
     private int PayWay;//支付方式
 
-    private List<GoodsOfGroupPurchaseCartVO.DataBean> GoodsOfOrders = new ArrayList<>(); //订单中的商品
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,7 +179,7 @@ public class ConfirmOrderActivity extends AppCompatActivity implements View.OnCl
             SelectedAddress();
         } else {
             if (v == btGoGroupPurchase) {
-                GoGroupPurchase(RecevingId, GoodsOfOrders);
+                GoGroupPurchase(RecevingId, OrderOfGoodsList);
             }
         }
 
@@ -203,64 +194,6 @@ public class ConfirmOrderActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra(GroupPurchasePayActivity.Tag_AddressId, AddressId);
         intent.putExtra(Tag_GoodsTotalPrice, tvTotalMoney.getText().toString().trim());
         this.startActivity(intent);
-    }
-
-    /**
-     * 提交未签名订单到App的服务器，应该使用同步请求，这时应该有过渡动画，等待服务器返回签名后的订单信息再进行下一步操作。
-     */
-    private void CommitNotSignOrderToAppServer(Long UserId,Long AddressId,List<GoodsOfGroupPurchaseCartVO.DataBean> CartItemList) {
-        if (!CheckAllParamLegality()) { //检查所有参数的合法性
-            return;
-        }
-        //创建订单JSON对象
-        JSONObject mJO = new JSONObject();
-        mJO.put("userId", UserId); //用户ID
-        mJO.put("addressId", AddressId); //地址ID
-        mJO.put("cartItemList", CartItemList); //订单商品列表
-
-        //提示用户请稍后
-
-
-        //1.发送订单签名请求
-        final RequestCall call = OkHttpUtils.postString()
-                .url(Api.AddGroupPurchaseOder)
-                .content(mJO.toJSONString())
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .build();
-
-        //用户等待时间过长（网络环境很差的情况）时可以取消此次支付
-        final AlertDialog dialog = new AlertDialog.Builder(this).setTitle("支付").setMessage("请稍后...")
-                .setCancelable(false).setNegativeButton("取消支付", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        call.cancel();  //取消支付请求
-                        Toast.makeText(ConfirmOrderActivity.this, "支付取消", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
-
-        call.execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Log.e("onError", e.toString());
-                if (e instanceof java.net.SocketTimeoutException) { //请求超时
-                    Toast.makeText(ConfirmOrderActivity.this, "网络繁忙，请稍后再试!", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                Log.e("onResponse", response);
-                dialog.dismiss();
-                Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                //调用payTask方法进行支付
-
-                //提交订单到App服务器
-
-            }
-
-        });
-
     }
 
     /**

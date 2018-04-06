@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.basket.vo.GoodsOfGroupPurchaseCartVO;
+import com.leonidas.zt.bycs.group.utils.Api;
 
 import java.util.List;
 
@@ -76,7 +80,12 @@ public class OrderContentRecyclerViewAdapter extends RecyclerView.Adapter {
          * @param data
          */
         public void setData(GoodsOfGroupPurchaseCartVO.DataBean data) {
-            //Glide.with(mContext).load(Api.BaseImg + data.get).into(ivGoods);
+            GlideApp.with(mContext)
+                    .load(Api.BaseImg + data.getPicturePath())
+                    .error(R.mipmap.mebee_image_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(ivGoods);
             tvGoodsName.setText(data.getProductName());
             tvGoodsLimit.setText(data.getProductUnit());
             tvGoodsCopyCount.setText(data.getProductQuantity() + "");

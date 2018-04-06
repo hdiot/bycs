@@ -13,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.group.activity.GroupPurchaseGoodsDetailActivity;
 import com.leonidas.zt.bycs.group.utils.Api;
 import com.leonidas.zt.bycs.group.utils.ApiParamKey;
@@ -96,7 +98,12 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
 
         public void setData(GroupPurchaseGoodsListVO.DataBean.GroupProductsBean.ListBean data) {
             this.data = data;
-            Glide.with(mContext).load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath()).into(ivGoods);
+            GlideApp.with(mContext)
+                    .load(Api.BaseImg + data.getProductPictures().get(0).getPicturePath())
+                    .error(R.mipmap.mebee_image_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(ivGoods);
             tvGoodsName.setText(data.getProductName());
             tvGoodsStock.setText(data.getProductStock() + "");
             tvGoodsLimit.setText(data.getProductUnit() + "");
@@ -138,7 +145,6 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
                 btAddCart.setCount(0);
                 return;
             }
-            Log.e("productedid", data.getProductId() + "");
             AddGoodsToCart(data ,count);
         }
 
@@ -167,7 +173,6 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
                 btAddCart.setCount(0);
                 return;
             }
-            Log.e("productedid", data.getProductId() + "");
             DelGoodsToCart(data ,count);
         }
 
@@ -251,7 +256,7 @@ public class GroupPurchaseGoodsRvAdapter extends RecyclerView.Adapter {
             long UserId = 1516332510603L;
             JSONObject mJo = new JSONObject();
             mJo.put(ApiParamKey.UserId, UserId);
-            mJo.put(ApiParamKey.ProductId, groupProduct);
+            mJo.put(ApiParamKey.ProductId, groupProduct.getProductId());
             mJo.put(ApiParamKey.ProductQuantity, count);
 
             OkHttpUtils.postString().url(Api.ModifyPgGoodsToCart).content(mJo.toJSONString())
