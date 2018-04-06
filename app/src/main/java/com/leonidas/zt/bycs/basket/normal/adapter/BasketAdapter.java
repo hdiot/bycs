@@ -94,8 +94,7 @@ public class BasketAdapter extends RecyclerView.Adapter<ViewHolder> {
                 ((VHItem) holder).cost.setText(productItem.getProductQuantity()*productItem.getProductPrice()+"");
                 ((VHItem) holder).quantity.setText(productItem.getProductQuantity()+"");
                 ((VHItem) holder).amount.setText(productItem.getProductQuantity()+"");
-                ((VHItem) holder).checkBox.setOnCheckedChangeListener(new CompoundButton
-                        .OnCheckedChangeListener() {
+                ((VHItem) holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 

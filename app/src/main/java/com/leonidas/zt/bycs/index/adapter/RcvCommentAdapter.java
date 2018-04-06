@@ -55,7 +55,7 @@ public class RcvCommentAdapter extends XRecyclerView.Adapter<RcvCommentAdapter.V
         holder.userName.setText(mComments.get(position).getUserName());
         GlideApp.with(mContext)
                 .load(Constant.API.images + mComments.get(position).getUserHead())
-                .error(R.mipmap.mebee_image_bg)
+                .error(R.mipmap.mebee_bg_square)
                 .transform(new RoundedCorners(20))
                 .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.head);

@@ -79,7 +79,7 @@ public class RcvProductAdapter extends XRecyclerView.Adapter<RcvProductAdapter.V
                 .transform(new RoundedCorners(20))
                 .transition(new DrawableTransitionOptions().crossFade(200))
                 .into(holder.productImg);
-        holder.item.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ProductDetialActivity.class);
@@ -104,7 +104,6 @@ public class RcvProductAdapter extends XRecyclerView.Adapter<RcvProductAdapter.V
         TextView productPriceTxt;
         TextView productOrgPriceTxt;
         AnimShopButton animShopButton;
-        View item;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -115,7 +114,6 @@ public class RcvProductAdapter extends XRecyclerView.Adapter<RcvProductAdapter.V
             productOrgPriceTxt = (TextView) itemView.findViewById(R.id.txt_product_org_price);
             productStockTxt = (TextView) itemView.findViewById(R.id.txt_product_stock);
             animShopButton = (AnimShopButton) itemView.findViewById(R.id.shop_button);
-            item = itemView;
         }
     }
 

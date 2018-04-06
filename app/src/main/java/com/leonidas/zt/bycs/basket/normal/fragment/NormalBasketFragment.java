@@ -48,7 +48,7 @@ public class NormalBasketFragment
 
     @Override
     public void loadMore(List<ShopItem> list) {
-//        Log.e("list", "loadMore: " + list.size() );
+        //Log.e("list", "loadMore: " + list.size() );
         mBasketAdapter.loadMore(list);
     }
 
@@ -82,6 +82,11 @@ public class NormalBasketFragment
     @Override
     public void loadMoreFinish() {
         mXrcv.loadMoreComplete();
+    }
+
+    @Override
+    public void onError(CharSequence s) {
+        mErrorLayout.setErrorMessage(s);
     }
 
     @Override

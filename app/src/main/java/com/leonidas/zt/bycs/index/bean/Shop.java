@@ -17,6 +17,7 @@ public class Shop implements Serializable {
      * shopAddress : 商店地址22
      * shopPhone : 商店电话22
      * shopDesc : 商店描述22
+     * shopNote : 商店备注
      * shopSale : 22
      * shopGrade : 1
      * limitPrice : 22
@@ -30,6 +31,10 @@ public class Shop implements Serializable {
     private String shopAddress;
     private String shopPhone;
     private String shopDesc;
+    private String shopNote;
+
+
+
     private int shopSale;
     private int shopGrade;
     private int limitPrice;
@@ -42,6 +47,7 @@ public class Shop implements Serializable {
                 "\nshopName:" + shopName+
                 "\nshopPhone:" + shopPhone+
                 "\nshopDesc:" + shopDesc+
+                "\nshopNode:" + shopNote +
                 "\nshopSale:" + shopSale+
                 "\nshopGrade:" + shopGrade+
                 "\nlimitPrice:" + limitPrice+
@@ -88,6 +94,15 @@ public class Shop implements Serializable {
 
     public void setShopDesc(String shopDesc) {
         this.shopDesc = shopDesc;
+    }
+
+    public String getShopNote() {
+
+        return shopNote;
+    }
+
+    public void setShopNote(String shopNote) {
+        this.shopNote = shopNote;
     }
 
     public int getShopSale() {
