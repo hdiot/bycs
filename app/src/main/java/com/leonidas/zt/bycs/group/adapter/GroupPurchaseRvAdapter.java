@@ -201,6 +201,7 @@ public class GroupPurchaseRvAdapter extends XRecyclerView.Adapter{
             rvGroupPurchaseGoods = itemView.findViewById(R.id.rv_normal);
             rvGroupPurchaseGoods.setAdapter(new GroupPurchaseGoodsRvAdapter(mContext, GroupPurchaseGoodsDataList));
             rvGroupPurchaseGoods.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+
         }
 
         /**

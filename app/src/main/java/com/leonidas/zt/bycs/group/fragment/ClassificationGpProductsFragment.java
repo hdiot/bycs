@@ -184,7 +184,7 @@ public class ClassificationGpProductsFragment extends BaseFragment{
 
             @Override
             public void onError(Response response, int errCode, Exception e) {
-
+                Log.e("onError", e.toString());
             }
 
             @Override

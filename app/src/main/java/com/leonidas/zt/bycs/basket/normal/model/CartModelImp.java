@@ -29,7 +29,6 @@ public class CartModelImp implements CartModel {
         params.put("productQuantity", quantity);
         params.put("itemCategory", category);
         okHttpHelper.doPost(Constant.API.addToCart, JSON.toJSON(params).toString(), callback);
-
     }
 
     @Override

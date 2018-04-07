@@ -27,13 +27,27 @@
             android:layout_weight="2"
             android:src="@drawable/leonidas_new_img_loading"/>
 
-        <TextView
-            android:id="@+id/tv_selected_pg_start_time_and_lake_people"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            android:gravity="center_vertical"
-            android:text="HH时MM分之前开团，还差N人。"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_selected_group_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="拼购组ID：XXX" />
+            <TextView
+                android:id="@+id/tv_selected_pg_start_time_and_lake_people"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="HH时MM分之前开团，还差N人。"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="0dp"

@@ -9,8 +9,12 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.basket.vo.GoodsOfGroupPurchaseCartVO;
+import com.leonidas.zt.bycs.group.utils.Api;
 
 import java.util.List;
 
@@ -85,10 +89,15 @@ public class CartGoodsListRvAdapter extends RecyclerView.Adapter {
          * @param position
          */
         public void setData(GoodsOfGroupPurchaseCartVO.DataBean data, int position) {
-            cbIsSelect.setChecked(data.isSelect());
+            cbIsSelect.setChecked(data.isSelected());
             cbIsSelect.setTag(cbIsSelect.getId(), position);
             cbIsSelect.setOnClickListener(this);
-            //Glide.with(mContext).load(Api.BaseImg + data.get).into(ivGoods);
+            GlideApp.with(mContext)
+                    .load(Api.BaseImg + data.getPicturePath())
+                    .error(R.mipmap.mebee_image_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(ivGoods);
             tvGoodsName.setText(data.getProductName());
             tvGoodsLimit.setText(data.getProductUnit());
             tvGoodsCopyCount.setText(data.getProductQuantity() + "");
@@ -104,7 +113,7 @@ public class CartGoodsListRvAdapter extends RecyclerView.Adapter {
                 GoodsOfGroupPurchaseCartVO.DataBean goods = mGoodsOfGroupPurchaseCartList.get(position);
                 //设置状态
                 //goods.setSelect(!goods.isSelect());
-                goods.setSelect(cbIsSelect.isChecked());
+                goods.setSelected(cbIsSelect.isChecked());
                 //校验当前是否“全选”
                 if (isCheckAll()) {
                     cbAllSelect.setChecked(true);
@@ -126,7 +135,7 @@ public class CartGoodsListRvAdapter extends RecyclerView.Adapter {
             //取出被选中的商品进行总价的计算
             for (int i = 0; i < mGoodsOfGroupPurchaseCartList.size(); i++) {
                 GoodsOfGroupPurchaseCartVO.DataBean goods = mGoodsOfGroupPurchaseCartList.get(i);
-                if (goods.isSelect()) {//商品是被选中的才进行计算
+                if (goods.isSelected()) {//商品是被选中的才进行计算
                     //单价 * 数量
                     TotalPrice += Double.valueOf(goods.getProductNprice()) * Double.valueOf(goods.getProductQuantity());
                 }
@@ -146,7 +155,7 @@ public class CartGoodsListRvAdapter extends RecyclerView.Adapter {
             int count = 0; //记录被选中的item的个数
             for (int i = 0; i < mGoodsOfGroupPurchaseCartList.size(); i++) {
                 GoodsOfGroupPurchaseCartVO.DataBean goods = mGoodsOfGroupPurchaseCartList.get(i);
-                if (!goods.isSelect()) {//只要有一个商品没被选中则为非全选
+                if (!goods.isSelected()) {//只要有一个商品没被选中则为非全选
                     isAllSelect = false;
                 } else {
                     count++;
@@ -165,7 +174,7 @@ public class CartGoodsListRvAdapter extends RecyclerView.Adapter {
     public void modifyAllItemSelectStatus(boolean isChecked) {
         if (mGoodsOfGroupPurchaseCartList.size() > 0) {
             for (int i = 0; i < mGoodsOfGroupPurchaseCartList.size(); i++) {
-                mGoodsOfGroupPurchaseCartList.get(i).setSelect(isChecked); //修改内存
+                mGoodsOfGroupPurchaseCartList.get(i).setSelected(isChecked); //修改内存
                 //notifyItemChanged(i); //通知Item内容变更
                 notifyDataSetChanged();
             }

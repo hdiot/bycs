@@ -45,6 +45,7 @@ public class SelectTakeDeliveryAddressActivity extends AppCompatActivity {
                 new BaseCallback<String>() {
                     @Override
                     public void OnSuccess(Response response, String s) {
+                        Log.e("进入", "haha");
                         Log.e("onResponse", s);
                         UserAllReceiveAddressVO data = JSON.parseObject(s, UserAllReceiveAddressVO.class);
                         if (data.getData() == null) {//数据出错
@@ -75,12 +76,12 @@ public class SelectTakeDeliveryAddressActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Request request, IOException e) {
-
+                        Log.e("onError", e.toString());
                     }
 
                     @Override
                     public void onBzError(Response response, int code, String hint, String data) {
-
+                        Log.e("onError", hint);
                     }
                 });
     }

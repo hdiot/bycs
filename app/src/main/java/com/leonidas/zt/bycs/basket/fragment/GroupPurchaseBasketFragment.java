@@ -220,7 +220,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
         // 获取被选中的商品
         List<GoodsOfGroupPurchaseCartVO.DataBean> SelectedCartOfGoodsList = new ArrayList<>();
         for (GoodsOfGroupPurchaseCartVO.DataBean goods : GoodsOfGroupPurchaseCartList) {
-            if (goods.isSelect()) {
+            if (goods.isSelected()) {
                 SelectedCartOfGoodsList.add(goods);
             }
         }
@@ -247,7 +247,7 @@ public class GroupPurchaseBasketFragment extends BaseFragment implements View.On
             //删除选中的数据
             for (int i = 0; i < GoodsOfGroupPurchaseCartList.size(); i++) {
                 GoodsOfGroupPurchaseCartVO.DataBean goods = GoodsOfGroupPurchaseCartList.get(i);
-                if (goods.isSelect()) {//如果勾选,则删除
+                if (goods.isSelected()) {//如果勾选,则删除
                     //1.从内存中移除
                     GoodsOfGroupPurchaseCartList.remove(goods);
                     //2.从服务器删除数据
