@@ -24,7 +24,7 @@ public class ShopInfo implements Serializable {
      * workTime : 24531
      */
 
-    private long shopId;
+    private String shopId;
     private String shopName;
     private String shopAddress;
     private String shopPhone;
@@ -37,11 +37,11 @@ public class ShopInfo implements Serializable {
     private double sendPrice;
     private int workTime;
 
-    public long getShopId() {
+    public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(long shopId) {
+    public void setShopId(String shopId) {
         this.shopId = shopId;
     }
 

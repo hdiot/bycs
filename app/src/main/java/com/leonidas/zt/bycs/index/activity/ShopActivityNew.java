@@ -1,6 +1,7 @@
 package com.leonidas.zt.bycs.index.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -58,7 +59,7 @@ public class ShopActivityNew extends AppCompatActivity {
     private AppBarLayout mAppBarLayout;
     private ViewGroup titleCenterLayout;
     private RoundProgressBar progressBar;
-    private ImageView mSettingIv, mMsgIv;
+    private ImageView mMsgIv;
     private CircleImageView mAvater;
     private CircleImageView mTitleAvater;
     private CommonTabLayout mTablayout;
@@ -67,13 +68,15 @@ public class ShopActivityNew extends AppCompatActivity {
     private TextView mPostFee;
     private TextView mDescription;
     private TextView mScore;
+    private TextView mSole;
     private TextView mShopName;
+    private TextView mTitleName;
     private TextView mAnnounce;
+
+
     private MaterialRatingBar mStar;
 
-
     private Shop mShop;
-
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
@@ -104,12 +107,13 @@ public class ShopActivityNew extends AppCompatActivity {
         mAppBarLayout = (AppBarLayout) findViewById(com.mebee.coordinatorbehavior.R.id.appbar_layout);
         titleCenterLayout = (ViewGroup) findViewById(com.mebee.coordinatorbehavior.R.id.title_center_layout);
         progressBar = (RoundProgressBar) findViewById(com.mebee.coordinatorbehavior.R.id.uc_progressbar);
-        mSettingIv = (ImageView) findViewById(com.mebee.coordinatorbehavior.R.id.uc_setting_iv);
         mMsgIv = (ImageView) findViewById(com.mebee.coordinatorbehavior.R.id.uc_msg_iv);
         mAvater = (CircleImageView) findViewById(com.mebee.coordinatorbehavior.R.id.uc_avater);
         mTablayout = (CommonTabLayout) findViewById(com.mebee.coordinatorbehavior.R.id.uc_tablayout);
         mViewPager = (NoScrollViewPager) findViewById(com.mebee.coordinatorbehavior.R.id.uc_viewpager);
         mTitleAvater = (CircleImageView) findViewById(R.id.title_uc_avater);
+        mTitleName = (TextView) findViewById(R.id.title_uc_title);
+
 
 
         mLimit = findViewById(R.id.frag_uc_limit_tv);
@@ -119,7 +123,7 @@ public class ShopActivityNew extends AppCompatActivity {
         mShopName = findViewById(R.id.frag_uc_nickname_tv);
         mStar = findViewById(R.id.flag_uc_star);
         mAnnounce = findViewById(R.id.flag_uc_announce_tv);
-
+        mSole =  (TextView) findViewById(R.id.flag_uc_sole_tv);
     }
 
 
@@ -127,11 +131,14 @@ public class ShopActivityNew extends AppCompatActivity {
         if (shop == null)
             return;
         Log.e("head", "setData: "+ shop.getShopPictures().get(0).getPicturePath() );
-        /*if (shop.getShopPictures().size()>1) {
+        mZoomIv.setBackgroundColor(R.drawable.mebee_transfrom_bg);
+        if (shop.getShopPictures().size()>1) {
             Glide.with(this)
                     .load(Constant.API.images + shop.getShopPictures().get(1).getPicturePath())
                     .into(mZoomIv);
-        }*/
+        } else {
+            mZoomIv.setBackgroundColor(R.drawable.mebee_transfrom_bg);
+        }
         Glide.with(this)
                 .load(Constant.API.images + shop.getShopPictures().get(0).getPicturePath())
                 .into(mAvater);
@@ -139,12 +146,14 @@ public class ShopActivityNew extends AppCompatActivity {
                 .load(Constant.API.images + shop.getShopPictures().get(0).getPicturePath())
                 .into(mTitleAvater);
         mLimit.setText("￥" + shop.getLimitPrice() + "起送");
-        mPostFee.setText("配送费" + shop.getSendPrice());
+        mPostFee.setText("配送费￥" + shop.getSendPrice());
         mDescription.setText(shop.getShopDesc());
         mScore.setText(shop.getShopGrade() + "");
         mShopName.setText(shop.getShopName());
         mStar.setRating(shop.getShopGrade());
         mAnnounce.setText(shop.getShopNote());
+        mTitleName.setText(shop.getShopName());
+        mSole.setText(shop.getShopSale() + "单");
     }
 
     private void requsetData() {
@@ -202,7 +211,7 @@ public class ShopActivityNew extends AppCompatActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 float percent = Float.valueOf(Math.abs(verticalOffset)) / Float.valueOf(appBarLayout.getTotalScrollRange());
                 Log.d("percent", "onOffsetChanged: " + percent);
-                if (titleCenterLayout != null && mAvater != null && mSettingIv != null && mMsgIv != null) {
+                if (titleCenterLayout != null && mAvater != null && mMsgIv != null) {
                     titleCenterLayout.setAlpha(percent);
                     StatusBarUtil.setTranslucentForImageView(ShopActivityNew.this, (int) (255f * percent), null);
                     if (percent == 0) {
@@ -234,7 +243,7 @@ public class ShopActivityNew extends AppCompatActivity {
                 if (mMsgIv != null) {
                     if (progress == 0 && !progressBar.isSpinning) {
                         mMsgIv.setVisibility(View.VISIBLE);
-                    } else if (progress > 0 && mSettingIv.getVisibility() == View.VISIBLE) {
+                    } else if (progress > 0 ) {
                         mMsgIv.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -295,24 +304,21 @@ public class ShopActivityNew extends AppCompatActivity {
     public void groupChange(float alpha, int state) {
         lastState = state;
 
-        mSettingIv.setAlpha(alpha);
         mMsgIv.setAlpha(alpha);
 
         switch (state) {
             case 1://完全展开 显示白色
                 mMsgIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_msg);
-                mSettingIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_setting);
                 mViewPager.setNoScroll(false);
                 break;
             case 2://完全关闭 显示黑色
                 mMsgIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_msg_black);
-                mSettingIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_setting_black);
+
                 mViewPager.setNoScroll(false);
                 break;
             case 0://介于两种临界值之间 显示黑色
                 if (lastState != 0) {
                     mMsgIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_msg_black);
-                    mSettingIv.setImageResource(com.mebee.coordinatorbehavior.R.mipmap.icon_setting_black);
                 }
                 mViewPager.setNoScroll(true);
                 break;
@@ -356,14 +362,11 @@ public class ShopActivityNew extends AppCompatActivity {
     }
 
     public void getShopId() {
-        mShopId = getIntent().getStringExtra("shopId");
-        mShop = (Shop) getIntent().getSerializableExtra("shop");
-        if (mShopId == null) {
-            throw new RuntimeException("shopId cannot be null");
-        }
 
+        mShop = (Shop) getIntent().getSerializableExtra("shop");
+        mShopId = mShop.getShopId();
         if (mShop == null) {
-            throw new RuntimeException("shop cannot be null");
+            throw new RuntimeException("shopId cannot be null");
         }
 
     }

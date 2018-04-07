@@ -157,8 +157,13 @@ public class OkHttpHelper {
     }
 
     private void doRequest(final Request request, final BaseCallback callback) {
+
+        Call call = mClient.newCall(request);
+
         callbackBeforeRequest(callback, request);
-        mClient.newCall(request).enqueue(new Callback() {
+        // callbackBeforeRequest(callback, request, Call call);
+
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: ");
@@ -195,6 +200,8 @@ public class OkHttpHelper {
                 }
             }
         });
+
+
     }
 
     private void callbackBzError(final BaseCallback callback,

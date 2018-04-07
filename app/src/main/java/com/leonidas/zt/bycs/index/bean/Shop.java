@@ -26,7 +26,7 @@ public class Shop implements Serializable {
      * shopPictures : [{"pictureId":1515567175160,"picturePath":2}]
      */
 
-    private long shopId;
+    private String shopId;
     private String shopName;
     private String shopAddress;
     private String shopPhone;
@@ -37,9 +37,19 @@ public class Shop implements Serializable {
 
     private int shopSale;
     private int shopGrade;
-    private int limitPrice;
-    private int sendPrice;
+    private double limitPrice;
+    private double sendPrice;
     private int workTime;
+    private String sellerName;
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     private List<ShopPicturesBean> shopPictures;
 
     public String toString(){
@@ -56,11 +66,11 @@ public class Shop implements Serializable {
     }
 
 
-    public long getShopId() {
+    public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(long shopId) {
+    public void setShopId(String shopId) {
         this.shopId = shopId;
     }
 
@@ -121,19 +131,19 @@ public class Shop implements Serializable {
         this.shopGrade = shopGrade;
     }
 
-    public int getLimitPrice() {
+    public double getLimitPrice() {
         return limitPrice;
     }
 
-    public void setLimitPrice(int limitPrice) {
+    public void setLimitPrice(double limitPrice) {
         this.limitPrice = limitPrice;
     }
 
-    public int getSendPrice() {
+    public double getSendPrice() {
         return sendPrice;
     }
 
-    public void setSendPrice(int sendPrice) {
+    public void setSendPrice(double sendPrice) {
         this.sendPrice = sendPrice;
     }
 
