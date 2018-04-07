@@ -168,17 +168,23 @@ public class ProductDetialActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        if (mIsNeedPadding) {
+        /*if (mIsNeedPadding) {
             //mToolbar.setPadding(0,getStatusBarHeight(),0,0);
-        }
-        setSupportActionBar(mToolbar);//设置toolbar
+        }*/
+        /*setSupportActionBar(mToolbar);//设置toolbar
         mCollToolbarLay.setTitleEnabled(true);
         mCollToolbarLay.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
         mCollToolbarLay.setExpandedTitleGravity(Gravity.CENTER);////设置展开后标题的位置
         mCollToolbarLay.setTitle("标题");//设置标题的名字
         mCollToolbarLay.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
-        mCollToolbarLay.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
+        mCollToolbarLay.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色*/
         mToolbar.inflateMenu(R.menu.toolbar_basket_only);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

@@ -51,7 +51,7 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/Widget.AppCompat.Toolbar" />
 
-                <include layout="@layout/layout_uc_head_title" />
+                <include layout="@layout/mebee_layout_uc_head_title" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>

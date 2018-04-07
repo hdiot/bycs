@@ -50,7 +50,7 @@ public class Shops {
         this.totalPages = totalPages;
     }
 
-    public boolean isIsFirstPage() {
+    public boolean isFirstPage() {
         return isFirstPage;
     }
 
@@ -58,7 +58,7 @@ public class Shops {
         this.isFirstPage = isFirstPage;
     }
 
-    public boolean isIsLastPage() {
+    public boolean isLastPage() {
         return isLastPage;
     }
 

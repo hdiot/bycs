@@ -1,6 +1,7 @@
 package com.leonidas.zt.bycs.index.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,15 +10,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.leonidas.zt.bycs.R;
+import com.leonidas.zt.bycs.app.glide.GlideApp;
+import com.leonidas.zt.bycs.app.utils.Constant;
+import com.leonidas.zt.bycs.basket.normal.bean.MultipleTypeBean;
 import com.leonidas.zt.bycs.basket.normal.helper.MultipleTypeDataHelper;
+import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
+import com.leonidas.zt.bycs.index.activity.ShopActivityNew;
 import com.leonidas.zt.bycs.index.bean.Product;
 import com.leonidas.zt.bycs.index.bean.SearchShop;
+import com.leonidas.zt.bycs.index.bean.Shop;
 import com.leonidas.zt.bycs.index.bean.ShopInfo;
 import com.mcxtzhang.lib.AnimShopButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Author: mebee.
@@ -60,7 +73,56 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        MultipleTypeBean bean = mMultipleTypeDataHelper.getDatas().get(position);
+        if (holder instanceof HolderMore) {
 
+        } else if (holder instanceof HolderProduct){
+            final Product product = (Product) bean.getmData();
+            ((HolderProduct)holder).productPriceTxt.setText("￥" + product.getProductPrice());
+            ((HolderProduct)holder).productStockTxt.setText("剩余" + product.getProductStock() + "份");
+            ((HolderProduct)holder).productNameTxt.setText(product.getProductName());
+            ((HolderProduct)holder).productLimitTxt.setText("每份" + product.getLimitNumber());
+            GlideApp.with(mContext)
+                    .load(Constant.API.images+product.getProductIcon())
+                    .error(R.mipmap.mebee_image_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(((HolderProduct)holder).productImg);
+            ((HolderProduct)holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, ProductDetialActivity.class);
+                    intent.putExtra("shopId",product.getShopId());
+                    intent.putExtra("productInfo", (Serializable) product);
+                    mContext.startActivity(intent);
+                }
+            });
+        } else if (holder instanceof HolderShop){
+            final ShopInfo shopInfo = (ShopInfo) bean.getmData();
+            ((HolderShop)holder).name.setText(shopInfo.getShopName());
+            ((HolderShop)holder).grade.setText("评分：" + shopInfo.getShopGrade());
+            ((HolderShop)holder).sale.setText("销量" + shopInfo.getShopSale() + "单");
+            ((HolderShop)holder).limitPrice.setText("￥" + shopInfo.getLimitPrice() + "起送");
+            ((HolderShop)holder).sendPrice.setText("配送费￥" + shopInfo.getSendPrice());
+            GlideApp.with(mContext)
+                    .load(Constant.API.images + shopInfo.getShopIcon())
+                    .error(R.mipmap.mebee_image_bg)
+                    .transform(new RoundedCorners(20))
+                    .transition(new DrawableTransitionOptions().crossFade(200))
+                    .into(((HolderShop)holder).image);
+
+            ((HolderShop)holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,ShopActivityNew.class);
+                    intent.putExtra("shopId", shopInfo.getShopId());
+                    intent.putExtra("shop", shopInfoToShop(shopInfo));
+                     /*启动 商家详情 Activity */
+                    startActivity(mContext,
+                            intent, null);
+                }
+            });
+        }
     }
 
     @Override
@@ -82,6 +144,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView sale;
         TextView limitPrice;
         TextView sendPrice;
+        TextView name;
         public HolderShop(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.header_shop_img);
@@ -89,6 +152,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             sale =  (TextView) itemView.findViewById(R.id.header_shop_sale);
             limitPrice =  (TextView) itemView.findViewById(R.id.header_shop_limit_price);
             sendPrice =  (TextView) itemView.findViewById(R.id.header_shop_send_price);
+            name = (TextView) itemView.findViewById(R.id.header_shop_name);
         }
     }
 
@@ -149,16 +213,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         if (shops!=null){
             for (SearchShop shop : shops) {
-                ShopInfo shopInfo = new ShopInfo();
-                shopInfo.setLimitPrice(shop.getLimitPrice());
-                shopInfo.setSendPrice(shop.getSendPrice());
-                shopInfo.setShopAddress(shop.getShopAddress());
-                shopInfo.setShopDesc(shop.getShopDesc());
-                shopInfo.setShopIcon(shop.getShopIcon());
-                shopInfo.setShopGrade(shop.getShopGrade());
-                shopInfo.setShopId(shop.getShopId());
-                shopInfo.setShopPhone(shop.getShopPhone());
-                shopInfo.setShopSale(shop.getShopSale());
+                Log.e("SearchShopID", shop.getShopId() );
+                ShopInfo shopInfo = searchShopToShopInfo(shop);
                 mMultipleTypeDataHelper.add(TYPE_SHOP, shopInfo);
                 for (int i = 0; i < shop.getShopProducts().size(); i++) {
                     if (i < 2){
@@ -172,5 +228,43 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             notifyDataSetChanged();
         }
+    }
+
+    public Shop shopInfoToShop(ShopInfo shopInfo){
+        Shop shop = new Shop();
+        shop.setLimitPrice(shopInfo.getLimitPrice());
+        shop.setShopName(shopInfo.getShopName());
+        shop.setShopAddress(shopInfo.getShopAddress());
+        shop.setShopPhone(shopInfo.getShopPhone());
+        shop.setShopDesc(shopInfo.getShopDesc());
+        shop.setShopNote(shopInfo.getShopNote());
+        shop.setShopSale(shopInfo.getShopSale());
+        shop.setShopGrade(shopInfo.getShopGrade());
+        shop.setSendPrice(shopInfo.getSendPrice());
+        shop.setWorkTime(shopInfo.getWorkTime());
+        shop.setShopId(shopInfo.getShopId());
+        List<Shop.ShopPicturesBean> picturesBeans = new LinkedList<>();
+        Shop.ShopPicturesBean picturesBean = new Shop.ShopPicturesBean();
+        picturesBean.setPicturePath(shopInfo.getShopIcon());
+        picturesBeans.add(picturesBean);
+        shop.setShopPictures(picturesBeans);
+        return shop;
+    }
+
+    public ShopInfo searchShopToShopInfo(SearchShop shop){
+        ShopInfo shopInfo = new ShopInfo();
+        shopInfo.setLimitPrice(shop.getLimitPrice());
+        shopInfo.setShopName(shop.getShopName());
+        shopInfo.setShopAddress(shop.getShopAddress());
+        shopInfo.setShopPhone(shop.getShopPhone());
+        shopInfo.setShopDesc(shop.getShopDesc());
+        shopInfo.setShopNote(shop.getShopNote());
+        shopInfo.setShopSale(shop.getShopSale());
+        shopInfo.setShopGrade(shop.getShopGrade());
+        shopInfo.setSendPrice(shop.getSendPrice());
+        shopInfo.setWorkTime(shop.getWorkTime());
+        shopInfo.setShopIcon(shop.getShopIcon());
+        shopInfo.setShopId(shop.getShopId());
+        return shopInfo;
     }
 }

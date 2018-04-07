@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -27,6 +28,7 @@ public class SortActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private SearchView mSearchView;
     private SlidingTabLayout mTabLayout;
+    private TextView mSearch;
     private ViewPager mViewPager;
     private List<Category> mSorts;
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -52,6 +54,7 @@ public class SortActivity extends AppCompatActivity {
         mSearchView = findViewById(R.id.searchView_sort);
         mTabLayout = findViewById(R.id.tab_sort);
         mViewPager = findViewById(R.id.viewpager_sort);
+        mSearch =  (TextView) findViewById(R.id.txt_search_sort);
 
         initToolbar();
         initSearchView();
@@ -110,9 +113,21 @@ public class SortActivity extends AppCompatActivity {
     }
 
     private void initSearchView() {
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SortActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        };
+
         mSearchView.onActionViewExpanded();
         mSearchView.clearFocus();
         mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setOnClickListener(onClickListener);
+
+        mSearch.setOnClickListener(onClickListener);
     }
 
     private void initToolbar() {

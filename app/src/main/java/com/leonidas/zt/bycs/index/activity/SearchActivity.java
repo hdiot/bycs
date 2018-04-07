@@ -30,7 +30,7 @@ import okhttp3.Response;
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final String TAG = "SearchActivity";
 
-    private Toolbar mToobar;
+    private Toolbar mToolbar;
     private SearchView mSearchView;
     private RecyclerView mRcv;
     private ErrorLayout mErrorLayout;
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void initView() {
-        mToobar = findViewById(R.id.toolbar_search_activity);
+        mToolbar = findViewById(R.id.toolbar_search_activity);
         mRcv = findViewById(R.id.rv_search_activity);
         mErrorLayout = findViewById(R.id.error_layout_search_activity);
         mSearchView = findViewById(R.id.searchView_search_activity);
@@ -90,13 +90,16 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
                     mSearchAdapter.add(dataResMessage.getData().getShops());
                     mErrorLayout.setVisibility(View.GONE);
                 } catch (NullPointerException e){
-
+                    nullResult();
+                } finally {
+                    if (dataResMessage.getData().getShops()==null || dataResMessage.getData().getShops().size() ==0)
+                        nullResult();
                 }
             }
 
             @Override
             public void onError(Response response, int errCode, Exception e) {
-
+                Toast.makeText(SearchActivity.this, "服务器出错", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -106,14 +109,20 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
             @Override
             public void onFailure(Request request, IOException e) {
-
+                Toast.makeText(SearchActivity.this, "网络出错", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onBzError(Response response, int code, String hint, String data) {
-
+                Toast.makeText(SearchActivity.this, hint, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void nullResult() {
+        Toast.makeText(this, "没有找到相应商家、商品，换个试试吧", Toast.LENGTH_SHORT).show();
+        /*mErrorLayout.setVisibility(View.VISIBLE);
+        mErrorLayout.setErrorMessage("没有找到相应商家、商品，换个试试吧");*/
     }
 
     private void initXRCV() {
@@ -125,7 +134,12 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void initToolbar() {
-
+        mToolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

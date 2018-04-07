@@ -245,7 +245,7 @@ public class RcvIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 shopsTotalPage = mShops.getTotalPages();
                                 shopsCurrentPage = mShops.getPageNum();
                                 shopsTotalPage = mShops.getTotalPages();
-                                isShopsLastpage = mShops.isIsLastPage();
+                                isShopsLastpage = mShops.isLastPage();
                                 Log.d(TAG, "OnSuccess: "+ "sortsCurrentPage--"+sortsCurrentPage+ ",sortsTotalPage--" + sortsTotalPage+ ",isSortsLastpage--" + isSortsLastpage);
                                 switch (shopsReqCase){
                                     case FIRST:
