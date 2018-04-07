@@ -10,7 +10,7 @@ package com.leonidas.zt.bycs.group.utils;
 
 public class Api {
     //服务器的BaseUrl
-    public static final String Base = "http://47.106.66.34:8080/";
+    public static final String Base = "http://120.78.87.169:8080/";
     //图片的途径的BaseUrl
     public static final String BaseImg = Base + "market/images/";
     //查询批量拼购商品分类

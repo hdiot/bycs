@@ -76,12 +76,12 @@ public class SelectTakeDeliveryAddressActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Request request, IOException e) {
-                        Log.e("onError", e.toString());
+                        Log.e("onFailure", e.toString());
                     }
 
                     @Override
                     public void onBzError(Response response, int code, String hint, String data) {
-                        Log.e("onError", hint);
+                        Log.e("onBzError", hint);
                     }
                 });
     }
