@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.leonidas.zt.bycs.basket.normal.bean.MultipleTypeBean;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,33 +20,41 @@ public class MultipleTypeDataHelper {
         return datas;
     }
 
-    public void add(@NonNull MultipleTypeBean bean){
+    public void add(@NonNull MultipleTypeBean bean) {
         datas.add(bean);
     }
 
-    public void add(int type, Object data){
+    public void add(int type, Object data) {
         MultipleTypeBean bean = new MultipleTypeBean();
         bean.setmType(type);
         bean.setmData(data);
         datas.add(bean);
     }
 
-    public void remove(MultipleTypeBean bean){
+    public void add(int index, MultipleTypeBean element) {
+        datas.add(index, element);
+    }
+
+    public void add(int index, Collection<? extends MultipleTypeBean> collection){
+        datas.addAll(index, collection);
+    }
+
+    public void remove(MultipleTypeBean bean) {
         datas.remove(bean);
     }
 
-    public void remove(int index){
+    public void remove(int index) {
         datas.remove(index);
     }
 
-    public void clear(){
+    public void clear() {
         datas.clear();
     }
 
-    public void setDatas(@NonNull List<MultipleTypeBean> datas) {
+    public void setDatas(@NonNull ArrayList<MultipleTypeBean> datas) {
         this.datas = datas;
     }
 
-    private List<MultipleTypeBean> datas = new ArrayList<MultipleTypeBean>();
+    private ArrayList<MultipleTypeBean> datas = new ArrayList<MultipleTypeBean>();
 
 }

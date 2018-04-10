@@ -28,7 +28,7 @@
         <activity android:name=".index.activity.SearchActivity" />
         <activity android:name=".index.activity.SortActivity" />
         <activity
-            android:name=".index.activity.ProductDetialActivity"
+            android:name=".index.activity.ProductDetailActivity"
             android:theme="@style/MebeeTheme" />
         <activity android:name=".index.activity.ShopsActivity" />
         <activity android:name=".index.activity.ShopActivity" />

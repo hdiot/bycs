@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.leonidas.zt.bycs.R;
 import com.leonidas.zt.bycs.app.fragment.BaseFragment;
@@ -62,10 +63,12 @@ public class ProductsFragment extends BaseFragment {
     }
 
     private void getProductData(){
-        Map<String,String> map = new LinkedHashMap<String,String>(1);
-        map.put("shopId",mShopId);
 
-        mHttpHelper.doGet(Constant.API.getProducts, map, new BaseCallback<ResMessage<Data<Products>>>() {
+        StringBuffer params = new StringBuffer();
+        params.append("?shopId=");
+        params.append(mShopId);
+
+        mHttpHelper.doGet(Constant.API.getProducts + params.toString(), new BaseCallback<ResMessage<Data<Products>>>() {
 
             @Override
             public void OnSuccess(Response response, ResMessage<Data<Products>> dataResMessage) {

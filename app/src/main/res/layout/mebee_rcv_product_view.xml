@@ -91,7 +91,7 @@
                     app:hintBgColor="#3190E8"
                     app:hintBgRoundValue="15dp"
                     app:hintFgColor="#ffffff"
-                    app:maxCount="99"/>
+                    app:maxCount="0"/>
 
             </LinearLayout>
             <TextView

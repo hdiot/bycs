@@ -37,9 +37,9 @@ import java.util.WeakHashMap;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProductDetialActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "ProductDetialActivity";
+    private static final String TAG = "ProductDetailActivity";
     private Toolbar mToolbar;
     private CollapsingToolbarLayout mCollToolbarLay;
     private ImageView mProductImg;
@@ -65,10 +65,10 @@ public class ProductDetialActivity extends AppCompatActivity {
 
     private void getInfoFromStart() {
         mProduct = (Product) getIntent().getSerializableExtra("productInfo");
-        mShopId = getIntent().getStringExtra("shopId");
         if (mProduct == null) {
             throw new RuntimeException("Product can not be null");
         }
+        mShopId = mProduct.getShopId();
     }
 
     private void setStatusBar(){

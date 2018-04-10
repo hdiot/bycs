@@ -136,4 +136,17 @@ public class ErrorLayout extends LinearLayout {
     public void setToDoBtnOnClickListener(OnClickListener listener) {
         toDoBtn.setOnClickListener(listener);
     }
+
+    public void setDismissAll(){
+        errorMessage.setVisibility(GONE);
+        toDoBtn.setVisibility(GONE);
+        loadingIndicatorView.setVisibility(GONE);
+        this.setVisibility(GONE);
+    }
+
+    public void setToDoBtnText(String s) {
+        if (s != null) {
+            toDoBtn.setText(s);
+        }
+    }
 }

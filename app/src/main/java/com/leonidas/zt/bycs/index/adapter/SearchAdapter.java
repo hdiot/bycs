@@ -17,7 +17,7 @@ import com.leonidas.zt.bycs.app.glide.GlideApp;
 import com.leonidas.zt.bycs.app.utils.Constant;
 import com.leonidas.zt.bycs.basket.normal.bean.MultipleTypeBean;
 import com.leonidas.zt.bycs.basket.normal.helper.MultipleTypeDataHelper;
-import com.leonidas.zt.bycs.index.activity.ProductDetialActivity;
+import com.leonidas.zt.bycs.index.activity.ProductDetailActivity;
 import com.leonidas.zt.bycs.index.activity.ShopActivityNew;
 import com.leonidas.zt.bycs.index.bean.Product;
 import com.leonidas.zt.bycs.index.bean.SearchShop;
@@ -64,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TYPE_SHOP:
                 Log.e("searchHolder", "TYPE_SHOP: ");
                 view = LayoutInflater.from(mContext).inflate(R.layout.mebee_search_shop_header, parent, false);
-                holder =new HolderShop(view);
+                holder = new HolderShop(view);
                 break;
         }
 
@@ -72,49 +72,81 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         MultipleTypeBean bean = mMultipleTypeDataHelper.getDatas().get(position);
-        if (holder instanceof HolderMore) {
 
-        } else if (holder instanceof HolderProduct){
+        if (holder instanceof HolderMore) {
+            final MoreProduct moreProduct = (MoreProduct) bean.getmData();
+            if (!moreProduct.isShow) {
+                ((HolderMore) holder).more.setText("展开更多商品：" + moreProduct.getSize() + "个");
+            } else {
+                ((HolderMore) holder).more.setText("收起");
+            }
+            ((HolderMore) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!moreProduct.isShow) {
+                        moreProduct.setShow(true);
+                        ArrayList<MultipleTypeBean> beans = new ArrayList<>();
+                        for (Product mHideProduct : moreProduct.mHideProducts) {
+                            MultipleTypeBean bean = new MultipleTypeBean();
+                            bean.setmType(TYPE_PRODUCT);
+                            bean.setmData(mHideProduct);
+                            beans.add(bean);
+                        }
+                        mMultipleTypeDataHelper.add(position, beans);
+                        notifyDataSetChanged();
+                    } else {
+                        moreProduct.setShow(false);
+                        int startIndex = position - 1;
+                        for (int i = 0; i < moreProduct.getSize(); i++) {
+                            mMultipleTypeDataHelper.remove(startIndex);
+                            --startIndex;
+                        }
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+
+        } else if (holder instanceof HolderProduct) {
             final Product product = (Product) bean.getmData();
-            ((HolderProduct)holder).productPriceTxt.setText("￥" + product.getProductPrice());
-            ((HolderProduct)holder).productStockTxt.setText("剩余" + product.getProductStock() + "份");
-            ((HolderProduct)holder).productNameTxt.setText(product.getProductName());
-            ((HolderProduct)holder).productLimitTxt.setText("每份" + product.getLimitNumber());
+            ((HolderProduct) holder).productPriceTxt.setText("￥" + product.getProductPrice());
+            ((HolderProduct) holder).productStockTxt.setText("剩余" + product.getProductStock() + "份");
+            ((HolderProduct) holder).productNameTxt.setText(product.getProductName());
+            ((HolderProduct) holder).productLimitTxt.setText("每份" + product.getLimitNumber());
             GlideApp.with(mContext)
-                    .load(Constant.API.images+product.getProductIcon())
+                    .load(Constant.API.images + product.getProductIcon())
                     .error(R.mipmap.mebee_image_bg)
                     .transform(new RoundedCorners(20))
                     .transition(new DrawableTransitionOptions().crossFade(200))
-                    .into(((HolderProduct)holder).productImg);
-            ((HolderProduct)holder).itemView.setOnClickListener(new View.OnClickListener() {
+                    .into(((HolderProduct) holder).productImg);
+            ((HolderProduct) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ProductDetialActivity.class);
-                    intent.putExtra("shopId",product.getShopId());
+                    Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                    intent.putExtra("shopId", product.getShopId());
                     intent.putExtra("productInfo", (Serializable) product);
                     mContext.startActivity(intent);
                 }
             });
-        } else if (holder instanceof HolderShop){
+        } else if (holder instanceof HolderShop) {
             final ShopInfo shopInfo = (ShopInfo) bean.getmData();
-            ((HolderShop)holder).name.setText(shopInfo.getShopName());
-            ((HolderShop)holder).grade.setText("评分：" + shopInfo.getShopGrade());
-            ((HolderShop)holder).sale.setText("销量" + shopInfo.getShopSale() + "单");
-            ((HolderShop)holder).limitPrice.setText("￥" + shopInfo.getLimitPrice() + "起送");
-            ((HolderShop)holder).sendPrice.setText("配送费￥" + shopInfo.getSendPrice());
+            ((HolderShop) holder).name.setText(shopInfo.getShopName());
+            ((HolderShop) holder).grade.setText("评分：" + shopInfo.getShopGrade());
+            ((HolderShop) holder).sale.setText("销量" + shopInfo.getShopSale() + "单");
+            ((HolderShop) holder).limitPrice.setText("￥" + shopInfo.getLimitPrice() + "起送");
+            ((HolderShop) holder).sendPrice.setText("配送费￥" + shopInfo.getSendPrice());
             GlideApp.with(mContext)
                     .load(Constant.API.images + shopInfo.getShopIcon())
                     .error(R.mipmap.mebee_image_bg)
                     .transform(new RoundedCorners(20))
                     .transition(new DrawableTransitionOptions().crossFade(200))
-                    .into(((HolderShop)holder).image);
+                    .into(((HolderShop) holder).image);
 
-            ((HolderShop)holder).itemView.setOnClickListener(new View.OnClickListener() {
+            ((HolderShop) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext,ShopActivityNew.class);
+                    Intent intent = new Intent(mContext, ShopActivityNew.class);
                     intent.putExtra("shopId", shopInfo.getShopId());
                     intent.putExtra("shop", shopInfoToShop(shopInfo));
                      /*启动 商家详情 Activity */
@@ -138,20 +170,21 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     /**
      * 商店 Item ViewHolder
      */
-    class HolderShop extends RecyclerView.ViewHolder{
+    class HolderShop extends RecyclerView.ViewHolder {
         ImageView image;
         TextView grade;
         TextView sale;
         TextView limitPrice;
         TextView sendPrice;
         TextView name;
+
         public HolderShop(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.header_shop_img);
-            grade =  (TextView) itemView.findViewById(R.id.header_shop_grade);
-            sale =  (TextView) itemView.findViewById(R.id.header_shop_sale);
-            limitPrice =  (TextView) itemView.findViewById(R.id.header_shop_limit_price);
-            sendPrice =  (TextView) itemView.findViewById(R.id.header_shop_send_price);
+            grade = (TextView) itemView.findViewById(R.id.header_shop_grade);
+            sale = (TextView) itemView.findViewById(R.id.header_shop_sale);
+            limitPrice = (TextView) itemView.findViewById(R.id.header_shop_limit_price);
+            sendPrice = (TextView) itemView.findViewById(R.id.header_shop_send_price);
             name = (TextView) itemView.findViewById(R.id.header_shop_name);
         }
     }
@@ -159,7 +192,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     /**
      * 商品 Item ViewHolder
      */
-    class HolderProduct extends RecyclerView.ViewHolder{
+    class HolderProduct extends RecyclerView.ViewHolder {
 
         ImageView productImg;
         TextView productNameTxt;
@@ -181,17 +214,28 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    class HolderMore extends RecyclerView.ViewHolder{
+    class HolderMore extends RecyclerView.ViewHolder {
         TextView more;
+
         public HolderMore(View itemView) {
             super(itemView);
             more = (TextView) itemView.findViewById(R.id.more_foot_txt);
         }
     }
 
-    private class MoreProduct{
+    private class MoreProduct {
 
         List<Product> mHideProducts = new ArrayList<>();
+
+        public boolean isShow() {
+            return isShow;
+        }
+
+        public void setShow(boolean show) {
+            isShow = show;
+        }
+
+        boolean isShow = false;
 
         public List<Product> getHideProducts() {
             return mHideProducts;
@@ -201,36 +245,43 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mHideProducts = hideProducts;
         }
 
-        public void addProduct(Product product){
+        public void addProduct(Product product) {
             mHideProducts.add(product);
         }
-        public int getSize(){
+
+        public int getSize() {
             return mHideProducts.size();
         }
     }
 
     public void add(List<SearchShop> shops) {
 
-        if (shops!=null){
+        if (shops != null && shops.size() != 0) {
+            mMultipleTypeDataHelper.clear();
             for (SearchShop shop : shops) {
-                Log.e("SearchShopID", shop.getShopId() );
+                Log.e("SearchShopID", shop.getShopId());
                 ShopInfo shopInfo = searchShopToShopInfo(shop);
                 mMultipleTypeDataHelper.add(TYPE_SHOP, shopInfo);
+
                 for (int i = 0; i < shop.getShopProducts().size(); i++) {
-                    if (i < 2){
+                    if (i < 2) {
                         mMultipleTypeDataHelper.add(TYPE_PRODUCT, shop.getShopProducts().get(i));
                     } else {
-                        MoreProduct moreProduct = new MoreProduct();
-                        moreProduct.setHideProducts(shop.getShopProducts().subList(2, shop.getShopProducts().size()-1));
-                        mMultipleTypeDataHelper.add(TYPE_MORE,moreProduct);
+                        break;
                     }
+                }
+
+                if (shop.getShopProducts().size() > 2) {
+                    MoreProduct moreProduct = new MoreProduct();
+                    moreProduct.setHideProducts(shop.getShopProducts().subList(2, shop.getShopProducts().size() - 1));
+                    mMultipleTypeDataHelper.add(TYPE_MORE, moreProduct);
                 }
             }
             notifyDataSetChanged();
         }
     }
 
-    public Shop shopInfoToShop(ShopInfo shopInfo){
+    public Shop shopInfoToShop(ShopInfo shopInfo) {
         Shop shop = new Shop();
         shop.setLimitPrice(shopInfo.getLimitPrice());
         shop.setShopName(shopInfo.getShopName());
@@ -251,7 +302,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return shop;
     }
 
-    public ShopInfo searchShopToShopInfo(SearchShop shop){
+    public ShopInfo searchShopToShopInfo(SearchShop shop) {
         ShopInfo shopInfo = new ShopInfo();
         shopInfo.setLimitPrice(shop.getLimitPrice());
         shopInfo.setShopName(shop.getShopName());

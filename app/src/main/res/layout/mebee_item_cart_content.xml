@@ -9,6 +9,7 @@
     android:orientation="horizontal"
     android:focusable="true"
     android:clickable="true"
+    android:focusableInTouchMode="false"
     android:background="@drawable/mebee_select_item_ripple_bg"
     android:layout_marginTop="1dp">
 

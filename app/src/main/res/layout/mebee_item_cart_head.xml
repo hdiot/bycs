@@ -6,7 +6,9 @@
     android:gravity="center_vertical"
     android:layout_marginTop="10dp"
     android:background="@color/white"
-    android:padding="8dp">
+    android:focusableInTouchMode="false"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
     <CheckBox
         android:id="@+id/normal_cart_Item_head_check"
@@ -26,12 +28,15 @@
             android:drawableLeft="@mipmap/store"
             android:drawableRight="@mipmap/next_black"
             android:singleLine="true"
+            android:background="@drawable/mebee_select_item_ripple_bg"
             android:text="商家名称"/>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/normal_cart_head_delete_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:background="@drawable/mebee_select_item_ripple_bg"
         android:src="@mipmap/garbage"/>
 </LinearLayout>

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Others: 暂无
  * ReviseHistory(Author、Date、RevisePart)： 暂无
  */
-public class ProductItem implements Serializable {
+public class ProductItem implements Serializable, Cloneable {
 
     /**
      * itemId : 1516362852681795985
@@ -42,6 +42,16 @@ public class ProductItem implements Serializable {
     private String productIcon;
     private String productDesc;
     private String productState;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
 
     public String getItemId() {
         return itemId;
@@ -153,5 +163,17 @@ public class ProductItem implements Serializable {
 
     public void setProductState(String productState) {
         this.productState = productState;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        ProductItem productItem = null;
+        try {
+            productItem = (ProductItem) super.clone();
+        } catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+
+        return productItem;
     }
 }

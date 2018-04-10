@@ -194,12 +194,12 @@ public class ClassificationGpProductsFragment extends BaseFragment{
 
             @Override
             public void onFailure(Request request, IOException e) {
-
+                Log.e(TAG, "onFailure: " + e.toString());
             }
 
             @Override
             public void onBzError(Response response, int code, String hint, String data) {
-
+                Log.e(TAG, "onBzError: " + code + hint );
             }
         });
 

@@ -1,7 +1,6 @@
 package com.leonidas.zt.bycs.index.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -82,6 +81,8 @@ public class ShopActivityNew extends AppCompatActivity {
     private int lastState = 1;
     private OkHttpHelper mOkHttpHelper = OkHttpHelper.getInstance();
 
+    private static final String TAG = "ShopActivityNew";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,13 @@ public class ShopActivityNew extends AppCompatActivity {
         initListener();
         initTab();
         initStatus();
-        setData(mShop);
-        //requsetData();
+        if (mShop != null) {
+            Log.e(TAG, "onCreate: " + mShop.getShopName());
+            setData(mShop);
+        } else {
+            Log.e(TAG, "onCreate: requestData() ");
+            requestData();
+        }
     }
 
 
@@ -115,7 +121,6 @@ public class ShopActivityNew extends AppCompatActivity {
         mTitleName = (TextView) findViewById(R.id.title_uc_title);
 
 
-
         mLimit = findViewById(R.id.frag_uc_limit_tv);
         mPostFee = findViewById(R.id.frag_uc_post_fee_tv);
         mDescription = findViewById(R.id.frag_uc_interest_tv);
@@ -123,16 +128,16 @@ public class ShopActivityNew extends AppCompatActivity {
         mShopName = findViewById(R.id.frag_uc_nickname_tv);
         mStar = findViewById(R.id.flag_uc_star);
         mAnnounce = findViewById(R.id.flag_uc_announce_tv);
-        mSole =  (TextView) findViewById(R.id.flag_uc_sole_tv);
+        mSole = (TextView) findViewById(R.id.flag_uc_sole_tv);
     }
 
 
     private void setData(Shop shop) {
         if (shop == null)
             return;
-        Log.e("head", "setData: "+ shop.getShopPictures().get(0).getPicturePath() );
+        Log.e("head", "setData: " + shop.getShopPictures().get(0).getPicturePath());
         mZoomIv.setBackgroundColor(R.drawable.mebee_transfrom_bg);
-        if (shop.getShopPictures().size()>1) {
+        if (shop.getShopPictures().size() > 1) {
             Glide.with(this)
                     .load(Constant.API.images + shop.getShopPictures().get(1).getPicturePath())
                     .into(mZoomIv);
@@ -156,14 +161,17 @@ public class ShopActivityNew extends AppCompatActivity {
         mSole.setText(shop.getShopSale() + "单");
     }
 
-    private void requsetData() {
-        Map<String, String> params = new WeakHashMap<>(1);
-        params.put("shopId", mShopId);
-        mOkHttpHelper.doGet(Constant.API.getShop, params, new BaseCallback<ResMessage<Data<Shop>>>() {
+    private void requestData() {
+        StringBuffer params = new StringBuffer();
+        params.append("?shopId=");
+        params.append(mShopId);
+        mOkHttpHelper.doGet(Constant.API.getShop+ params, new BaseCallback<ResMessage<Data<Shop>>>() {
 
             @Override
             public void OnSuccess(Response response, ResMessage<Data<Shop>> dataResMessage) {
+
                 mShop = dataResMessage.getData().getShop();
+                Log.e("ShopActivityNew", "OnSuccess: " + mShop.getShopName());
                 setData(mShop);
             }
 
@@ -243,7 +251,7 @@ public class ShopActivityNew extends AppCompatActivity {
                 if (mMsgIv != null) {
                     if (progress == 0 && !progressBar.isSpinning) {
                         mMsgIv.setVisibility(View.VISIBLE);
-                    } else if (progress > 0 ) {
+                    } else if (progress > 0) {
                         mMsgIv.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -349,7 +357,7 @@ public class ShopActivityNew extends AppCompatActivity {
         for (String str : mNames) {
             mTabEntities.add(new TabEntity(str));
         }
-
+        
         return mNames;
     }
 
@@ -363,10 +371,14 @@ public class ShopActivityNew extends AppCompatActivity {
 
     public void getShopId() {
 
-        mShop = (Shop) getIntent().getSerializableExtra("shop");
-        mShopId = mShop.getShopId();
-        if (mShop == null) {
-            throw new RuntimeException("shopId cannot be null");
+        try {
+            mShop = (Shop) getIntent().getSerializableExtra("shop");
+            mShopId = getIntent().getStringExtra("shopId");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        if (mShopId == null) {
+            throw new RuntimeException("shop id cannot be null");
         }
 
     }

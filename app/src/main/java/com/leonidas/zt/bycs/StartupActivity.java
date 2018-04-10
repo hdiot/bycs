@@ -35,55 +35,53 @@ public class StartupActivity extends FragmentActivity {
             public void run() {
                 //在主线程中执行
                 //启动主页面
-                startActivity(new Intent(StartupActivity.this,MainActivity.class));
+                startActivity(new Intent(StartupActivity.this, MainActivity.class));
                 //关闭当前页面
                 finish();
             }
-        },2000);
+        }, 2000);
     }
 
-   public void checkLogin(){
+    public void checkLogin() {
 
-       if (User.getInstance().getUserInfo() != null) {
+        if (User.getInstance().getUserInfo() != null) {
 
-           final String uId = User.getInstance().getUserInfo().userId;
-           OkHttpHelper okHttpHelper = OkHttpHelper.getInstance();
+            final String uId = User.getInstance().getUserInfo().userId;
+            OkHttpHelper okHttpHelper = OkHttpHelper.getInstance();
 
-           okHttpHelper.doGet(Constant.API.getAddrs + uId,new BaseCallback<ResMessage<Adderesses>>() {
+            okHttpHelper.doGet(Constant.API.getAddrs + uId, new BaseCallback<ResMessage<Adderesses>>() {
 
-               @Override
-               public void OnSuccess(Response response, ResMessage<Adderesses> adderessesResMessage) {
-                   if (adderessesResMessage.getData() != null) {
-                       User.getInstance().setLogin(true);
-                   }
-               }
+                @Override
+                public void OnSuccess(Response response, ResMessage<Adderesses> adderessesResMessage) {
+                    User.getInstance().setLogin(true);
+                }
 
-               @Override
-               public void onError(Response response, int errCode, Exception e) {
+                @Override
+                public void onError(Response response, int errCode, Exception e) {
 
-               }
+                }
 
-               @Override
-               public void onRequestBefore(Request request) {
+                @Override
+                public void onRequestBefore(Request request) {
 
-               }
+                }
 
-               @Override
-               public void onFailure(Request request, IOException e) {
+                @Override
+                public void onFailure(Request request, IOException e) {
 
-               }
+                }
 
-               @Override
-               public void onBzError(Response response, int code, String hint, String data) {
+                @Override
+                public void onBzError(Response response, int code, String hint, String data) {
+                    User.getInstance().setLogin(true);
+                }
+            });
+        } else {
+            // TODO: 2018/3/15
+            // 未登录处理
 
-               }
-           });
-       } else {
-           // TODO: 2018/3/15
-           // 未登录处理
-
-           return;
-       }
-   }
+            return;
+        }
+    }
 
 }

@@ -49,7 +49,7 @@ public class MebeeLoader {
         final AVLoadingIndicatorView avLoadingIndicatorView = LoaderCreator.create(type, context);
         final TextView messageTxt = new TextView(context);
         final LinearLayout linearLayout = new LinearLayout(context);
-        messageTxt.setText("加载中");
+        messageTxt.setText(message);
         messageTxt.setTextColor(Color.WHITE);
 
         final LinearLayout.LayoutParams layoutParams = new LinearLayout

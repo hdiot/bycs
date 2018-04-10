@@ -1,6 +1,7 @@
 package com.leonidas.zt.bycs.basket.normal.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,16 @@ public class ShopItem implements Serializable {
     private double limitPrice;
     private double sendPrice;
     private List<ProductItem> cartItemDTOList;
+
+    private int isSelected;
+
+    public int isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(int selected) {
+        isSelected = selected;
+    }
 
     public String getCartId() {
         return cartId;

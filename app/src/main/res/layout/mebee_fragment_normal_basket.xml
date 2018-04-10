@@ -6,6 +6,9 @@
 
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:descendantFocusability="blocksDescendants"
+        android:focusableInTouchMode="false"
+        android:touchscreenBlocksFocus="true"
         android:id="@+id/normal_basket_xrcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +26,7 @@
 
 
         <CheckBox
-            android:id="@+id/normal_basket_selected_checkbox"
+            android:id="@+id/normal_basket_selected_clear"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="全选" />
