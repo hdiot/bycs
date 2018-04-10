@@ -265,7 +265,8 @@ GroupPurchasePayActivity extends AppCompatActivity implements View.OnClickListen
                             Log.e("hint", mJO.getString("hint"));
                             return;
                         }
-                        final String orderInfo = mJO.getString("sign");
+
+                        final String orderInfo = mJO.getJSONObject("data").getString("orderInfo");
                         //调用payTask方法进行支付
                         Runnable payRunnable = new Runnable() {
                             @Override
